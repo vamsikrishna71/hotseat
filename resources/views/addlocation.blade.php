@@ -16,7 +16,7 @@
                     <h4 class="card-title mb-4">Address</h4>
 
                     <form action="{{ route('addlocation') }}" method="post">
-                        {{-- @if (Session::get('success'))
+                        @if (Session::get('success'))
                             <div class="alert alert-success">
                                 {{ Session::get('success') }}
                             </div>
@@ -26,25 +26,16 @@
                             <div class="alert alert-danger">
                                 {{ Session::get('fail') }}
                             </div>
-                        @endif --}}
+                        @endif
 
                         @csrf
-                        {{-- <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="formrow-firstname-input" class="form-label">Building</label>
-                                    <input type="text" name="buildingName" class="form-control" id="formrow-firstname-input"
-                                        placeholder="Building Name">
-                                </div>
-                            </div>
-                        </div> --}}
-
+                    
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="formrow-firstname-input" class="form-label">Address</label>
                                     <input type="text" name="address" class="form-control" id="formrow-firstname-input"
-                                        placeholder="Address">
+                                        placeholder="Address" required>
                                 </div>
                             </div>
                         </div>
@@ -54,7 +45,7 @@
                                 <div class="mb-3">
                                     <label for="formrow-inputState" class="form-label">Country</label>
                                     <input type="text" name="country" class="form-control" id="formrow-inputCity"
-                                        placeholder="Enter Your Country">
+                                        placeholder="Enter Your Country" required>
                                 </div>
                             </div>
                             <div class="col-lg-3">
@@ -87,23 +78,23 @@
                                             placeholder="Enter Your Time Zone">
                                     </div>
                                 </div>
-                                <h5 class="card-title mb-4">Add Level</h5>
+                                <h5 class="card-title mb-4">Add Zones</h5>
                                 <div class="repeater">
-                                    <div data-repeater-list="group-a">
+                                    <div data-repeater-list="zones">
                                         <div data-repeater-item class="row">
                                             <div class="mb-3 col-lg-3">
                                                 <label for="formrow-firstname-input" class="form-label">Building</label>
-                                                <input type="text" name="buildingName" class="form-control"
-                                                    id="formrow-firstname-input" placeholder="Building Name">
+                                                <input type="text" name="building_name" class="form-control"
+                                                    id="formrow-firstname-input" placeholder="Building Name" required>
                                             </div>
                                             <div class="mb-3 col-lg-3">
                                                 <label for="name">Level</label>
-                                                <input type="text" name="level" class="form-control"
+                                                <input type="text" name="level_name" class="form-control"
                                                     id="formrow-firstname-input" placeholder="Level">
                                             </div>
                                             <div class="mb-3 col-lg-3">
                                                 <label for="name">Zone</label>
-                                                <input type="text" class="form-control" id="formrow-inputZip" name="zone"
+                                                <input type="text" class="form-control" id="formrow-inputZip" name="zone_name"
                                                     placeholder="Enter Your Zone ID">
                                             </div>
 

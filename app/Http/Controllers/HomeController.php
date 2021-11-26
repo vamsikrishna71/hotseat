@@ -21,6 +21,7 @@ use App\Models\Zone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
@@ -239,39 +240,52 @@ class HomeController extends Controller
      */
     public function location(Request $request)
     {
+        // return $request->input();
 
         $request->validate(
             [
-                'address'      => ['required', 'string', 'max:255'],
-                'state'        => ['required', 'string', 'max:100'],
-                'city'         => ['required', 'string', 'max:100'],
-                'country'      => ['required', 'string', 'max:100'],
-                'zipcode'      => ['required', 'string', 'max:100'],   
+                'address' => ['required', 'string', 'max:255'],
+                'state'   => ['required', 'string', 'max:100'],
+                'city'    => ['required', 'string', 'max:100'],
+                'country' => ['required', 'string', 'max:100'],
+                'zipcode' => ['required', 'string', 'max:100'],
             ]
         );
 
-        $location          = new Location;
-        $location->address  = $request->address;
-        $location->country  = $request->country;
-        $location->timezone = $request->timezone;
-        $location->state    = $request->state;
-        $location->city     = $request->city;
-        $location->zipcode  = $request->zipcode;
-        $location->save();
-        
-       $location->zone()->create(
-            [
-                'building_name' => '$request->buildingName',
-                'level'         => '$request->level',
-                'zone'          => '$request->zone'
-            ]
-        );
-        
-    
-        
-        return back();
+        try {
+            DB::beginTransaction();
+            
+            $location           = new Location;
+            $location->address  = $request->address;
+            $location->country  = $request->country;
+            $location->timezone = $request->timezone;
+            $location->state    = $request->state;
+            $location->city     = $request->city;
+            $location->zipcode  = $request->zipcode;
+            $save               = $location->save();
+
+            $zones = $request->all()['zones'];
+            foreach ($zones as $zone) {
+                $location->zone()->create(
+                    [
+                        'building_name' => $zone['building_name'],
+                        'level'         => $zone['level_name'],
+                        'zone'          => $zone['zone_name'],
+                    ]
+                );
+            }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            echo $e->getMessage(); //error showing
+        }
+        DB::commit();
+
+        if ($save) {
+            return back()->with('success', 'New Location Added Successfully');
+        } else {
+            return back()->with('fail', 'Something went Wrong,Try again later');
+        };
     }
-
 
     /**
      * Remove the specified resource from storage.

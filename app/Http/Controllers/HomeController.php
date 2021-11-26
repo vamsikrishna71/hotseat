@@ -169,7 +169,7 @@ class HomeController extends Controller
     /**
      * Update password data into database.
      *
-     * @param mixed Request $request it validates the fields.
+     * @param mixed Request                  $request it validates the fields.
      * @param mixed Identifying the password $id.
      *
      * @var $user
@@ -188,7 +188,8 @@ class HomeController extends Controller
         if (!(Hash::check(
             $request->get('current_password'),
             Auth::user()->password
-        ))) {
+        ))
+        ) {
             return response()->json(
                 [
                     'isSuccess' => false,
@@ -262,7 +263,7 @@ class HomeController extends Controller
             $location->state    = $request->state;
             $location->city     = $request->city;
             $location->zipcode  = $request->zipcode;
-            $save               = $location->save();
+            $location->save();
 
             $zones = $request->all()['zones'];
             foreach ($zones as $zone) {
@@ -276,15 +277,11 @@ class HomeController extends Controller
             }
         } catch (\Exception $e) {
             DB::rollBack();
-            echo $e->getMessage(); //error showing
+            Session::flash('message', 'Something went wrong!');
+            Session::flash('alert-class', 'alert-danger');
         }
         DB::commit();
-
-        if ($save) {
-            return back()->with('success', 'New Location Added Successfully');
-        } else {
-            return back()->with('fail', 'Something went Wrong,Try again later');
-        };
+        return back()->with('success', 'New Location Added Successfully');
     }
 
     /**

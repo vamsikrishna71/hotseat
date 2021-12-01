@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -26,8 +27,26 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    // protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo;
 
+    public function redirectTo()
+    {
+        switch (Auth::user()->role) {
+            case 1:
+                $this->redirectTo = '/companyAdmin';
+                return $this->redirectTo;
+                break;
+            case 2:
+                $this->redirectTo = '/employee';
+                return $this->redirectTo;
+                break;
+            default:
+                $this->redirectTo = '/login';
+                return $this->redirectTo;
+        }
+        
+    }
     /**
      * To login with the employee_id 
      *
@@ -37,7 +56,7 @@ class LoginController extends Controller
     {
         return 'username';
     }
-    
+
     /**
      * Create a new controller instance.
      *
@@ -47,6 +66,4 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-    
-    
 }

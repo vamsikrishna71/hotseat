@@ -22,6 +22,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Collection;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
@@ -58,10 +59,12 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $location = Location::all();
-
+        $location = User::find(Auth::user()->id)->location;
         if (view()->exists($request->path())) {
-            return view($request->path(), compact('location'));
+            return view(
+                $request->path(),
+                compact('location')
+            );
         }
         return abort(404);
     }
@@ -73,7 +76,8 @@ class HomeController extends Controller
      */
     public function root()
     {
-        return view('index');
+        $zone = Zone::all();
+        return view('index',compact('zone'));
     }
 
     /**
@@ -188,8 +192,7 @@ class HomeController extends Controller
         if (!(Hash::check(
             $request->get('current_password'),
             Auth::user()->password
-        ))
-        ) {
+        ))) {
             return response()->json(
                 [
                     'isSuccess' => false,
@@ -230,19 +233,14 @@ class HomeController extends Controller
     }
 
     /**
-     * Insert location data into database
+     * updateLocation
      *
-     * @param mixed Request $request it validates the fields.
-     *
-     * @var $data
-     * @var $save
-     *
-     * @return view
+     * @param  mixed $request
+     * @param  mixed $id
+     * @return void
      */
-    public function location(Request $request)
+    public function updateLocation(Request $request, $id)
     {
-        // return $request->input();
-
         $request->validate(
             [
                 'address' => ['required', 'string', 'max:255'],
@@ -252,53 +250,29 @@ class HomeController extends Controller
                 'zipcode' => ['required', 'string', 'max:100'],
             ]
         );
+        $location = Location::find($id);
 
-        try {
-            DB::beginTransaction();
-            
-            $location           = new Location;
-            $location->address  = $request->address;
-            $location->country  = $request->country;
-            $location->timezone = $request->timezone;
-            $location->state    = $request->state;
-            $location->city     = $request->city;
-            $location->zipcode  = $request->zipcode;
-            $location->save();
+        $location->address = $request->get('address');
+        $location->city    = $request->get('city');
+        $location->state   = $request->get('state');
+        $location->country = $request->get('country');
+        $location->zipcode = $request->get('zipcode');
+        $location->update();
 
-            $zones = $request->all()['zones'];
-            foreach ($zones as $zone) {
-                $location->zone()->create(
-                    [
-                        'building_name' => $zone['building_name'],
-                        'level'         => $zone['level_name'],
-                        'zone'          => $zone['zone_name'],
-                    ]
-                );
-            }
-        } catch (\Exception $e) {
-            DB::rollBack();
-            Session::flash('message', 'Something went wrong!');
-            Session::flash('alert-class', 'alert-danger');
+        $zones = $request->all()['zones'];
+        foreach ($zones as $zone) {
+            $location->zone()->update([
+                'building_name' => $zone['building_name'],
+                'level'         => $zone['level_name'],
+                'zone'          => $zone['zone_name']
+            ]);
         }
-        DB::commit();
-        return back()->with('success', 'New Location Added Successfully');
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param mixed Deleting the location $id.
-     *
-     * @var $data
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-        $data = Location::findOrFail($id);
-        $data->delete();
-        session()->flash('success', 'Location was successfully deleted');
-        return redirect()->route('location');
+        return
+            redirect()->route(
+                'location',
+                ['location' => $location->id]
+            );
     }
+    
 }

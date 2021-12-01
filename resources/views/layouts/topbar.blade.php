@@ -48,7 +48,7 @@
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="@lang('translation.Search')" aria-label="Search input">
 
-                                <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify"></i></button>s
+                                <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify"></i></button>
                             </div>
                         </div>
                     </form>
@@ -64,6 +64,7 @@
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item waves-effect">
                     <img class="rounded-circle header-profile-user" src="{{ isset(Auth::user()->logo) ? asset(Auth::user()->logo) : asset('/assets/images/users/avatar-1.jpg') }}" alt="Header logo">
+                    <h5 class="font-size-15 text-truncate">{{ Auth::user()->username }}</h5>
                 </button>
             </div>
 

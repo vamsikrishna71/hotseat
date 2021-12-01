@@ -9,31 +9,15 @@
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li class="menu-title" key="t-menu">@lang('translation.Menu')</li>
                 <li>
-                    <a href="index" class="waves-effect">
-                        <span key="t-file-manager">Admin dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <span key="t-multi-level">Users</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="true">
-                        <li>
-                            <a href="javascript: void(0);" key="t-level-2-2">Add Users</a>
-                        </li>
-                        
-                    </ul>
-                </li>
-                {{--  <li>
                     <a href="{{ url('mywork') }}" class="waves-effect">
                         <span key="t-dashboards">My Work</span>
                     </a>
-                </li>  --}}
-                <!-- <li>
+                </li>
+                 <li>
                     <a href="{{ url('bookseat') }}" class="waves-effect">
                         <span key="t-dashboards">Book Seat</span>
                     </a>
-                </li> -->
+                </li>
 
                 {{--  <li>
                     <a href="javascript: void(0);" class="waves-effect">
@@ -52,13 +36,13 @@
                     </a>
                 </li>  --}}
 
-                <li>
+                {{--  <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <span key="t-multi-level">Location</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
                         <li>
-                            <a href="location" key="t-level-2-1">
+                            <a href="{{ URL('location') }}" key="t-level-2-1">
                                 Overview</a>
                         </li>
                         <li>
@@ -66,10 +50,11 @@
                         </li>
                         
                     </ul>
+                    
                 </li>
 
                 <li>
-                    <a href="charts-apex" class="waves-effect">
+                    <a href="apps-filemanager" class="waves-effect">
                         <span key="t-file-manager">Reports</span>
                     </a>
                 </li>
@@ -77,7 +62,7 @@
                 <li>
                     <a href="javascript: void(0);" class="waves-effect">
                         <span key="t-multi-level">Settings</span>
-                    </a>
+                    </a>  --}}
                     {{-- <ul class="sub-menu" aria-expanded="true">
                         <li>
                             <a href="javascript: void(0);" class="has-arrow" key="t-level-1-1">Location</a>

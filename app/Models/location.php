@@ -5,11 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class location extends Model
+class Location extends Model
 {
     use HasFactory;
 
-    protected $table = 'locations';
     /**
      * The attributes that are mass assignable.
      *
@@ -33,4 +32,12 @@ class location extends Model
     {
         return $this->hasMany(Zone::class);
     }
+    
+    public function user()
+    {
+        return $this->belongsTo(User::class,
+            'user_id',
+            'id');
+    }
+ 
 }

@@ -109,11 +109,11 @@
                                                 @enderror
                                             </div>  --}}
                                                 <div class="mb-3">
-                                                    <label for="username" class="form-label">Employee ID<span style="color:red">*</span></label>
+                                                    <label for="username" class="form-label">Company ID<span style="color:red">*</span></label>
                                                     <input type="text"
                                                         class="form-control @error('username') is-invalid @enderror"
                                                         id="username" value="{{ old('username') }}" name="username"
-                                                        placeholder="Enter Employee ID" autofocus required>
+                                                        placeholder="Enter Company ID" autofocus required>
                                                     @error('username')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>

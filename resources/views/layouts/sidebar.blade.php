@@ -19,9 +19,11 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
                         <li>
-                            <a href="javascript: void(0);" key="t-level-2-2">Add Users</a>
+                            <a href="employee.create" key="t-level-2-2">Add Users</a>
                         </li>
-                        
+                        <li>
+                            <a href="employee.edit" key="t-level-2-2">Edit Users</a>
+                        </li>
                     </ul>
                 </li>
                 {{--  <li>
@@ -35,8 +37,8 @@
                     </a>
                 </li> -->
 
-                {{--  <li>
-                    <a href="javascript: void(0);" class="waves-effect">
+                 {{-- <li>
+                    <a href="ui-notifications" class="waves-effect">
                         <span key="t-layouts">Booking</span>
                     </a>
                 </li>  --}}

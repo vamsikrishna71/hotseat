@@ -33,7 +33,7 @@ use Illuminate\Support\Facades\Session;
  *
  * @category  PHP
  * @package   Desk_Reservation
- * @author    Vamsi Krishna <vamsi@softsoutions4u.com>
+ * @author    Vamsi Krishna 
  * @copyright 2006-2021 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   standard license
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -59,11 +59,11 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $location = User::find(Auth::user()->id)->location;
+        $locations = User::find(Auth::user()->id)->location;
         if (view()->exists($request->path())) {
             return view(
                 $request->path(),
-                compact('location')
+                compact('locations')
             );
         }
         return abort(404);
@@ -76,8 +76,7 @@ class HomeController extends Controller
      */
     public function root()
     {
-        $zone = Zone::all();
-        return view('index',compact('zone'));
+        return view('index');
     }
 
     /**
@@ -98,7 +97,7 @@ class HomeController extends Controller
             return redirect()->back();
         }
     }
-
+    
     /**
      * Update profile data in database.
      *
@@ -230,49 +229,5 @@ class HomeController extends Controller
                 ); // Status code here
             }
         }
-    }
-
-    /**
-     * updateLocation
-     *
-     * @param  mixed $request
-     * @param  mixed $id
-     * @return void
-     */
-    public function updateLocation(Request $request, $id)
-    {
-        $request->validate(
-            [
-                'address' => ['required', 'string', 'max:255'],
-                'state'   => ['required', 'string', 'max:100'],
-                'city'    => ['required', 'string', 'max:100'],
-                'country' => ['required', 'string', 'max:100'],
-                'zipcode' => ['required', 'string', 'max:100'],
-            ]
-        );
-        $location = Location::find($id);
-
-        $location->address = $request->get('address');
-        $location->city    = $request->get('city');
-        $location->state   = $request->get('state');
-        $location->country = $request->get('country');
-        $location->zipcode = $request->get('zipcode');
-        $location->update();
-
-        $zones = $request->all()['zones'];
-        foreach ($zones as $zone) {
-            $location->zone()->update([
-                'building_name' => $zone['building_name'],
-                'level'         => $zone['level_name'],
-                'zone'          => $zone['zone_name']
-            ]);
-        }
-
-        return
-            redirect()->route(
-                'location',
-                ['location' => $location->id]
-            );
-    }
-    
+    }    
 }

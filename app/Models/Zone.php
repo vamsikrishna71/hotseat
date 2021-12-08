@@ -33,6 +33,5 @@ class Zone extends Model
             'location_id',
             'id'
         );
-        
     }
 }

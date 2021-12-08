@@ -11,9 +11,19 @@
 
     @component('components.breadcrumb')
         @slot('li_1') Location @endslot
-        @slot('title') Locations Overview @endslot
+        @slot('title') Overview @endslot
     @endcomponent
+                        @if (Session::get('success'))
+                            <div class="alert alert-success" role="alert">
+                                {{ Session::get('success') }}
+                            </div>
+                        @endif
 
+                        @if (Session::get('fail'))
+                            <div class="alert alert-danger" role="alert">
+                                {{ Session::get('fail') }}
+                            </div>
+                        @endif
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -22,14 +32,6 @@
                     <h4 class="card-title">All Location</h4>
 
                     <div class="row">
-                        {{-- <div class="col-sm-12 col-md-3 mb-3">
-                        <select id="formrow-inputState" class="form-select">
-                            <option selected>Select Country</option>
-                                @foreach (\App\Models\Location::select('country')->get() as $country)
-                                    <option>{{ $country->country }}</option>
-                                @endforeach
-                        </select>
-                    </div> --}}
                         <div class="col-sm-12 offset-md-12 col-md-12 mb-3 text-end">
                             <a href="{{ url('addlocation') }}">
                                 <button type="button" class="btn btn-success waves-effect waves-light">
@@ -39,40 +41,72 @@
                         </div>
                     </div>
 
-                    <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
-                        <thead>
+                    <x-table>
+                        <x-slot name="header">
                             <tr>
-                                <th>City</th>
-                                <th>Area</th>
-                                <th>Levels</th>
-                                <th>Time Zone</th>
-                                <th>Actions</th>
+                                <x-table-column>S.NO</x-table-column>
+                                <x-table-column>City</x-table-column>
+                                <x-table-column>Area</x-table-column>
+                                <x-table-column>Building Name</x-table-column>
+                                <x-table-column>Level</x-table-column>
+                                <x-table-column>Time Zone</x-table-column>
+                                <x-table-column>Actions</x-table-column>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($location as $centre)
-                                <tr class="font-bold" id="tr_{{ Auth::user() }}">
-                                    <td>{{ $centre->city }}</td>
-                                    <td>{{ $centre->country }}</td>
-                                    <td>{{ $centre->address }}</td>
-                                    <td>{{ $centre->timezone }}</td>
-                                    <td>
-                                        <a href="#" class="text-dark fs-3">
+                        </x-slot>
+
+                        @forelse ($locations as $centre)
+                            <tr class="font-bold" id="tr_{{ Auth::user()->id }}">
+                                <x-table-column>{{ $loop->iteration }}</x-table-column>
+                                <x-table-column>{{ $centre->city }}</x-table-column>
+                                <x-table-column>{{ $centre->country }}</x-table-column>
+                                @forelse ($centre->zone as $zone)
+                                    @forelse (explode(',', $zone->building_name) as $building)
+                                        <x-table-column>
+                                            <option>{{ $building }}</option>
+                                        </x-table-column>
+                                        @empty
+                                        <div class="alert alert-warning" role="alert">
+                                    No buildings Found!
+                                        </div>
+                                    @endforelse
+                                    @forelse (explode(',', $zone->level) as $level)
+                                        <x-table-column>
+                                            {{ $level }}
+                                        </x-table-column>
+                                        @empty
+                                        <div class="alert alert-warning" role="alert">
+                                    No Levels found!
+                                        </div>
+                                    @endforelse
+                                    @empty
+                                    <div class="alert alert-warning" role="alert">
+                                    No zones found !
+                            </div>
+                                @endforelse
+                                <x-table-column>{{ $centre->timezone }}</x-table-column>
+                                <x-table-column>
+                                    <a href="{{ route('location.edit', ['location_id' => $centre->id]) }}" class="text-dark fs-3">
                                             <i class="fas fa-edit"></i>
-                                        </a>
-                                        <a href="#" class="fs-3" style="color: red;">
-                                            <form class="d-inline" action="#" method="post">
-                                                @csrf
-                                                @method('DELETE')
-                                                <i class="fas fa-trash-alt"></i>
-                                                {{--  <input type="submit" value="delete">  --}}
-                                            </form>
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                    </a>
+                                    
+                                        <form class="d-inline" action="{{ route(
+                                            'location.destroy',['location_id' => $centre->id]) }}"
+                                            method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            
+                                            <input type="submit" class="btn btn-danger"value="Delete">
+                                        </form>
+                                    </a>
+                                </x-table-column>
+                            </tr>
+                            @empty
+                            <div class="alert alert-warning" role="alert">
+                                    No records Found!
+                            </div>
+                        @endforelse
+
+                    </x-table>
                 </div>
             </div>
         </div> <!-- end col -->
@@ -88,4 +122,5 @@
 
     <!-- Datatable init js -->
     <script src="{{ URL::asset('/assets/js/pages/datatables.init.js') }}"></script>
+
 @endsection

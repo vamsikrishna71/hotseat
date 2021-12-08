@@ -19,7 +19,8 @@ class CreateZonesTable extends Migration
             $table->unsignedInteger('location_id');
             $table->foreign('location_id')
                 ->references('id')
-                ->on('locations');
+                ->on('locations')
+                ->onDelete('cascade');
             $table->string('level');
             $table->string('zone');
             $table->timestamps();
@@ -36,7 +37,7 @@ class CreateZonesTable extends Migration
         Schema::dropIfExists(
             'zones',
             function (Blueprint $table) {
-                $table->dropForeign('locations_location_id_foreign');
+                $table->dropForeign('zones_location_id_foreign');
                 $table->dropColumn('location_id');
             }
         );

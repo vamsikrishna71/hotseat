@@ -31,7 +31,6 @@
                     <h4 class="card-title mb-4">Upcoming</h4>
                     <div id="task-1">
                         <div id="upcoming-task" class="pb-1 task-list">
-
                             <div class="card task-box" id="uptask-1">
                                 <div class="card-body">
                                     <div class="dropdown float-end">

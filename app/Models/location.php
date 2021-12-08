@@ -39,5 +39,4 @@ class Location extends Model
             'user_id',
             'id');
     }
- 
 }

@@ -32,12 +32,11 @@
                             <img src="{{ isset(Auth::user()->logo) ? asset(Auth::user()->logo) : asset('/assets/images/users/avatar-1.jpg') }}" alt="" class="img-thumbnail rounded-circle">
                         </div>
                         <h5 class="font-size-15 text-truncate">{{ Str::ucfirst(Auth::user()->username) }}</h5>
-                        <p class="text-muted mb-0 text-truncate">UI/UX Designer</p>
+                        <p class="text-muted mb-0 text-truncate">Developer</p>
                     </div>
 
                     <div class="col-sm-8">
                         <div class="pt-4">
-
                             <div class="row">
                                 <div class="col-6">
                                     <h5 class="font-size-15">125</h5>
@@ -49,7 +48,7 @@
                                 </div>
                             </div>
                             <div class="mt-4">
-                                <a href="" class="btn btn-primary waves-effect waves-light btn-sm">View Profile <i class="mdi mdi-arrow-right ms-1"></i></a>
+                                <a href="contacts-profile" class="btn btn-primary waves-effect waves-light btn-sm">View Profile <i class="mdi mdi-arrow-right ms-1"></i></a>
                             </div>
                         </div>
                     </div>
@@ -163,8 +162,8 @@
                         </ul>
                     </div>
                 </div>
-
-                <div id="stacked-column-chart" class="apex-charts" dir="ltr"></div>
+                <div id="stacked-column-chart" class="apex-charts" dir="ltr">
+                </div>
             </div>
         </div>
     </div>

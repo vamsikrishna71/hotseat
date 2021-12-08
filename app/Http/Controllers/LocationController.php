@@ -1,14 +1,40 @@
 <?php
 
+/**
+ * Location controller for the admin interface.
+ *
+ * PHP version 8
+ *
+ * @category  PHP
+ * @package   Desk_Reservation
+ * @author    Vamsi Krishna
+ * @copyright 2006-2021 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   standard license
+ * @link      http://pear.php.net/package/PHP_CodeSniffer
+ */
+
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Zone;
 use App\Models\Location;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 
+/**
+ * Location controller for the admin interface.
+ *
+ * PHP version 8
+ *
+ * @category  PHP
+ * @package   Desk_Reservation
+ * @author    Vamsi Krishna
+ * @copyright 2006-2021 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   standard license
+ * @link      http://pear.php.net/package/PHP_CodeSniffer
+ */
 class LocationController extends Controller
 {
     //
@@ -27,21 +53,21 @@ class LocationController extends Controller
     {
         $request->validate(
             [
-                'address' => ['required', 'string', 'max:255'],
-                'state'   => ['required', 'string', 'max:100'],
-                'city'    => ['required', 'string', 'max:100'],
-                'country' => ['required', 'string', 'max:100'],
-                'zipcode' => ['required', 'string', 'max:100'],
+                'address'  => ['required', 'string', 'max:255'],
+                'state'    => ['required', 'string', 'max:100'],
+                'city'     => ['required', 'string', 'max:100'],
+                'country'  => ['required', 'string', 'max:100'],
+                'zipcode'  => ['required', 'string', 'max:100'],
                 'timezone' => ['required', 'string', 'max:100'],
             ]
         );
-        
+
         try {
-            $user = Auth::user();
+            $user     = Auth::user();
             $location = $user->location()->create(
                 [
                     'address'  => $request->address,
-                    'country' => $request->country,
+                    'country'  => $request->country,
                     'timezone' => $request->timezone,
                     'state'    => $request->state,
                     'city'     => $request->city,
@@ -63,7 +89,7 @@ class LocationController extends Controller
             Session::flash('message', 'Something went wrong!');
             Session::flash('alert-class', 'alert-danger');
         }
-        return back()->with('success', 'New Location Added Successfully');
+        return redirect('location')->with('success', 'New Location Added Successfully');
     }
 
     /**
@@ -73,11 +99,10 @@ class LocationController extends Controller
      */
     public function locationOverview()
     {
-       $location = User::find(Auth::user()->id)->location->orderBy('id')->get();
-       print_r($location);die;
-       
-       return view('location',compact('location'));
-       
+        $location = User::find(Auth::user()->id)->location->orderBy('id')->get();
+        // print_r($location);
+        // die;
+        return view('location', compact('location'));
     }
     /**
      * editLocation
@@ -86,16 +111,84 @@ class LocationController extends Controller
      */
     public function editLocation($id)
     {
+        $location = Location::findOrFail($id);
         return view(
             'editlocation',
-            ['location' => Location::findOrFail($id)]
+            compact('location')
         );
+    }
+
+    /**
+     * updateLocation
+     *
+     * @param  mixed $request
+     * @param  mixed $id
+     * @return void
+     */
+    public function updateLocation(Request $request, $id)
+    {
+        $request->validate(
+            [
+                'address' => ['required', 'string', 'max:255'],
+                'state'   => ['required', 'string', 'max:100'],
+                'city'    => ['required', 'string', 'max:100'],
+                'country' => ['required', 'string', 'max:100'],
+                'zipcode' => ['required', 'string', 'max:100'],
+            ]
+        );
+        // dd($request->all());
+        $locationId = Location::find($id);
+
+        $locationId->update(
+            [
+                'address'  => $request->get('address'),
+                'country'  => $request->get('country'),
+                'timezone' => $request->get('timezone'),
+                'state'    => $request->get('state'),
+                'city'     => $request->get('city'),
+                'zipcode'  => $request->get('zipcode'),
+            ]
+        );
+
+        $zones = $request->all()['zones'];
+        foreach ($zones as $zone) {
+            $locationId->zone()->update(
+                [
+                    'building_name' => $zone['building_name'],
+                    'level'         => $zone['level_name'],
+                    'zone'          => $zone['zone_name'],
+                ]
+            );
+        }
+        // }
+        // if (true) {
+        //     Session::flash('message', 'Location Details Updated successfully!');
+        //     Session::flash('alert-class', 'alert-success');
+        //     return response()->json(
+        //         [
+        //             'isSuccess' => true,
+        //             'Message'   => "Location Details Updated successfully!",
+        //         ],
+        //         200
+        //     ); // Status code here
+        // } else {
+        //     Session::flash('message', 'Something went wrong!');
+        //     Session::flash('alert-class', 'alert-danger');
+        //     return response()->json(
+        //         [
+        //             'isSuccess' => true,
+        //             'Message'   => "Something went wrong!",
+        //         ],
+        //         200
+        //     ); // Status code here
+        // }
+        return redirect('location')->with('success', 'Location updated Successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param mixed Deleting the location $id.
+     * @param mixed Deleting the location.
      *
      * @var $data
      *
@@ -103,17 +196,17 @@ class LocationController extends Controller
      */
     public function destroy($id)
     {
-        dd($id);
-        // try {
-        //     DB::beginTransaction();
-        // $data = Location::findOrFail($id);
-        // $data->delete();
-        // Session::flash('message', 'Location Delete Successfully');
-        // Session::flash('alert-class', 'alert-danger');
-        // } catch (\Exception $e) {
-        //     dd($e);
-        // }
-        // DB::commit();
-        // return redirect()->route('location');
+        // dd($id, 'delete');die;
+        try {
+            DB::beginTransaction();
+            $location = Location::findOrFail($id);
+            $location->delete();
+        } catch (\Exception $e) {
+            // dd($e);
+        }
+        DB::commit();
+        Session::flash('message', 'Location Delete Successfully');
+        Session::flash('alert-class', 'alert-danger');
+        return redirect('location')->with('success','Location Delete Successfully');
     }
 }

@@ -24,7 +24,7 @@ class EmployeeController extends Controller
     public function index()
     {
         //
-        return view('addlocation');
+        
     }
 
     /**
@@ -35,6 +35,7 @@ class EmployeeController extends Controller
     public function create()
     {
         //
+        return view('employee.create');
     }
 
     /**
@@ -45,7 +46,14 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // $request->validate([
+        //     'firstName' => ['required', 'string', 'max:255'],
+        //     'lastName'    => ['required', 'string', 'max:255'],
+        //     'designation'    => ['required', 'string', 'max:255'],
+        //     'department'  => ['required', 'string', 'max:255']
+        // ]);
+        // return $request->input();
+        // dd($request->input());
     }
 
     /**

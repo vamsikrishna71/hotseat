@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -18,7 +19,7 @@ class LoginController extends Controller
     | redirecting them to your home screen. The controller uses a trait
     | to conveniently provide its functionality to your applications.
     |
-    */
+     */
 
     use AuthenticatesUsers;
 
@@ -27,28 +28,10 @@ class LoginController extends Controller
      *
      * @var string
      */
-    // protected $redirectTo = RouteServiceProvider::HOME;
-    protected $redirectTo;
+    protected $redirectTo = RouteServiceProvider::HOME;
 
-    public function redirectTo()
-    {
-        switch (Auth::user()->role) {
-            case 1:
-                $this->redirectTo = '/companyAdmin';
-                return $this->redirectTo;
-                break;
-            case 2:
-                $this->redirectTo = '/employee';
-                return $this->redirectTo;
-                break;
-            default:
-                $this->redirectTo = '/login';
-                return $this->redirectTo;
-        }
-        
-    }
     /**
-     * To login with the employee_id 
+     * To login with the company_id
      *
      * @return string
      */
@@ -56,7 +39,7 @@ class LoginController extends Controller
     {
         return 'username';
     }
-
+    
     /**
      * Create a new controller instance.
      *
@@ -65,5 +48,27 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+        $this->middleware('guest:employee')->except('logout');
+    }
+
+    public function showEmployeeLoginForm()
+    {
+        return view('auth.login', ['url' => 'mywork']);
+    }
+
+    public function employeeLogin(Request $request)
+    {
+        $this->validate($request, [
+            'username' => 'required',
+            'password'   => 'required|min:6',
+        ]);
+
+        if (Auth::guard('employee')->attempt(
+            ['username' => $request->username, 'password' => $request->password],
+            $request->get('remember'))) {
+
+            return redirect()->intended('index');
+        }
+        return back()->withInput($request->only('username', 'remember'));
     }
 }

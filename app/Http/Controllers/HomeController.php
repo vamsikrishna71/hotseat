@@ -60,10 +60,11 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $locations = User::find(Auth::user()->id)->location;
+        $employees = User::find(Auth::user()->id)->employee;
         if (view()->exists($request->path())) {
             return view(
                 $request->path(),
-                compact('locations')
+                compact('locations','employees')
             );
         }
         return abort(404);

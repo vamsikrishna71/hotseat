@@ -3,101 +3,49 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class EmployeeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return view
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-        
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-        return view('employee.create');
-    }
+  /**
+   * Adding Employee by respective admin.
+   *
+   * @param  mixed $request
+   * @return void
+   */
+  public function addEmployee(Request $request)
+  {
+    $request->validate(
+      [
+        'username'    => ['required', 'string', 'max:255'],
+        'firstName'   => ['required', 'string', 'max:100'],
+        'lastName'    => ['required', 'string', 'max:100'],
+        'department'  => ['required', 'string', 'max:100'],
+        'designation' => ['required', 'string', 'max:100'],
+      ]
+    );
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        // $request->validate([
-        //     'firstName' => ['required', 'string', 'max:255'],
-        //     'lastName'    => ['required', 'string', 'max:255'],
-        //     'designation'    => ['required', 'string', 'max:255'],
-        //     'department'  => ['required', 'string', 'max:255']
-        // ]);
-        // return $request->input();
-        // dd($request->input());
+    try {
+      $user = Auth::user();
+      $user->employee()->create([
+        'username'    => $request->username,
+        'first_name'  => $request->firstName,
+        'last_name'   => $request->lastName,
+        'password'    => Str::random(10),
+        'designation' => $request->designation,
+        'department'  => $request->department,
+      ]);
+    } catch (\Exception $e) {
+      dd($e);
     }
+    // return $request->input();
+    return redirect('location')->with('success', 'Employee Added Successfully');
+    // dd($request->input());
+  }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+  public function editEmployee(Request $request)
+  {
+  }
 }

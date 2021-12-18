@@ -15,16 +15,19 @@
                 <div class="card-body">
                     <h4 class="card-title">Employee Details</h4>
                     <p class="card-title-desc">Add Employee Details</p>
-                    <form action="employee" class="needs-validation" novalidate>
+                    <form action="{{ route('addEmployee')  }}" class="needs-validation" novalidate method="post">
                         @csrf
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <label for="validationCustom01" class="form-label">Employee ID</label>
-                                    <input type="text" class="form-control" id="validationCustom01" name="employeeId"
-                                        placeholder="First name" value="Mark" required>
+                                    <input type="text" class="form-control" id="validationCustom01" name="username"
+                                        placeholder="Employee ID" value="{{ old('username') }}" required>
                                     <div class="valid-feedback">
                                         Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Please provide a Employee ID.
                                     </div>
                                 </div>
                             </div>
@@ -34,9 +37,12 @@
                                 <div class="mb-3">
                                     <label for="validationCustom01" class="form-label">First name</label>
                                     <input type="text" class="form-control" id="validationCustom01" name="firstName"
-                                        placeholder="First name" value="Mark" required>
+                                        placeholder="First name" value="{{ old('firstName') }}" required>
                                     <div class="valid-feedback">
                                         Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Please provide a First Name.
                                     </div>
                                 </div>
                             </div>
@@ -44,9 +50,12 @@
                                 <div class="mb-3">
                                     <label for="validationCustom02" class="form-label">Last name</label>
                                     <input type="text" class="form-control" id="validationCustom02" name="lastName"
-                                        placeholder="Last name" value="Otto" required>
+                                        placeholder="Last name" value="{{ old('lastname') }}" required>
                                     <div class="valid-feedback">
                                         Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Please provide a Last name.
                                     </div>
                                 </div>
                             </div>
@@ -64,23 +73,43 @@
                                     </div>
                                 </div>
                             </div>  --}}
+                            {{-- <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="validationCustom01" class="form-label">E-mail</label>
+                                    <input type="text" class="form-control" id="validationCustom01" name="email"
+                                        placeholder="Email" value="{{ old('email') }}" required>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Please provide a E-mail.
+                                    </div>
+                                </div>
+                            </div> --}}
                             <div class="col-md-4">
                                 <div class="mb-3">
                                     <label for="validationCustom02" class="form-label">Designation</label>
                                     <input type="text" class="form-control" id="validationCustom02" name="designation"
-                                        placeholder="designation" value="Developer" required>
+                                        placeholder="Designation" value="{{ old('designation') }}" required>
                                     <div class="valid-feedback">
                                         Looks good!
                                     </div>
+                                    <div class="invalid-feedback">
+                                        Please provide a designation.
+                                    </div>
                                 </div>
                             </div>
+                            
                             <div class="col-md-4">
                                 <div class="mb-3">
                                     <label for="validationCustom04" class="form-label">Department</label>
                                     <input type="text" class="form-control" id="validationCustom04" name="department" placeholder="CSE"
                                         required>
+                                        <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
                                     <div class="invalid-feedback">
-                                        Please provide a valid Department.
+                                        Please provide a Department.
                                     </div>
                                 </div>
                             </div>
@@ -105,7 +134,7 @@
                             </div>
                         </div>  --}}
                         <div>
-                            <button class="btn btn-primary" type="submit">Submit form</button>
+                            <button class="btn btn-primary" type="submit">Submit</button>
                         </div>
                     </form>
                 </div>

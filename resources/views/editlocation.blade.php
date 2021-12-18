@@ -6,7 +6,6 @@
 <link href="{{ URL::asset('/assets/css/app.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
 
-
 @section('content')
 
     @component('components.breadcrumb')
@@ -20,23 +19,14 @@
                 <div class="card-body">
                     <h4 class="card-title mb-4">Address</h4>
                     <form action="{{ route('location.update', ['location_id' => $location->id]) }}" method="post">
-                        @if (Session::get('success'))
-                            <div class="alert alert-success">
-                                {{ Session::get('success') }}
-                            </div>
-                        @endif
-
-                        @if (Session::get('fail'))
-                            <div class="alert alert-danger">
-                                {{ Session::get('fail') }}
-                            </div>
-                        @endif
+                        
                         @if ($message = Session::get('status'))
                             <div class="alert alert-success alert-block">
                                 <button type="button" class="close" data-dismiss="alert">×</button>
                                 <strong>{{ $message }}</strong>
                             </div>
                         @endif
+                        
                         @csrf
                         <div class="row">
                             <div class="col-md-6">
@@ -109,7 +99,7 @@
                                                         value="{{ old('level_name', $zone->level) }}"
                                                         id="formrow-firstname-input level_name" placeholder="Level">
                                                 </div>
-                                                <div class="mb-3 col-lg-3">
+                                                 <div class="mb-3 col-lg-3">
                                                     <label for="name">Zone</label>
                                                     <input type="text" class="form-control"
                                                         id="formrow-inputZip zone_name"
@@ -126,12 +116,13 @@
                                             </div>
                                         </div>
                                     </div>
-                                @endforeach
-                                <div class="text-center">
-                                    <input data-repeater-create type="button" class="btn btn-success mt-3 btn-lg mt-lg-0"
-                                        value="Add Zone" />
+                                    <div class="text-center">
+                                    <input data-repeater-create type="button"
+                                            class="btn btn-success mt-3 btn-lg mt-lg-0" value="Add Zone" />
                                     <button type="submit" class="btn btn-success btn-lg w-md mt-3 m-lg-3">Submit</button>
                                 </div>
+                                @endforeach
+                                
                             </div>
                         </div>
                     </form>

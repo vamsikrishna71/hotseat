@@ -160,28 +160,7 @@ class LocationController extends Controller
                 ]
             );
         }
-        // }
-        // if (true) {
-        //     Session::flash('message', 'Location Details Updated successfully!');
-        //     Session::flash('alert-class', 'alert-success');
-        //     return response()->json(
-        //         [
-        //             'isSuccess' => true,
-        //             'Message'   => "Location Details Updated successfully!",
-        //         ],
-        //         200
-        //     ); // Status code here
-        // } else {
-        //     Session::flash('message', 'Something went wrong!');
-        //     Session::flash('alert-class', 'alert-danger');
-        //     return response()->json(
-        //         [
-        //             'isSuccess' => true,
-        //             'Message'   => "Something went wrong!",
-        //         ],
-        //         200
-        //     ); // Status code here
-        // }
+       
         return redirect('location')->with('success', 'Location updated Successfully');
     }
 

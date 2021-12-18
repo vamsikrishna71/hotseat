@@ -19,9 +19,8 @@ Auth::routes();
 Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])
     ->name('root');
 
-// Route::resource([App\Http\Controllers\EmployeeController::class]);
-
-Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->name('companyAdmin')->middleware('companyAdmin');
+Route::get('/login/employee', [App\Http\Controllers\Auth\LoginController::class,'showEmployeeLoginForm']);
+Route::post('/login/employee', [App\Http\Controllers\Auth\LoginController::class, 'employeeLogin']);
 
 //Update User Details
 Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class, 'updateProfile'])
@@ -38,15 +37,15 @@ Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang'
 Route::post('/addlocation', [App\Http\Controllers\LocationController::class, 'location'])->name('addlocation');
 
 
-Route::get('editlocation/{location_id}', [App\Http\Controllers\LocationController::class, 'editLocation'])->name('location.edit');
+Route::get('/editlocation/{location_id}', [App\Http\Controllers\LocationController::class, 'editLocation'])->name('location.edit');
 
 Route::post('/update-location/{location_id}', [App\Http\Controllers\LocationController::class, 'updateLocation'])
     ->name('location.update');
-
-// Route::get('location', [App\Http\Controllers\HomeController::class,
-// 'index'])->name('location');
 
 Route::delete(
     '/location/{location_id}',
     [App\Http\Controllers\LocationController::class, 'destroy']
 )->name('location.destroy');
+
+//Employee Controllers
+Route::post('/addEmployee', [App\Http\Controllers\EmployeeController::class, 'addEmployee'])->name('addEmployee');

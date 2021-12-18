@@ -15,14 +15,14 @@
                 </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <span key="t-multi-level">Users</span>
+                        <span key="t-multi-level">Employee Directory</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
                         <li>
-                            <a href="employee.create" key="t-level-2-2">Add Users</a>
+                            <a href="employee.create" key="t-level-2-2">Add Employee</a>
                         </li>
                         <li>
-                            <a href="employee.edit" key="t-level-2-2">Edit Users</a>
+                            <a href="employee.details" key="t-level-2-2">Employees</a>
                         </li>
                     </ul>
                 </li>
@@ -60,7 +60,7 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
                         <li>
-                            <a href="location" key="t-level-2-1">
+                            <a href="{{ URL('location') }}" key="t-level-2-1">
                                 Overview</a>
                         </li>
                         <li>

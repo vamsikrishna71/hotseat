@@ -47,10 +47,10 @@
                         <x-slot name="header">
                             <tr>
                                 <x-table-column>S.NO</x-table-column>
-                                <x-table-column>First Name</x-table-column>
+                                <x-table-column>Username</x-table-column>
                                 <x-table-column>Last Name</x-table-column>
                                 <x-table-column>Designation</x-table-column>
-                                <x-table-column>Password</x-table-column>
+                                <x-table-column>Department</x-table-column>
                                 <x-table-column>Actions</x-table-column>
                             </tr>
                         </x-slot>
@@ -58,10 +58,10 @@
                         @forelse ($employees as $centre)
                             <tr class="font-bold" id="tr_{{ Auth::user()->id }}">
                                 <x-table-column>{{ $loop->iteration }}</x-table-column>
-                                <x-table-column>{{ $centre->first_name }}</x-table-column>
+                                <x-table-column>{{ $centre->username }}</x-table-column>
                                 <x-table-column>{{ $centre->last_name }}</x-table-column>
                                 <x-table-column>{{ $centre->designation }}</x-table-column>
-                                <x-table-column>{{ $centre->password }}</x-table-column>
+                                <x-table-column>{{ $centre->department }}</x-table-column>
                                 <x-table-column>
                                     <div class="table-action">
                                     <a href="employee.edit" class="text-dark fs-3">

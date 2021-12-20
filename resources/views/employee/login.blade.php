@@ -96,7 +96,7 @@
                                                 In</button>
                                         </div>
 
-                                        <div class="mt-4 text-center">
+                                        {{-- <div class="mt-4 text-center">
                                             <h5 class="font-size-14 mb-3">Sign in with</h5>
 
                                             <ul class="list-inline">
@@ -117,7 +117,7 @@
                                                     </a>
                                                 </li>
                                             </ul>
-                                        </div>
+                                        </div> --}}
 
                                         <div class="mt-4 text-center">
                                             @if (Route::has('password.request'))
@@ -134,12 +134,12 @@
                         <div class="mt-5 text-center">
 
                             <div>
-                                <p>Don't have an account ? <a href="{{ url('register') }}" class="fw-medium text-primary">
-                                        Signup now </a> </p>
+                                {{-- <p>Don't have an account ? <a href="{{ url('register') }}" class="fw-medium text-primary">
+                                        Signup now </a> </p> --}}
                                 <p>© <script>
                                         document.write(new Date().getFullYear())
 
-                                    </script> Skote. Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand
+                                    </script> maintained by<i class="mdi mdi-heart text-danger"></i> SS4U
                                 </p>
                             </div>
                         </div>
@@ -149,5 +149,4 @@
             </div>
         </div>
         <!-- end account-pages -->
-
     @endsection

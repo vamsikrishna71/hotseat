@@ -18,6 +18,10 @@ return [
         'passwords' => 'users',
         
     ],
+    'employee' => [
+        'driver' => 'eloquent',
+        'model' => App\Models\Employee::class,
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -44,7 +48,7 @@ return [
 
         'employee' => [
             'driver' => 'session',
-            'provider' => 'employees'
+            'provider' => 'employees',
         ]
     ],
 
@@ -99,6 +103,10 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
+        'employees' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Employee::class,
+        ]
     ],
 
     /*

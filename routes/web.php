@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EmployeeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,8 +20,29 @@ Auth::routes();
 Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])
     ->name('root');
 
-Route::get('/login/employee', [App\Http\Controllers\Auth\LoginController::class,'showEmployeeLoginForm']);
-Route::post('/login/employee', [App\Http\Controllers\Auth\LoginController::class, 'employeeLogin']);
+
+// Route::get('login/employee', [App\Http\Controllers\EmployeeController::class, 'showEmployeeLoginForm']);
+
+// Route::post('/mywork', [App\Http\Controllers\EmployeeController::class, 'employeeLogin']);
+
+
+//Grouping routes
+Route::prefix('employee')->name('employee.')->group(function () {
+    Route::middleware(['guest:employee'])->group(function () {
+        Route::view('/login', 'employee.login')->name('login');
+        Route::post('/check', [EmployeeController::class, 'employeeLogin'])->name('check');
+    });
+    Route::middleware(['auth:employee'])->group(function () {
+        Route::view('/create', 'employee.create')->name('create');
+        
+    });
+});
+
+
+
+
+
+
 
 //Update User Details
 Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class, 'updateProfile'])

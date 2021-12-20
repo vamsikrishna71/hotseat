@@ -11,15 +11,15 @@ use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
     /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-     */
+ |--------------------------------------------------------------------------
+ | Login Controller
+ |--------------------------------------------------------------------------
+ |
+ | This controller handles authenticating users for the application and
+ | redirecting them to your home screen. The controller uses a trait
+ | to conveniently provide its functionality to your applications.
+ |
+  */
 
     use AuthenticatesUsers;
 
@@ -39,7 +39,7 @@ class LoginController extends Controller
     {
         return 'username';
     }
-    
+
     /**
      * Create a new controller instance.
      *
@@ -48,27 +48,5 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
-        $this->middleware('guest:employee')->except('logout');
-    }
-
-    public function showEmployeeLoginForm()
-    {
-        return view('auth.login', ['url' => 'mywork']);
-    }
-
-    public function employeeLogin(Request $request)
-    {
-        $this->validate($request, [
-            'username' => 'required',
-            'password'   => 'required|min:6',
-        ]);
-
-        if (Auth::guard('employee')->attempt(
-            ['username' => $request->username, 'password' => $request->password],
-            $request->get('remember'))) {
-
-            return redirect()->intended('index');
-        }
-        return back()->withInput($request->only('username', 'remember'));
     }
 }

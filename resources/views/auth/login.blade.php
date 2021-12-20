@@ -99,14 +99,14 @@
                                             <h5 class="text-primary">Welcome Back !</h5>
                                             <p class="text-muted">Sign in to continue to Feugo.</p>
                                         </div>
-                                        @isset($url)
+                                        {{-- @isset($url)
                                             <form method="POST" action='{{ url('/'.$url) }}'
                                                 aria-label="{{ __('Login') }}">
                                                 
-                                            @else
+                                            @else --}}
                                                 <div class="mt-4">
                                                     <form class="form-horizontal" method="POST" action="{{ route('login') }}">
-                                                    @endisset
+                                                    {{-- @endisset --}}
                                                     @csrf
                                                     {{-- <div class="mb-3">
                                                 <label for="username" class="form-label">Employee ID</label>
@@ -157,8 +157,8 @@
                                                     </div>
 
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" id="remember"
-                                                            {{ old('remember') ? 'checked' : '' }}>
+                                                        <input class="form-check-input" type="checkbox" id="remember" name="remember"
+                                                            value="{{ old('remember') ? 'checked' : '' }}">
                                                         <label class="form-check-label" for="remember">
                                                             Remember me
                                                         </label>
@@ -170,7 +170,7 @@
                                                             In</button>
                                                     </div>
 
-                                                    <div class="mt-4 text-center">
+                                                    {{-- <div class="mt-4 text-center">
                                                         <h5 class="font-size-14 mb-3">Sign in with</h5>
 
                                                         <ul class="list-inline">
@@ -193,7 +193,7 @@
                                                                 </a>
                                                             </li>
                                                         </ul>
-                                                    </div>
+                                                    </div> --}}
                                                 </form>
                                                 <div class="mt-5 text-center">
                                                     <p>Don't have an account ? <a href="{{ url('register') }}"

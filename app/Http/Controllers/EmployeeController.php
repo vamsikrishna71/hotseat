@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 class EmployeeController extends Controller
 {
@@ -33,7 +34,7 @@ class EmployeeController extends Controller
         'username'    => $request->username,
         'first_name'  => $request->firstName,
         'last_name'   => $request->lastName,
-        'password'    => Str::random(10),
+        'password'    => Hash::make($request->password),
         'designation' => $request->designation,
         'department'  => $request->department,
       ]);
@@ -41,8 +42,30 @@ class EmployeeController extends Controller
       dd($e);
     }
     // return $request->input();
-    return redirect('location')->with('success', 'Employee Added Successfully');
+    return redirect('employee.details')->with('success', 'Employee Added Successfully');
     // dd($request->input());
+  }
+
+
+  /**
+   * employeeLogin
+   *
+   * @param  mixed $request
+   * @return void
+   */
+  public function employeeLogin(Request $request)
+  {
+    $request->validate( [
+      'username' => 'required',
+      'password' => 'required|min:6',
+    ]);
+    $credentials = $request->only('username', 'password');
+    if (Auth::guard('employee')->attempt($credentials)) {
+      return redirect()->route('employee.create');
+    } else {
+      exit('Not login');
+    }
+    // return redirect()->route('employee.create');
   }
 
   public function editEmployee(Request $request)

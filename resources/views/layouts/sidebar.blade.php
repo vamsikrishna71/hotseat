@@ -15,7 +15,7 @@
                 </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <span key="t-multi-level">Employee Directory</span>
+                        <span key="t-multi-level">Employees</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
                         <li>

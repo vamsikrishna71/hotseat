@@ -1,20 +1,22 @@
 @extends('layouts.master')
 
 @section('title') @lang('Add Employee') @endsection
-
+<link href="{{ URL::asset('/assets/css/bootstrap.min.css') }}" id="bootstrap-style" rel="stylesheet"
+    type="text/css" />
+<link href="{{ URL::asset('/assets/css/app.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
 @section('content')
 
     @component('components.breadcrumb')
-        @slot('li_1') Users @endslot
-        @slot('title') Add Users @endslot
+        @slot('li_1') Employee @endslot
+        @slot('title') Add Employee @endslot
     @endcomponent
 
     <div class="row">
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Employee Details</h4>
-                    <p class="card-title-desc">Add Employee Details</p>
+                    <h4 class="card-title mb-4">Add Employee Details</h4>
                     <form action="{{ route('addEmployee')  }}" class="needs-validation" novalidate method="post">
                         @csrf
                         <div class="row">
@@ -134,7 +136,7 @@
                             </div>
                         </div>  --}}
                         <div>
-                            <button class="btn btn-primary" type="submit">Submit</button>
+                            <button class="btn btn-primary" type="submit">Save</button>
                         </div>
                     </form>
                 </div>

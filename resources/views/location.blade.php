@@ -88,30 +88,20 @@
                                 <x-table-column>{{ $centre->timezone }}</x-table-column>
                                 <x-table-column>
                                     <div class="table-action">
-                                        {{-- <style>
-                                            table tbody th,
-                                            table. tbody td {
-                                                vertical-align: middle;
-                                            }
-
-                                            .table-action {
-                                                display: flex;
-                                                align-items: center;
-                                                justify-content: space-evenly;
-                                            }
-
-                                        </style> --}}
                                     <a href="{{ route('location.edit', ['location_id' => $centre->id]) }}" class="text-dark fs-3">
                                             <i class="fas fa-edit"></i>
                                     </a>
                                     
-                                        <form class="d-inline" action="{{ route(
+                                        <form class="d-inline delete-icon position-relative" action="{{ route(
                                             'location.destroy',['location_id' => $centre->id]) }}"
                                             method="post">
                                             @csrf
                                             @method('DELETE')
                                             
-                                            <input type="submit" id="showtoast" class="btn btn-danger"value="Delete">
+                                            {{--  <input type="submit" id="showtoast" class="btn btn-danger"value="Delete">  --}}
+                                            
+                                            <input type="submit" role="button" aria-label="delete location" value="">
+                                            <i class="fas fa-trash text-danger fs-3"></i>
                                         </form>
                                     </div>
                                 </x-table-column>

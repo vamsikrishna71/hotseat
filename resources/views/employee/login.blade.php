@@ -10,46 +10,60 @@
     @endsection
 
     @section('content')
-        <div class="account-pages my-5 pt-sm-5">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-md-8 col-lg-6 col-xl-5">
-                        <div class="card overflow-hidden">
-                            <div class="bg-primary bg-soft">
-                                <div class="row">
-                                    <div class="col-7">
-                                        <div class="text-primary p-4">
-                                            <h5 class="text-primary">Welcome Back !</h5>
-                                            <p>Sign in to continue to Skote.</p>
+    <div>
+        <div class="container-fluid p-0">
+            <div class="row g-0">
+
+                <div class="col-xl-9">
+                    <div class="auth-full-bg pt-lg-5 p-4">
+                        <div class="w-100">
+                            <div class="bg-overlay"></div>
+                            <div class="d-flex h-100 flex-column justify-content-center">
+
+                                <div class="p-4">
+                                    <div class="row justify-content-center">
+                                        <div class="col-lg-7">
+                                            <div class="text-center">
+
+                                                <div dir="ltr">
+                                                    <h2 class="mb-3 text-primary">Welcome to Employee Login</h2>
+                                                    <h2 class="mb-3 text-dark">FUEGO</h2>
+                                                    <h2 class="mb-3 text-dark">Health Systems</h2>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-5 align-self-end">
-                                        <img src="{{ URL::asset('/assets/images/profile-img.png') }}" alt=""
-                                            class="img-fluid">
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-body pt-0">
-                                <div class="auth-logo">
-                                    <a href="index" class="auth-logo-light">
-                                        <div class="avatar-md profile-user-wid mb-4">
-                                            <span class="avatar-title rounded-circle bg-light">
-                                                <img src="{{ URL::asset('/assets/images/logo-light.svg') }}" alt=""
-                                                    class="rounded-circle" height="34">
-                                            </span>
-                                        </div>
-                                    </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- end col -->
 
-                                    <a href="index" class="auth-logo-dark">
-                                        <div class="avatar-md profile-user-wid mb-4">
-                                            <span class="avatar-title rounded-circle bg-light">
-                                                <img src="{{ URL::asset('/assets/images/logo.svg') }}" alt=""
-                                                    class="rounded-circle" height="34">
-                                            </span>
-                                        </div>
+                <div class="col-xl-3">
+                    <div class="auth-full-page-content p-md-5 p-4">
+                        <div class="w-100">
+
+                            <div class="d-flex flex-column h-100">
+                                <div class="mb-4 mb-md-5">
+                                    <a href="index" class="d-block auth-logo">
+                                        {{-- <img src="{{ URL::asset('/assets/images/logo-dark.png') }}" alt="" height="18" class="auth-logo-dark">
+                                        <img src="{{ URL::asset('/assets/images/logo-light.png') }}" alt="" height="18" class="auth-logo-light"> --}}
+                                        <h1>FEUGO</h1>
                                     </a>
                                 </div>
-                                <div class="p-2">
+                                <div class="my-auto">
+
+                                    <div>
+                                        <h5 class="text-primary">Welcome Back Employee!</h5>
+                                        <p class="text-muted">Sign in to continue to Feugo.</p>
+                                    </div>
+                                    {{-- @isset($url)
+                                            <form method="POST" action='{{ url('/'.$url) }}'
+                                    aria-label="{{ __('Login') }}">
+
+                                    @else --}}
+                                    <div class="mt-4">
                                     <form class="form-horizontal" method="POST" action="{{ route('employee.check') }}">
                                         @csrf
                                         <div class="mb-3">
@@ -96,57 +110,21 @@
                                                 In</button>
                                         </div>
 
-                                        {{-- <div class="mt-4 text-center">
-                                            <h5 class="font-size-14 mb-3">Sign in with</h5>
-
-                                            <ul class="list-inline">
-                                                <li class="list-inline-item">
-                                                    <a href="#"
-                                                        class="social-list-item bg-primary text-white border-primary">
-                                                        <i class="mdi mdi-facebook"></i>
-                                                    </a>
-                                                </li>
-                                                <li class="list-inline-item">
-                                                    <a href="#" class="social-list-item bg-info text-white border-info">
-                                                        <i class="mdi mdi-twitter"></i>
-                                                    </a>
-                                                </li>
-                                                <li class="list-inline-item">
-                                                    <a href="#" class="social-list-item bg-danger text-white border-danger">
-                                                        <i class="mdi mdi-google"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div> --}}
-
-                                        <div class="mt-4 text-center">
-                                            @if (Route::has('password.request'))
-                                                <a href="{{ route('password.request') }}" class="text-muted"><i
-                                                        class="mdi mdi-lock me-1"></i> Forgot your password?</a>
-                                            @endif
-
-                                        </div>
                                     </form>
-                                </div>
-
+                                    <div class="mt-5 text-center">
+                                        <p>Don't have an account ? <a href="{{ url('register') }}" class="fw-medium text-primary"> Signup now </a> </p>
+                                    </div>
                             </div>
                         </div>
-                        <div class="mt-5 text-center">
 
-                            <div>
-                                {{-- <p>Don't have an account ? <a href="{{ url('register') }}" class="fw-medium text-primary">
-                                        Signup now </a> </p> --}}
-                                <p>© <script>
-                                        document.write(new Date().getFullYear())
-
-                                    </script> maintained by<i class="mdi mdi-heart text-danger"></i> SS4U
-                                </p>
-                            </div>
-                        </div>
 
                     </div>
                 </div>
             </div>
+            <!-- end col -->
         </div>
-        <!-- end account-pages -->
+        <!-- end row -->
+    </div>
+    <!-- end container-fluid -->
+    </div>
     @endsection

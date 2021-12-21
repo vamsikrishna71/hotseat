@@ -20,29 +20,17 @@ Auth::routes();
 Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])
     ->name('root');
 
-
-// Route::get('login/employee', [App\Http\Controllers\EmployeeController::class, 'showEmployeeLoginForm']);
-
-// Route::post('/mywork', [App\Http\Controllers\EmployeeController::class, 'employeeLogin']);
-
-
-//Grouping routes
+    //Grouping routes
 Route::prefix('employee')->name('employee.')->group(function () {
     Route::middleware(['guest:employee'])->group(function () {
         Route::view('/login', 'employee.login')->name('login');
         Route::post('/check', [EmployeeController::class, 'employeeLogin'])->name('check');
     });
     Route::middleware(['auth:employee'])->group(function () {
-        Route::view('/create', 'employee.create')->name('create');
+        Route::view('/show', 'employee.show')->name('show');
         
     });
 });
-
-
-
-
-
-
 
 //Update User Details
 Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class, 'updateProfile'])
@@ -58,7 +46,6 @@ Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang'
 //Location Controllers
 Route::post('/addlocation', [App\Http\Controllers\LocationController::class, 'location'])->name('addlocation');
 
-
 Route::get('/editlocation/{location_id}', [App\Http\Controllers\LocationController::class, 'editLocation'])->name('location.edit');
 
 Route::post('/update-location/{location_id}', [App\Http\Controllers\LocationController::class, 'updateLocation'])
@@ -69,5 +56,15 @@ Route::delete(
     [App\Http\Controllers\LocationController::class, 'destroy']
 )->name('location.destroy');
 
-//Employee Controllers
+//Admin-Employee Controllers
 Route::post('/addEmployee', [App\Http\Controllers\EmployeeController::class, 'addEmployee'])->name('addEmployee');
+
+Route::get('/edit/{id}', [App\Http\Controllers\EmployeeController::class, 'editEmployee'])->name('employee.edit');
+
+Route::post('/update/{id}', [App\Http\Controllers\EmployeeController::class, 'updateEmployee'])
+    ->name('employee.update');
+
+Route::delete(
+    '/employee/{id}',
+    [App\Http\Controllers\EmployeeController::class, 'destroy']
+)->name('employee.destroy');

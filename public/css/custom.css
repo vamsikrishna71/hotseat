@@ -8,3 +8,11 @@ table tbody td {
     align-items: center;
     justify-content: space-evenly;
 }
+
+.delete-icon input[role=button] {
+    background: none;
+    border: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}

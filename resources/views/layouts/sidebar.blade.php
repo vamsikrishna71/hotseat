@@ -19,31 +19,32 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
                         <li>
-                            <a href="employee.create" key="t-level-2-2">Add Employee</a>
+                            <a href="employee.details" key="t-level-2-2">Overview</a>
                         </li>
                         <li>
-                            <a href="employee.details" key="t-level-2-2">Employees</a>
+                            <a href="employee.create" key="t-level-2-2">Add Employee</a>
                         </li>
+
                     </ul>
                 </li>
-                {{--  <li>
+                {{-- <li>
                     <a href="{{ url('mywork') }}" class="waves-effect">
                         <span key="t-dashboards">My Work</span>
                     </a>
-                </li>  --}}
+                </li> --}}
                 <!-- <li>
                     <a href="{{ url('bookseat') }}" class="waves-effect">
                         <span key="t-dashboards">Book Seat</span>
                     </a>
                 </li> -->
 
-                 {{-- <li>
+                {{-- <li>
                     <a href="ui-notifications" class="waves-effect">
                         <span key="t-layouts">Booking</span>
                     </a>
-                </li>  --}}
+                </li> --}}
 
-                {{--  <li>
+                {{-- <li>
                     <a href="javascript: void(0);" class="waves-effect">
                         <span key="t-dashboards">Team</span>
                     </a>
@@ -52,7 +53,7 @@
                     <a href="javascript: void(0);" class="waves-effect">
                         <span key="t-dashboards">calendar</span>
                     </a>
-                </li>  --}}
+                </li> --}}
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
@@ -66,10 +67,20 @@
                         <li>
                             <a href="{{ URL('addlocation') }}" key="t-level-2-2">Add Location</a>
                         </li>
-                        
+
                     </ul>
                 </li>
-
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <span key="t-multi-level">Desk</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="true">
+                        <li>
+                            <a href="{{ URL('floor') }}" key="t-level-2-1">
+                                All Desks</a>
+                        </li>
+                    </ul>
+                </li>
                 <li>
                     <a href="charts-apex" class="waves-effect">
                         <span key="t-file-manager">Reports</span>

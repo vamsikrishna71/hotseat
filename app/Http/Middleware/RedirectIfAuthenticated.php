@@ -26,7 +26,7 @@ class RedirectIfAuthenticated
             if (Auth::guard($guard)->check()) {
                 
                 if ($guard === 'employee') {
-                    return redirect()->route('employee.create');
+                    return redirect()->route('employee.show');
                 }
                 return redirect(RouteServiceProvider::HOME);
             }

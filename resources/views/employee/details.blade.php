@@ -55,25 +55,27 @@
                             </tr>
                         </x-slot>
 
-                        @forelse ($employees as $centre)
+                        @forelse ($employees as $employee)
                             <tr class="font-bold" id="tr_{{ Auth::user()->id }}">
                                 <x-table-column>{{ $loop->iteration }}</x-table-column>
-                                <x-table-column>{{ $centre->username }}</x-table-column>
-                                <x-table-column>{{ $centre->last_name }}</x-table-column>
-                                <x-table-column>{{ $centre->designation }}</x-table-column>
-                                <x-table-column>{{ $centre->department }}</x-table-column>
+                                <x-table-column>{{ $employee->username }}</x-table-column>
+                                <x-table-column>{{ $employee->last_name }}</x-table-column>
+                                <x-table-column>{{ $employee->designation }}</x-table-column>
+                                <x-table-column>{{ $employee->department }}</x-table-column>
                                 <x-table-column>
                                     <div class="table-action">
-                                    <a href="employee.edit" class="text-dark fs-3">
+                                    <a href="{{ route('employee.edit', ['id' => $employee->id]) }}" class="text-dark fs-3">
                                             <i class="fas fa-edit"></i>
                                     </a>
                                     
-                                        <form class="d-inline" action="#"
+                                        <form class="d-inline delete-icon position-relative" action="{{ route(
+                                            'employee.destroy',['id' => $employee->id]) }}"
                                             method="post">
                                             @csrf
                                             @method('DELETE')
                                             
-                                            <input type="submit" id="showtoast" class="btn btn-danger"value="Delete">
+                                            <input type="submit" role="button" aria-label="delete employee" value="">
+                                            <i class="fas fa-trash text-danger fs-3"></i>
                                         </form>
                                     </div>
                                 </x-table-column>
@@ -83,7 +85,6 @@
                                     No records Found!
                             </div>
                         @endforelse
-
                     </x-table>
                 </div>
             </div>

@@ -20,8 +20,39 @@
             </div>
         </div>
         <div class="col-12">
-            <button class="btn btn-success btn-lg" type="button">Create Floor</button>
+            <button class="btn btn-success btn-lg" type="button" data-bs-toggle="modal" data-bs-target="#createFloor">Create
+                Floor</button>
             <button class="btn btn-primary btn-lg" type="button">Import CSV</button>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="createFloor" tabindex="-1" aria-labelledby="createFloor" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Create New Floor</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="floorName" class="form-label">Floor Name <span style="color:red">*</span></label>
+                        <input type="text" class="form-control @error('email') is-invalid @enderror" id="floorName"
+                            value="Floor 4" name="email" placeholder="Enter email" autofocus>
+                    </div>
+                    <div class="mb-3">
+                        <label for="floorMap" class="form-label">Floor Map <span style="color:red">*</span></label>
+                        <div class="input-group">
+                            <input type="file" class="form-control @error('logo') is-invalid @enderror" id="floorMap"
+                                name="logo" autofocus required>
+                            <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-bs-dismiss="modal" class="btn btn-danger">Cancel</button>
+                    <button type="button" class="btn btn-success">Create</button>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

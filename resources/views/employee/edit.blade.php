@@ -5,6 +5,7 @@
     type="text/css" />
 <link href="{{ URL::asset('/assets/css/app.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('/css/cutom.css') }}" id="custom-style" rel="stylesheet" type="text/css" />
 @section('content')
 
     @component('components.breadcrumb')
@@ -78,19 +79,7 @@
                                     </div>
                                 </div>
                             </div> --}}
-                            {{--  <div class="col-md-4">
-                                <div class="mb-3">
-                                    <label for="validationCustom01" class="form-label">Password</label>
-                                    <input type="text" class="form-control" id="validationCustom01" name="password"
-                                        placeholder="Password" value="{{ $employee->password }}" required>
-                                    <div class="valid-feedback">
-                                        Looks good!
-                                    </div>
-                                    <div class="invalid-feedback">
-                                        Please provide a password.
-                                    </div>
-                                </div>
-                            </div>  --}}
+                           
                             <div class="col-md-4">
                                 <div class="mb-3">
                                     <label for="validationCustom02" class="form-label">Designation</label>

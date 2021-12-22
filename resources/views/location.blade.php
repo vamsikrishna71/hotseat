@@ -4,7 +4,6 @@
     <!-- DataTables -->
     <link href="{{ URL::asset('/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('/assets/libs/toastr/toastr.min.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('css/custom.css') }}" type="text/css" />
 @endsection
 
 @section('title') Location @endsection
@@ -92,7 +91,8 @@
                                             <i class="fas fa-edit"></i>
                                     </a>
                                     
-                                        <form class="d-inline delete-icon position-relative" action="{{ route(
+                                        <form class="d-inline delete-icon
+                                        position-relative" action="{{ route(
                                             'location.destroy',['location_id' => $centre->id]) }}"
                                             method="post">
                                             @csrf

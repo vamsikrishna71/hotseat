@@ -79,6 +79,10 @@
                             <a href="{{ URL('floor') }}" key="t-level-2-1">
                                 All Desks</a>
                         </li>
+                        <li>
+                            <a href="{{ URL('maps') }}" key="t-level-2-1">
+                                Maps</a>
+                        </li>
                     </ul>
                 </li>
                 <li>

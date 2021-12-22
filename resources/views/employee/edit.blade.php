@@ -78,7 +78,7 @@
                                     </div>
                                 </div>
                             </div> --}}
-                            <div class="col-md-4">
+                            {{--  <div class="col-md-4">
                                 <div class="mb-3">
                                     <label for="validationCustom01" class="form-label">Password</label>
                                     <input type="text" class="form-control" id="validationCustom01" name="password"
@@ -90,7 +90,7 @@
                                         Please provide a password.
                                     </div>
                                 </div>
-                            </div>
+                            </div>  --}}
                             <div class="col-md-4">
                                 <div class="mb-3">
                                     <label for="validationCustom02" class="form-label">Designation</label>

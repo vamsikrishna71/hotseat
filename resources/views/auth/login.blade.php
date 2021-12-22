@@ -83,8 +83,8 @@
                                             @enderror
                                     </div> --}}
                                     <div class="mb-3">
-                                        <label for="username" class="form-label">ID<span style="color:red">*</span></label>
-                                        <input type="text" class="form-control @error('username') is-invalid @enderror" id="username" value="{{ old('username') }}" name="username" placeholder="Enter ID" autofo cus required>
+                                        <label for="username" class="form-label">Company ID<span style="color:red">*</span></label>
+                                        <input type="text" class="form-control @error('username') is-invalid @enderror" id="username" value="{{ old('username') }}" name="username" placeholder="Enter Company ID" autofo cus required>
                                         @error('username')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>

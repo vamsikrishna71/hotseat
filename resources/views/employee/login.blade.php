@@ -67,7 +67,7 @@
                                     <form class="form-horizontal" method="POST" action="{{ route('employee.check') }}">
                                         @csrf
                                         <div class="mb-3">
-                                            <label for="username" class="form-label">Employee ID</label>
+                                            <label for="username" class="form-label">Employee ID<span style="color:red">*</span></label>
                                             <input type="text"
                                                 class="form-control @error('username') is-invalid @enderror"
                                                 value="{{ old('username') }}" id="username" name="username"
@@ -80,7 +80,7 @@
                                         </div>
 
                                         <div class="mb-3">
-                                            <label class="form-label">Password</label>
+                                            <label class="form-label">Password<span style="color:red">*</span></label>
                                             <div
                                                 class="input-group auth-pass-inputgroup @error('password') is-invalid @enderror">
                                                 <input type="password" name="password"

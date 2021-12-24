@@ -1,47 +1,86 @@
 @extends('layouts.master')
 
-@section('title') Add Desk @endsection
+@section('title') @lang('translation.Leaflet_Maps') @endsection
 
 @section('css')
-    <link href="{{ URL::asset('/assets/css/bootstrap.min.css') }}" id="bootstrap-style" rel="stylesheet"
-        type="text/css" />
-    <link href="{{ URL::asset('/assets/css/app.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
-    <link href="{{ URL::asset('/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
-    <!-- plugin css -->
-    <link href="{{ URL::asset('/assets/libs/jquery-vectormap/jquery-vectormap.min.css') }}" rel="stylesheet"
-        type="text/css" />
+    <!-- leaflet Css -->
+    <link href="{{ URL::asset('/assets/libs/leaflet/leaflet.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
-
 
 @section('content')
 
     @component('components.breadcrumb')
-        @slot('li_1') Desks @endslot
-        @slot('title') Maps @endslot
+        @slot('li_1') Maps @endslot
+        @slot('title') Leaflet Maps @endslot
     @endcomponent
-    <div class="row mb-4">
-        <div class="col-12">
-            <span class="text-dark">Desks / All Desks / Maps</span>
-        </div>
-    </div>
+
     <div class="row">
-        <div class="col-12">
+        <div class="col-lg-6">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">World Vector Map</h4>
-                    <p class="card-title-dsec">Example of world vector maps.</p>
-                    <div id="world-map-markers" style="height: 420px"></div>
-                </div> <!-- end card-body-->
-            </div> <!-- end card-->
-        </div> <!-- end col-->
+                    <h4 class="card-title mb-4">Example</h4>
+                    <div id="leaflet-map" class="leaflet-map">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Markers, circles and polygons</h4>
+                    <div id="leaflet-map-marker" class="leaflet-map"></div>
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- end row-->
+    <!-- end row -->
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Working with popups</h4>
+                    <div id="leaflet-map-popup" class="leaflet-map"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Markers with Custom Icons</h4>
+                    <div id="leaflet-map-custom-icons" class="leaflet-map"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Interactive Choropleth Map</h4>
+                    <div id="leaflet-map-interactive-map" class="leaflet-map"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Layer Groups and Layers Control</h4>
+                    <div id="leaflet-map-group-control" class="leaflet-map"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
 
 @endsection
 @section('script')
-    <!-- Plugins js-->
-    <script src="{{ URL::asset('/assets/libs/jquery-vectormap/jquery-vectormap.min.js') }}"></script>
+    <!-- leaflet plugin -->
+    <script src="{{ URL::asset('/assets/libs/leaflet/leaflet.min.js') }}"></script>
 
-    <!-- Init js-->
-    <script src="{{ URL::asset('/assets/js/pages/vector-maps.init.js') }}"></script>
+    <!-- leaflet map.init -->
+    <script src="{{ URL::asset('/assets/js/pages/leaflet-us-states.js') }}"></script>
+    <script src="{{ URL::asset('/assets/js/pages/leaflet-map.init.js') }}"></script>
 @endsection

@@ -22,7 +22,7 @@ class EmployeeController extends Controller
   {
     $request->validate(
       [
-        'username'    => ['required', 'string', 'max:255'],
+        'username'    => ['required','alpha_num', 'string', 'max:255'],
         'firstName'   => ['required', 'string', 'max:100'],
         'lastName'    => ['required', 'string', 'max:100'],
         'department'  => ['required', 'string', 'max:100'],

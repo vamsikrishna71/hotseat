@@ -64,4 +64,13 @@ class User extends Authenticatable
     public function employee(){
         return $this->hasMany(Employee::class);
     }
+        
+    /**
+     * desk
+     *
+     * @return void
+     */
+    public function desk(){
+        return $this->hasMany(Desk::class);
+    }
 }

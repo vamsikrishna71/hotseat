@@ -20,7 +20,7 @@ Auth::routes();
 Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])
     ->name('root');
 
-    //Grouping routes
+//Grouping routes
 Route::prefix('employee')->name('employee.')->group(function () {
     Route::middleware(['guest:employee'])->group(function () {
         Route::view('/login', 'employee.login')->name('login');
@@ -28,7 +28,6 @@ Route::prefix('employee')->name('employee.')->group(function () {
     });
     Route::middleware(['auth:employee'])->group(function () {
         Route::view('/show', 'employee.show')->name('show');
-        
     });
 });
 
@@ -68,3 +67,6 @@ Route::delete(
     '/employee/{id}',
     [App\Http\Controllers\EmployeeController::class, 'destroy']
 )->name('employee.destroy');
+
+//Desk controller
+Route::post('/desk', [App\Http\Controllers\DeskController::class, 'createFloor'])->name('createFloor');

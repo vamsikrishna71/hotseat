@@ -11,6 +11,7 @@
         @slot('li_1') Desk Reservation System @endslot
         @slot('title') Dashbaord @endslot
     @endcomponent
+    
     <div class="row">
         <div class="col-12 col-md-8">
             <div class="alert alert-success" role="alert">
@@ -22,7 +23,7 @@
         <div class="col-12">
             <button class="btn btn-success btn-lg" type="button" data-bs-toggle="modal" data-bs-target="#createFloor">Create
                 Floor</button>
-            <button class="btn btn-primary btn-lg" type="button">Import CSV</button>
+            <a href="drop-zone" class="btn btn-primary btn-lg" type="button">Import CSV</a>
         </div>
     </div>
     <!-- Modal -->
@@ -33,25 +34,28 @@
                     <h5 class="modal-title" id="exampleModalLabel">Create New Floor</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <form action="{{ route('createFloor') }}" method="post" enctype="multipart/form-data">
+                    @csrf
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="floorName" class="form-label">Floor Name <span style="color:red">*</span></label>
                         <input type="text" class="form-control @error('email') is-invalid @enderror" id="floorName"
-                            value="Floor 4" name="email" placeholder="Enter email" autofocus>
+                            value="Floor 4" name="floorName" autofocus>
                     </div>
                     <div class="mb-3">
                         <label for="floorMap" class="form-label">Floor Map <span style="color:red">*</span></label>
                         <div class="input-group">
-                            <input type="file" class="form-control @error('logo') is-invalid @enderror" id="floorMap"
-                                name="logo" autofocus required>
+                            <input type="file" class="form-control @error('floorMap') is-invalid @enderror" id="floorMap"
+                                name="floorMap" autofocus required>
                             <label class="input-group-text" for="inputGroupFile02">Upload</label>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" data-bs-dismiss="modal" class="btn btn-danger">Cancel</button>
-                    <button type="button" class="btn btn-success">Create</button>
+                    <button type="submit" class="btn btn-success">Create</button>
                 </div>
+                </form>
             </div>
         </div>
     </div>

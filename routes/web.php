@@ -70,3 +70,6 @@ Route::delete(
 
 //Desk controller
 Route::post('/desk', [App\Http\Controllers\DeskController::class, 'createFloor'])->name('createFloor');
+
+Route::get('/edit/{id}', [App\Http\Controllers\DeskController::class, 'editFloor'])->name('floor.edit');
+

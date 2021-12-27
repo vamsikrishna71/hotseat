@@ -61,10 +61,11 @@ class HomeController extends Controller
     {
         $locations = User::find(Auth::user()->id)->location;
         $employees = User::find(Auth::user()->id)->employee;
+        $floors = User::find(Auth::user()->id)->desk;
         if (view()->exists($request->path())) {
             return view(
                 $request->path(),
-                compact('locations','employees')
+                compact('locations', 'employees','floors')
             );
         }
         return abort(404);
@@ -98,7 +99,7 @@ class HomeController extends Controller
             return redirect()->back();
         }
     }
-    
+
     /**
      * Update profile data in database.
      *
@@ -230,5 +231,5 @@ class HomeController extends Controller
                 ); // Status code here
             }
         }
-    }    
+    }
 }

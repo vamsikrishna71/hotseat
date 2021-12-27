@@ -12,7 +12,6 @@ class DeskController extends Controller
     public function createFloor(Request $request)
     {
         // return $request->input();
-
         $request->validate([
             'floorName' => 'required',
             'floorMap'  => 'image|mimes:jpg,jpeg,png|max:2048',
@@ -30,8 +29,21 @@ class DeskController extends Controller
             'floor_name' => $request->floorName,
             'floor_map'  => $request->floorMap,
         ]);
-        return redirect('maps')
-        ->with('success', 'Floor Added Successfully');
+        return redirect('floor', )
+            ->with('success', 'Floor Added Successfully');
+    }
+    
+        
+    /**
+     * Edit Floor Details.
+     *
+     * @param  mixed $id
+     * @return void
+     */
+    public function editFloor($id)
+    {
+        $floor = Desk::findOrFail($id);
+        return view('maps', compact('floor'));
     }
 
     public function createDesk(Request $request)

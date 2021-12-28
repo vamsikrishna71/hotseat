@@ -38,16 +38,16 @@
                 <div class="card-body">
                     <h4 class="card-title mb-4">Floor Map</h4>
                     {{-- {{ dd($floor->floor_map) }} --}}
-                    <div id="leaflet-map" class="leaflet-map">
+                        <div id="leaflet-map" class="leaflet-map">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
     <!-- end row -->
     @php
-    $mapTileImage = $floor->floor_map;
+    $mapTileImage = $floor['floor_map'];
     @endphp
 @endsection
 
@@ -60,45 +60,22 @@
     <script>
         /******/
         $(function() {
+            // var mapTileImage = <?php echo $floor->floor_map; ?>
             // webpackBootstrap
             var __webpack_exports__ = {};
             /*!************************************************!*\
               !*** ./resources/js/pages/leaflet-map.init.js ***!
               \************************************************/
-            var myMap = L.map("leaflet-map").setView([-41.2858, 174.78682], 1);
-            var imgUrl = <?php echo json_encode($mapTileImage); ?>
-
+            var mymap = L.map("leaflet-map").setView([-41.2858, 174.78682], 13);
+            var imgUrl = <?php echo json_encode($mapTileImage); ?>;
             L.tileLayer(imgUrl, {
-                    maxZoom: 10,
-                    attribution: "mapbox/streets-v11",
-                    tileSize: 512,
-                    zoomOffset: -1,
-                }).addTo(myMap), L.marker([51.5, -.09], {
-                    draggable: true,
-                    riseOnHover: true
-                }).addTo(myMap).bindPopup(
-                    '<b>Desk Available</b>!</b><br />Here We go!.').openPopup();
-
-            function onMapClick(e) {
-                marker = new L.marker(e.latlng, {
-                    draggable: 'true'
-                }).bindPopup(
-                    '<b>Desk Available</b>!</b><br />Here We go!.').openPopup();
-
-                marker.on('dragend', function(event) {
-                    var marker = event.target;
-                    var position = marker.getLatLng();
-                    marker.setLatLng(new L.LatLng(position.lat, position.lng), {
-                        draggable: 'true'
-                    });
-                    myMap.panTo(new L.LatLng(position.lat, position.lng))
-                });
-
-                myMap.addLayer(marker);
-            };
-            myMap.on('click', onMapClick);
+                maxZoom: 10,
+                attribution: "mapbox/streets-v11",
+                tileSize: 512,
+                zoomOffset: -1,
+            }).addTo(mymap);
             /******/
         });
     </script>
-    // {{-- <script src="{{ URL::asset('/assets/js/pages/leaflet-map.init.js') }}"></script> --}}
+    {{-- <script src="{{ URL::asset('/assets/js/pages/leaflet-map.init.js') }}"></script> --}}
 @endsection

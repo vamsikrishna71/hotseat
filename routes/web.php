@@ -73,3 +73,5 @@ Route::post('/desk', [App\Http\Controllers\DeskController::class, 'createFloor']
 
 Route::get('/edit/{id}', [App\Http\Controllers\DeskController::class, 'editFloor'])->name('floor.edit');
 
+// Route::get('/show/{id}', [App\Http\Controllers\DeskController::class,'show'])
+// ->name('showMap');

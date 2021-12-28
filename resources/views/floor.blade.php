@@ -53,7 +53,7 @@
                         <div class="mb-3">
                             <label for="floorName" class="form-label">Floor Name <span
                                     style="color:red">*</span></label>
-                            <input type="text" class="form-control @error('email') is-invalid @enderror" id="floorName"
+                            <input type="text" class="form-control @error('floorName') is-invalid @enderror" id="floorName"
                                 value="Floor 4" name="floorName" autofocus>
                         </div>
                         <div class="mb-3">

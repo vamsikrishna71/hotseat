@@ -21,3 +21,11 @@ table tbody td {
     width: 100%;
     max-width: 100px;
 }
+
+
+/* #leaflet-map {
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    height: 100%;
+    } */

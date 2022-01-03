@@ -66,7 +66,6 @@
                                     <a href="{{ route('employee.edit', ['id' => $employee->id]) }}" class="text-dark fs-3">
                                             <i class="fas fa-edit"></i>
                                     </a>
-                                    
                                         <form class="d-inline delete-icon position-relative" action="{{ route(
                                             'employee.destroy',['id' => $employee->id]) }}"
                                             method="post">

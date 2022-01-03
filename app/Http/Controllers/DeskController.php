@@ -33,15 +33,7 @@ class DeskController extends Controller
             ->with('success', 'Floor Added Successfully');
     }
         
-    /**
-     * Show the dynamic map for the specified
-     *
-     * @param  mixed $id
-     * @return void
-     */
-    // public function show($id){
-    //     return view('showMap', ['floor' => Desk::findOrFail($id)]);
-    // }
+    
         
     /**
      * Edit Floor Details.

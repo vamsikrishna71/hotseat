@@ -58,7 +58,7 @@ Route::delete(
 //Admin-Employee Controllers
 Route::post('/addEmployee', [App\Http\Controllers\EmployeeController::class, 'addEmployee'])->name('addEmployee');
 
-Route::get('/edit/{id}', [App\Http\Controllers\EmployeeController::class, 'editEmployee'])->name('employee.edit');
+Route::get('/editEmployee/{id}', [App\Http\Controllers\EmployeeController::class, 'editEmployee'])->name('employee.edit');
 
 Route::post('/update/{id}', [App\Http\Controllers\EmployeeController::class, 'updateEmployee'])
     ->name('employee.update');
@@ -71,7 +71,7 @@ Route::delete(
 //Desk controller
 Route::post('/desk', [App\Http\Controllers\DeskController::class, 'createFloor'])->name('createFloor');
 
-Route::get('/edit/{id}', [App\Http\Controllers\DeskController::class, 'editFloor'])->name('floor.edit');
+Route::get('/editFloor/{id}', [App\Http\Controllers\DeskController::class, 'editFloor'])->name('floor.edit');
 
 // Route::get('/show/{id}', [App\Http\Controllers\DeskController::class,'show'])
 // ->name('showMap');

@@ -81,7 +81,14 @@ class EmployeeController extends Controller
     $employee = Employee::findOrFail($id);
     return view('employee.edit', compact('employee'));
   }
-
+  
+  /**
+   * UpdateEmployee in the database.
+   *
+   * @param  mixed $request
+   * @param  mixed $id
+   * @return void
+   */
   public function updateEmployee(Request $request, $id)
   {
     // dd($request->input());
@@ -102,7 +109,6 @@ class EmployeeController extends Controller
       'username'    => $request->get('username'),
       'first_name'  => $request->get('firstName'),
       'last_name'   => $request->get('lastName'),
-      // 'password'    => Hash::make($request->get('password')),
       'department'  => $request->get('department'),
       'designation' => $request->get('designation'),
     ]);

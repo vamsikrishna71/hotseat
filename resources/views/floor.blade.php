@@ -8,6 +8,7 @@
 <!-- DataTables -->
 <link href="{{ URL::asset('/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="{{ URL::asset('/assets/libs/toastr/toastr.min.css') }}">
+<link href="{{ URL::asset('/css/custom.css') }}" id="custom-style" rel="stylesheet" type="text/css" />
 @section('content')
 
     @component('components.breadcrumb')
@@ -114,11 +115,11 @@
                                 <x-table-column>
                                     <div class="table-action">
                                         <a href="{{ route('floor.edit', ['id' => $floor->id]) }}" class="text-dark fs-3">
-                                            <i class="fas fa-edit"></i>
+                                            <i class="fas fa-eye"></i>
                                         </a>
                                         <form
                                             class="d-inline delete-icon
-                                        position-relative"
+                                            position-relative mb-0"
                                             action="" method="post">
                                             @csrf
                                             @method('DELETE')

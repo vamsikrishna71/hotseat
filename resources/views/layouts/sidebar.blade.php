@@ -9,7 +9,7 @@
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li class="menu-title" key="t-menu">@lang('translation.Menu')</li>
                 <li>
-                    <a href="index" class="waves-effect">
+                    <a href="{{ route('root') }}" class="waves-effect">
                         <span key="t-file-manager">Admin dashboard</span>
                     </a>
                 </li>

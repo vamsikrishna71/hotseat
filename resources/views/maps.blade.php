@@ -19,7 +19,7 @@
 
     @component('components.breadcrumb')
         @slot('li_1') Maps @endslot
-        @slot('title') Leaflet Maps @endslot
+        @slot('title') Floor Name @endslot
     @endcomponent
     @if (Session::get('success'))
         <div class="alert alert-success" role="alert">
@@ -33,10 +33,18 @@
         </div>
     @endif
     <div class="row">
+        <div class="col-12">
+            <div class="mb-3 floor-map-date">
+                <input class="form-control" type="date" value="0000-00-00" id="example-date-input">
+            </div>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <label for="floor">Floor Name</label>
+                    <label for="floor">Floor name</label>
+
                     <h4 class="card-title mb-4">{{ $floor->floor_name }}</h4>
                     {{-- {{ dd($floor->floor_map) }} --}}
                     <div id="leaflet-map" class="leaflet-map">
@@ -67,6 +75,14 @@
               !*** ./resources/js/pages/leaflet-map.init.js ***!
               \************************************************/
             var myMap = L.map("leaflet-map").setView([-41.2858, 174.78682], 1);
+            var markerId = 0;
+            var myIcon = L.icon({
+                iconUrl: '/images/circle-icon-16068.png',
+                iconSize: [30],
+            });
+
+
+            //For local
             var imgUrl = <?php echo json_encode($mapTileImage); ?>
 
             L.tileLayer(imgUrl, {
@@ -76,63 +92,90 @@
                 zoomOffset: -1,
             }).addTo(myMap), L.marker([51.5, -.09], {
                 draggable: true,
+                icon: myIcon
             }).addTo(myMap).bindPopup(
                 '<b>Desk Available</b>!</b><br />Here We go!.').openPopup();
 
+            // Form Data 
+
             function onMapClick(e) {
                 marker = new L.marker(e.latlng, {
-                    draggable: 'true'
+                    draggable: true,
+                    icon: myIcon,
                 }).bindPopup(
-                    "<div class='row'>\
-                    <form>\
-                    <div class='col-lg-12'>\
-                        <div class='mb-2'>\</br>\
-                            <label for='deskName' class='form-label'>Desk Name<span style='color:red'>*</span></label>\</br>\
-                            <input type='text' class='form-control @error('deskName') is-invalid @enderror' id='deskName' value='Desk1' name='deskName' autofocus>\</br>\
-                        </div>\
-                    </div>\
-                    <div class='modal-footer'>\
-                        <button type='submit' class='btn btn-success'>Create</button>\
-                    </div>\
-                </form>\
-            </div>").openPopup();
+                    "<form action='javascript:void(0)' id='deskAssign' name='deskAssign'>\
+                                <div class='row'>\
+                                    <div class='col-12'>\
+                                    <div class='mb-3'>\
+                                    <label for='deskName'class='form-label'>Desk Name<span style='color:red'>*</span></label>\
+                                    <input type='text' class='form-control @error('deskName') is-invalid @enderror' id='deskName' value='Desk1' name='deskName' autofocus>\
+                                    </div>\
+                                    <div class='mb-3'>\
+                                    <label for='zoneName' class='form-label'>Zone Name<span style='color:red'>*</span></label>\
+                                    <input type='text' class='form-control @error('zoneName') is-invalid @enderror' id='zoneName' value='zoneName' name='zoneName' autofocus>\
+                                    </div>\
+                                    <div class='mb-3'>\
+                                    <label for='employeeName' class='form-label'>Employee Name<span style='color:red'>*</span></label>\
+                                    <input type='text' class='form-control @error('employeeName') is-invalid @enderror' id='employeeName' value='Employee' name='employeeName' autofocus>\
+                                    </div>\
+                                    <div class='d-flex align-items-center justify-content-around'>\
+                                        <a href='#' type='button' class='btn btn-sm\
+                                        btn-success text-light waves-effect fw-semibold'>SAVE</a>\
+                                        <a href='#' type='button' class='btn btn-sm btn-danger text-light waves-effect fw-semibold'>CANCEL</a>\
+                                    </div>\
+                                    </div>\
+                                    </div>\
+                                    </form>").openPopup();
 
-                marker.on('dragend', function(event) {
-                    var marker = event.target;
-                    var position = marker.getLatLng();
-                    marker.setLatLng(new L.LatLng(position.lat, position.lng), {
-                        draggable: 'true'
-                    });
-                    myMap.panTo(new L.LatLng(position.lat, position.lng))
-                });
+                // if ($('#deskAssign').length > 0) {
+                //     $('#deskAssign').validate({
+                //         rules: {
+                //             deskName: {
+                //                 required: true,
+                //                 maxlength: 50
+                //             },
+                //             employeeName: {
+                //                 required: true,
+                //                 maxlength: 50,
+                //             },
+                //         },
+                //         messages: {
+                //             deskName: {
+                //                 required: 'Please enter name',
+                //                 maxlength: 'Your name maxlength should be 50 characters long.'
+                //             },
+                //             employeeName: {
+                //                 required: 'Please enter valid employee',
+                //                 maxlength: 'The employee name should less than or equal to 50 characters',
+                //             },
+                //         },
+                //         // submitHandler: function(form) {
+                //         //     $.ajaxSetup({
+                //         //         headers: {
+                //         //             'X-CSRF-TOKEN': $('meta[name='
+                //         //                 csrf - token ']').attr('content')
+                //         //         }
+                //         //     });
+                //         //     $('#submit').html('Please Wait...');
+                //         //     $('#submit').attr('disabled', true);
+
+                //         //     $.ajax({
+                //         //         url: '{{ url('deskAssign') }}',
+                //         //         type: 'POST',
+                //         //         data: $('#deskAssign').serialize(),
+                //         //         success: function(response) {
+                //         //             $('#submit').html('Submit');
+                //         //             $('#submit').attr('disabled', false);
+                //         //             alert('Desk Assigned successfully');
+                //         //             document.getElementById('deskAssign').reset();
+                //         //         }
+                //         //     });
+                //         // }
+                //     })
+                // }
                 myMap.addLayer(marker);
             };
             myMap.on('click', onMapClick);
-            /******/
-            // Add a new repeating section
-            $('.addDesk').click(function() {
-                var currentCount = $('.repeatingSection').length;
-                var newCount = currentCount + 1;
-                var deskId = $('#deskName').length;
-                var lastRepeatingGroup = $('.repeatingSection').last();
-                var newSection = lastRepeatingGroup.clone();
-                newSection.insertAfter(lastRepeatingGroup);
-                newSection.find("input").each(function(index, input) {
-                    input.id = input.id.replace("_" + currentCount, "_" + newCount);
-                    input.name = input.name.replace("_" + currentCount, "_" + newCount);
-                });
-                newSection.find("label").each(function(index, label) {
-                    var l = $(label);
-                    l.attr('for', l.attr('for').replace("_" + currentCount, "_" + newCount));
-                });
-                return false;
-            });
-
-            // Delete a repeating section
-            $(document).on('click', '.deleteDesk', function() {
-                $(this).parent('div').remove();
-                return false;
-            });
         });
     </script>
     // {{-- <script src="{{ URL::asset('/assets/js/pages/leaflet-map.init.js') }}"></script> --}}

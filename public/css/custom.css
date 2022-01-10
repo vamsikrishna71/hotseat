@@ -22,6 +22,29 @@ table tbody td {
     max-width: 100px;
 }
 
+.leaflet-map {
+    height: 470px;
+}
+
+.leaflet-popup-content {
+    min-width: 200px;
+}
+
+.leaflet-popup-content .form-label,
+.leaflet-popup-content .form-control {
+    font-size: 14px;
+}
+
+.leaflet-container a.leaflet-popup-close-button {
+    top: 5px;
+    right: 5px;
+}
+
+.floor-map-date {
+    margin: 0 auto;
+    max-width: 200px;
+}
+
 
 /* #leaflet-map {
     position: absolute;

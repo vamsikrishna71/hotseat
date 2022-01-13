@@ -73,6 +73,8 @@ Route::post('/desk', [App\Http\Controllers\DeskController::class, 'createFloor']
 
 Route::get('/editFloor/{id}', [App\Http\Controllers\DeskController::class, 'editFloor'])->name('floor.edit');
 
+Route::delete('/floor/{id}',[App\Http\Controllers\DeskController::class, 'destroy'])->name('floor.destroy');
+
 //DeskAssignController
 
 Route::post('/deskAssign', [App\Http\Controllers\DeskAssignController::class,'deskAssign'])->name('deskAssign');

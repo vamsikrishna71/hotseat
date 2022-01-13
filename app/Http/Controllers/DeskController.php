@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Desk;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class DeskController extends Controller
 {
@@ -50,5 +52,31 @@ class DeskController extends Controller
     public function createDesk(Request $request)
     {
         return $request->input();
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param mixed Deleting the location.
+     *
+     * @var $data
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        // dd($id, 'delete');die;
+        try {
+            DB::beginTransaction();
+            $floor = Desk::findOrFail($id);
+            $floor->delete();
+        } catch (\Exception $e) {
+            dd($e);
+        }
+        DB::commit();
+        Session::flash('message', 'Floor Delete Successfully');
+        Session::flash('alert-class', 'alert-danger');
+        return redirect('floor')->with('success', 
+        'Floor Delete Successfully');
     }
 }

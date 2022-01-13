@@ -120,7 +120,7 @@
                                         <form
                                             class="d-inline delete-icon
                                             position-relative mb-0"
-                                            action="" method="post">
+                                            action="{{ route('floor.destroy', ['id' => $floor->id]) }}" method="post">
                                             @csrf
                                             @method('DELETE')
 

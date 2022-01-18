@@ -12,7 +12,7 @@
                     </span>
                 </a>
 
-                <a href="index" class="logo logo-light">
+                <a href="{{ route('root') }}" class="logo logo-light">
                     <span class="logo-sm">
                         FUEGO
                     </span>

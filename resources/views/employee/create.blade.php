@@ -28,8 +28,10 @@
                                     <div class="valid-feedback">
                                         Looks good!
                                     </div>
+                                    <span class="text-danger">@error('username')
+                                        {{ $message }} @enderror</span>
                                     <div class="invalid-feedback">
-                                        Please provide a Employee ID.
+                                        Please enter the valid Employee ID.
                                     </div>
                                 </div>
                             </div>
@@ -43,8 +45,10 @@
                                     <div class="valid-feedback">
                                         Looks good!
                                     </div>
+                                    <span class="text-danger">@error('firstName')
+                                        {{ $message }} @enderror</span>
                                     <div class="invalid-feedback">
-                                        Please provide a First Name.
+                                        Please enter the valid Firstname.
                                     </div>
                                 </div>
                             </div>
@@ -56,8 +60,10 @@
                                     <div class="valid-feedback">
                                         Looks good!
                                     </div>
+                                    <span class="text-danger">@error('lastName')
+                                        {{ $message }} @enderror</span>
                                     <div class="invalid-feedback">
-                                        Please provide a Last name.
+                                        Please enter the valid Last name.
                                     </div>
                                 </div>
                             </div>
@@ -83,8 +89,10 @@
                                     <div class="valid-feedback">
                                         Looks good!
                                     </div>
+                                    <span class="text-danger">@error('password')
+                                        {{ $message }} @enderror</span>
                                     <div class="invalid-feedback">
-                                        Please provide a password.
+                                        Please enter the valid password.
                                     </div>
                                 </div>
                             </div>
@@ -96,8 +104,10 @@
                                     <div class="valid-feedback">
                                         Looks good!
                                     </div>
+                                    <span class="text-danger">@error('designation')
+                                        {{ $message }} @enderror</span>
                                     <div class="invalid-feedback">
-                                        Please provide a designation.
+                                        Please enter the valid designation.
                                     </div>
                                 </div>
                             </div>
@@ -107,11 +117,13 @@
                                     <label for="validationCustom04" class="form-label">Department</label>
                                     <input type="text" class="form-control" id="validationCustom04" name="department" placeholder="CSE"
                                         required>
-                                        <div class="valid-feedback">
+                                       <div class="valid-feedback">
                                         Looks good!
                                     </div>
+                                    <span class="text-danger">@error('department')
+                                        {{ $message }} @enderror</span>
                                     <div class="invalid-feedback">
-                                        Please provide a Department.
+                                        Please enter the valid department.
                                     </div>
                                 </div>
                             </div>

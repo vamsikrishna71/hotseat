@@ -23,11 +23,11 @@ class EmployeeController extends Controller
     $request->validate(
       [
         'username'    => ['required','alpha_num', 'string', 'max:255'],
-        'firstName'   => ['required', 'string', 'max:100'],
-        'lastName'    => ['required', 'string', 'max:100'],
-        'department'  => ['required', 'string', 'max:100'],
-        'password'    => ['required', 'string', 'max:30'],
-        'designation' => ['required', 'string', 'max:100'],
+        'firstName'   => ['required', 'string', 'max:100', 'regex:/(^([a-zA-Z]+)(\d+)?$)/u'],
+        'lastName'    => ['required', 'string', 'max:100', 'regex:/(^([a-zA-Z]+)(\d+)?$)/u'],
+        'department'  => ['required', 'string', 'max:100', 'regex:/(^([a-zA-Z]+)(\d+)?$)/u'],
+        'password'    => ['required', 'string', 'max:30', 'regex:/(^([a-zA-Z]+)(\d+)?$)/u'],
+        'designation' => ['required', 'string', 'max:100', 'regex:/(^([a-zA-Z]+)(\d+)?$)/u'],
       ]
     );
 
@@ -58,7 +58,7 @@ class EmployeeController extends Controller
   public function employeeLogin(Request $request)
   {
     $request->validate([
-      'username' => 'required',
+      'username' => 'required|unique:employee',
       'password' => 'required|min:6',
     ]);
     $credentials = $request->only('username', 'password');
@@ -95,11 +95,11 @@ class EmployeeController extends Controller
     // exit('Not updated');
     $request->validate(
       [
-        'username'    => ['required', 'string', 'max:255'],
-        'firstName'   => ['required', 'string', 'max:100'],
-        'lastName'    => ['required', 'string', 'max:100'],
-        'department'  => ['required', 'string', 'max:100'],
-        'designation' => ['required', 'string', 'max:100'],
+        'username'    => ['required', 'string', 'max:100', 'regex:/(^([a-zA-Z]+)(\d+)?$)/u'],
+        'firstName'   => ['required', 'string', 'max:100', 'regex:/(^([a-zA-Z]+)(\d+)?$)/u'],
+        'lastName'    => ['required', 'string', 'max:100', 'regex:/(^([a-zA-Z]+)(\d+)?$)/u'],
+        'department'  => ['required', 'string', 'max:100', 'regex:/(^([a-zA-Z]+)(\d+)?$)/u'],
+        'designation' => ['required', 'string', 'max:100', 'regex:/(^([a-zA-Z]+)(\d+)?$)/u'],
       ]
     );
 

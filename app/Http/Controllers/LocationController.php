@@ -54,9 +54,9 @@ class LocationController extends Controller
         $request->validate(
             [
                 'address'  => ['required', 'string', 'max:255'],
-                'state'    => ['required', 'string', 'max:100'],
-                'city'     => ['required', 'string', 'max:100'],
-                'country'  => ['required', 'string', 'max:100'],
+                'state'    => ['required', 'string', 'max:100', 'regex:/(^([a-zA-Z]+)(\d+)?$)/u'],
+                'city'     => ['required', 'string', 'max:100', 'regex:/(^([a-zA-Z]+)(\d+)?$)/u'],
+                'country'  => ['required', 'string', 'max:100', 'regex:/(^([a-zA-Z]+)(\d+)?$)/u'],
                 'zipcode'  => ['required', 'string', 'max:100'],
                 'timezone' => ['required', 'string', 'max:100'],
             ]

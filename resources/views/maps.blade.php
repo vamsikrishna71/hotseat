@@ -4,10 +4,12 @@
 
 @section('css')
     <!-- leaflet Css -->
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <link href="{{ URL::asset('/assets/libs/leaflet/leaflet.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('/assets/css/bootstrap.min.css') }}" id="bootstrap-style" rel="stylesheet"
         type="text/css" />
     <link href="{{ URL::asset('/assets/css/app.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
     <link href="{{ URL::asset('/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- DataTables -->
     <link href="{{ URL::asset('/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
@@ -44,6 +46,9 @@
             <div class="card">
                 <div class="card-body">
                     <label for="floor">Floor name</label>
+                    <div class="alert alert-success d-none" id="saveMessage">
+                        <span id="responseMessage"></span>
+                    </div>
                     <h4 class="card-title mb-4">{{ $floor->floor_name }}</h4>
                     {{-- {{ dd($floor->floor_map) }} --}}
                     <div id="leaflet-map" class="leaflet-map">
@@ -70,45 +75,60 @@
         /******/
         var markers = [];
         var myMap = L.map("leaflet-map").setView([-41.2858, 174.78682], 1);
+        var LeafIcon = L.Icon.extend({
+            options: {
+                iconSize: [30],
+            }
+        });
+
+        var redIcon = new LeafIcon({
+            iconUrl: '/images/seat-booked.png'
+        });
+        var greenIcon = new LeafIcon({
+            iconUrl: '/images/seat-open.png'
+        });
+        var toolTip = 'Booked';
         $(function() {
             // webpackBootstrap
             var __webpack_exports__ = {};
             /*!************************************************!*\
               !*** ./resources/js/pages/leaflet-map.init.js ***!
               \************************************************/
-            
+
             var southWest = new L.LatLng(10.712, -54.227),
                 northEast = new L.LatLng(50.774, -74.125),
                 south = new L.LatLng(60.220, -80);
 
             bounds = new L.LatLngBounds(southWest, northEast, south);
 
-            var myIcon = L.icon({
-                iconUrl: '/images/seat-open.png',
-                iconSize: [30],
-            });
 
             function popupContentReady(id) {
-                return "<div class='row popcontent-" + id + "'>\
-                                    <div class='col-12'>\
-                                <div class='mb-3'>\
-                                    <label for='deskName'class='form-label'>Desk Name<span style='color:red'>*</span></label>\
-                                    <input type='text' class='form-control @error('deskName') is-invalid @enderror' id='deskName-" + id +
-                    "' value='Desk-" + id + "'name='deskName' autofocus>\
-                                </div>\
-                                <div class='mb-3'>\
-                                    <label for='employeeName' class='form-label'>Employee Name<span style='color:red'>*</span></label>\
-                                    <input type='text' class='form-control @error('employeeName') is-invalid @enderror' id='employeeName-" +
+                return "<div class='row popcontent-" +id +"'>\
+                        <div class='col-12'>\
+                                        <div class='mb-3'>\
+                                            <label for='deskName'class='form-label'>Desk Name<span style='color:red'>*</span></label>\
+                                            <input type='text' class='form-control @error('deskName') is-invalid @enderror' id='deskName-" +
+                    id +
+                    "' value='Desk-" + id +
+                    "'name='deskName' autofocus>\
+                                        </div>\
+                                        <div class='mb-3'>\
+                                            <label for='employeeName' class='form-label'>Employee Name<span style='color:red'>*</span></label>\
+                                            <input type='text' class='form-control @error('employeeName') is-invalid @enderror' id='employeeName-" +
                     id +
                     "' value='" + id + "' name='employeeName' autofocus>\
-                                </div>\
-                                <div class='d-flex align-items-center justify-content-around'>\
-                                    <button data-classname='popcontent-'" + id + "' type='button' class='btn btn-sm\
-                                    btn-success text-light waves-effect fw-semibold get-markers'>SAVE</a>\
-                                    <button data-classname='popcontent-'" + id + "' class='btn btn-sm btn-danger text-light waves-effect fw-semibold marker-delete-button' id='popcontentDelete' onclick='deletePop(\"popcontent-"+id+"\")'>Delete</button>\
-                                </div>\
-                            </div>\
-                        </div>";
+                                        </div>\
+                                        <div class='d-flex align-items-center justify-content-around'>\
+                                            <button data-classname='popcontent-'" + id + "' type='button' class='btn btn-sm\
+                                            btn-success text-light waves-effect fw-semibold get-markers'\
+                                            id='saveDeskForm'\
+                                            onclick='savePop(\"popcontent-" + id + "\")'>Save</a>\
+                                            <button data-classname='popcontent-'" + id +
+                    "' class='btn btn-sm btn-danger text-light waves-effect fw-semibold marker-delete-button' id='popcontentDelete' onclick='deletePop(\"popcontent-" +
+                    id + "\")'>Delete</button>\
+                                        </div>\
+                                    </div>\
+                                </div>";
             }
 
             //For local
@@ -119,34 +139,27 @@
                 attribution: "mapbox/streets-v11",
                 tileSize: 512,
                 zoomOffset: -1,
-            }).addTo(myMap), L.marker([51.5, -.09], {
-                draggable: true,
-                icon: myIcon
-            }).addTo(myMap).bindPopup(
-                '<b>Desk Available</b>!</b><br />Here We go!.').openPopup();
+            }).addTo(myMap);
+            
 
             function onMapClick(e) {
                 marker = new L.marker(e.latlng, {
                     draggable: true,
-                    icon: myIcon,
-                    // bounceOnAdd: true,
-            });
-            
-            // marker.on('click', function () {
-            // marker.bounce({duration: 500, height: 100});
-            // });
-            
+                    icon: greenIcon,
+                });
+
                 markers.push(
-                    [{
+                    {
                         "markerobj": marker,
                         "className": 'popcontent-' + markerClick
-                    }]
+                    }
                 );
 
                 // console.log(markers['markerobj']);
                 marker.bindPopup(
                     popupContentReady(markerClick)
                 );
+                $('.test').append(popupContentReady(markerClick));
                 markerClick++;
                 myMap.addLayer(marker);
             };
@@ -158,29 +171,45 @@
 
         function deletePop(classname) {
             $.each(markers, function(index, value) {
-                $.each(value, function(index, value) {
-                    if (value.className == classname) {
-                        var markerobj = value.markerobj;;
-                        myMap.removeLayer(markerobj);
-                        alert('Removed Succesfully');
-                    }
-                })
+                if (value.className == classname) {
+                    var markerobj = value.markerobj;
+                    myMap.removeLayer(markerobj);
+                }
             });
         }
 
-        // $.ajax({
-        //     url: '{{ url('deskAssign') }}',
-        //     type: 'POST',
-        //     data: $('#deskAssign').serialize(),
-        //     success: function(response) {
-        //         $('#submit').html('Submit');
-        //         $('#submit').attr('disabled', false);
-        //         alert('Desk Assigned successfully');
-        //         document.getElementById('deskAssign').reset();
-        //     }
-        // });
+        function savePop(classname) {
+            $.each(markers, function(index, value) {
+                if (value.className == classname) {
+                    var markerobj = value.markerobj;
+                    var curentDeskName = $('#deskName').val();
+                    var currentEmployee = $('#employeeName').val();
+                    deskSaveForm(curentDeskName, currentEmployee);
+                    // jQuery('.test .deskname').value(curentDeskName);
+                    // jQuery('.test .employee').value(currentEmployee);
+                    // markerobj.bindPopup(jQuery('.test .popcontent-1'));//make dynamic
+                    markerobj.setIcon(redIcon).closePopup();
+                    markerobj.dragging.disable();
+                    return false;
+                }
+            });
+        }
 
-
+        function deskSaveForm(deskName, employee) {
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: '{{ route('deskAssign') }}',
+                type: 'POST',
+                data: {
+                    'deskName' : deskName,
+                    'employee' : employee,
+                },
+                success: function(response) { 
+                }
+            });
+        }
     </script>
     // {{-- <script src="{{ URL::asset('/assets/js/pages/leaflet-map.init.js') }}"></script> --}}
 @endsection

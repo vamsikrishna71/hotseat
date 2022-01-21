@@ -77,15 +77,15 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'firstName'   => ['required', 'string', 'max:255'],
-            'lastName'    => ['required', 'string', 'max:255'],
-            'username'    => ['required', 'string', 'unique:users'],
-            'designation' => ['required', 'string', 'max:255'],
-            'department'  => ['required', 'string', 'max:255'],
+            'firstName'   => ['required', 'string', 'max:255','alpha'],
+            'lastName'    => ['required', 'string', 'max:255', 'alpha'],
+            'username'    => ['required', 'string', 'unique:users', 'regex:/(^([a-zA-Z]+)(\d+)?$)/u'],
+            'designation' => ['required', 'string', 'max:50', 'alpha'],
+            'department'  => ['required', 'string', 'max:50', 'alpha'],
             'email'       => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password'    => ['required', 'string', 'min:6', 'confirmed'],
             // 'dob' => ['required', 'date', 'before:today'],
-            'logo'      => ['required', 'image', 'mimes:jpg,jpeg,png', 'max:1024'],
+            'logo'      => ['required', 'image', 'mimes:jpg,jpeg,png', 'max:2048'],
         ]);
     }
 
@@ -98,7 +98,6 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         // return $request->input();
-
         if (request()->has('logo')) {
             $logo     = request()->file('logo');
             $logoName = time() . '.' . $logo->getClientOriginalExtension();

@@ -56,6 +56,14 @@
                                     style="color:red">*</span></label>
                             <input type="text" class="form-control @error('floorName') is-invalid @enderror" id="floorName"
                                 value="Floor 4" name="floorName" autofocus>
+                                <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <span class="text-danger">@error('floorName')
+                                        {{ $message }} @enderror</span>
+                                    <div class="invalid-feedback">
+                                        Please enter the valid Floorname.
+                                    </div>
                         </div>
                         <div class="mb-3">
                             <label for="floorMap" class="form-label">Floor Map <span style="color:red">*</span></label>
@@ -64,6 +72,14 @@
                                     id="floorMap" name="floorMap" autofocus required>
                                 <label class="input-group-text" for="inputGroupFile02">Upload</label>
                             </div>
+                            <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <span class="text-danger">@error('floorMap')
+                                        {{ $message }} @enderror</span>
+                                    <div class="invalid-feedback">
+                                        Please enter the valid format.
+                                    </div>
                         </div>
                     </div>
                     <div class="modal-footer">

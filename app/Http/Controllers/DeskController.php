@@ -13,9 +13,8 @@ class DeskController extends Controller
     //
     public function createFloor(Request $request)
     {
-        // return $request->input();
         $request->validate([
-            'floorName' => 'required',
+            'floorName' => ['required', 'regex:/(^([a-zA-Z]+)(\d+)?$)/u'],
             'floorMap'  => 'image|mimes:jpg,jpeg,png|max:2048',
         ]);
         if (request()->has('floorMap')) {

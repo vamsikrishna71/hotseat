@@ -16,7 +16,7 @@ class DeskAssignController extends Controller
      */
     public function deskAssign(Request $request){
         
-        return $request->input();
+        // return $request->input();
         $request->validate([
             'deskName' => 'required',
             'employeeName'  => 'required',
@@ -27,7 +27,7 @@ class DeskAssignController extends Controller
             'desk_name' => $request->deskName,
             'employee_name'  => $request->employeeName,
         ]);
-        return redirect('maps',)
+        return redirect('floor')
         ->with('success', 'Desk Added Successfully');
     }
 }

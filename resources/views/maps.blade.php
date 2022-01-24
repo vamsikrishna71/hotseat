@@ -98,40 +98,38 @@
             var southWest = new L.LatLng(10.712, -54.227),
                 northEast = new L.LatLng(50.774, -74.125),
                 south = new L.LatLng(60.220, -80);
-
-            bounds = new L.LatLngBounds(southWest, northEast, south);
-
+            var bounds = new L.LatLngBounds(southWest, northEast, south);
 
             function popupContentReady(id) {
-                return "<div class='row popcontent-" +id +"'>\
-                        <div class='col-12'>\
-                                        <div class='mb-3'>\
-                                            <label for='deskName'class='form-label'>Desk Name<span style='color:red'>*</span></label>\
-                                            <input type='text' class='form-control @error('deskName') is-invalid @enderror' id='deskName-" +
+                return "<div class='row popcontent-" + id +
+                    "'>\
+                    <div class='col-12'>\
+                         <div class='mb-3'>\
+                          <label for='deskName'class='form-label'>Desk Name<span style='color:red'>*</span></label>\
+                        <input type='text' class='form-control deskName @error('deskName') is-invalid @enderror' id='deskName-" +
                     id +
                     "' value='Desk-" + id +
                     "'name='deskName' autofocus>\
-                                        </div>\
-                                        <div class='mb-3'>\
-                                            <label for='employeeName' class='form-label'>Employee Name<span style='color:red'>*</span></label>\
-                                            <input type='text' class='form-control @error('employeeName') is-invalid @enderror' id='employeeName-" +
+                    </div>\
+                    <div class='mb-3'>\
+                    <label for='employeeName' class='form-label'>Employee Name<span style='color:red'>*</span></label>\
+                    <input type='text' class='form-control employeeName @error('employeeName') is-invalid @enderror' id='employeeName-" +
                     id +
                     "' value='" + id + "' name='employeeName' autofocus>\
-                                        </div>\
-                                        <div class='d-flex align-items-center justify-content-around'>\
-                                            <button data-classname='popcontent-'" + id + "' type='button' class='btn btn-sm\
-                                            btn-success text-light waves-effect fw-semibold get-markers'\
-                                            id='saveDeskForm'\
-                                            onclick='savePop(\"popcontent-" + id + "\")'>Save</a>\
-                                            <button data-classname='popcontent-'" + id +
+                    </div>\
+                    <div class='d-flex align-items-center justify-content-around'>\
+                    <button data-classname='popcontent-'" + id + "' type='button' class='btn btn-sm\
+                    btn-success text-light waves-effect fw-semibold get-markers'\
+                    id='saveDeskForm'\
+                    onclick='savePop(\"popcontent-" + id + "\"," + id + " )'>Save</a>\
+                    <button data-classname='popcontent-'" + id +
                     "' class='btn btn-sm btn-danger text-light waves-effect fw-semibold marker-delete-button' id='popcontentDelete' onclick='deletePop(\"popcontent-" +
                     id + "\")'>Delete</button>\
-                                        </div>\
-                                    </div>\
-                                </div>";
+                </div>\
+            </div>\
+        </div>";
             }
 
-            //For local
             var imgUrl = <?php echo json_encode($mapTileImage); ?>
 
             L.tileLayer(imgUrl, {
@@ -140,26 +138,25 @@
                 tileSize: 512,
                 zoomOffset: -1,
             }).addTo(myMap);
-            
 
-            function onMapClick(e) {
+
+            function onMapClick(e, id) {
                 marker = new L.marker(e.latlng, {
                     draggable: true,
                     icon: greenIcon,
                 });
 
-                markers.push(
-                    {
-                        "markerobj": marker,
-                        "className": 'popcontent-' + markerClick
-                    }
-                );
+                markers.push({
+                    "markerobj": marker,
+                    "className": 'popcontent-' + markerClick
+                });
 
                 // console.log(markers['markerobj']);
                 marker.bindPopup(
                     popupContentReady(markerClick)
                 );
                 $('.test').append(popupContentReady(markerClick));
+
                 markerClick++;
                 myMap.addLayer(marker);
             };
@@ -178,21 +175,38 @@
             });
         }
 
-        function savePop(classname) {
+        function savePop(classname, id, e) {
             $.each(markers, function(index, value) {
                 if (value.className == classname) {
                     var markerobj = value.markerobj;
-                    var curentDeskName = $('#deskName').val();
-                    var currentEmployee = $('#employeeName').val();
+                    var curentDeskName = $('#deskName-' + id).val();
+                    var currentEmployee = $('#employeeName-' + id).val();
+                    //save lat long in db
+                    // var deskLatLng = new L.LatLng(markerobj.latitude, markerobj.longitude);
+                    // var deskLatLng = L.latLng(55.4411764, 11.7928708);
+                    var myMarker = L.marker(e.latlng, {
+                            title: 'desk'
+                        })
+                        .addTo(myMap);
+                    alert(myMarker.getLatLng());
                     deskSaveForm(curentDeskName, currentEmployee);
-                    // jQuery('.test .deskname').value(curentDeskName);
-                    // jQuery('.test .employee').value(currentEmployee);
-                    // markerobj.bindPopup(jQuery('.test .popcontent-1'));//make dynamic
+                    $('.test #deskName-' + id).val(curentDeskName);
+                    $('.test #employeeName' + id).val(currentEmployee);
+                    var callContent = $('.test').find('popcontent' + id).html();
+                    markerobj.bindPopup(callContent);
+                    markerobj.bindTooltip('This place is booked by ' + currentEmployee);
+                    markerobj.on('mouseover', customTip);
                     markerobj.setIcon(redIcon).closePopup();
                     markerobj.dragging.disable();
                     return false;
                 }
             });
+        }
+
+        function customTip() {
+            if (!this.isPopupOpen()) {
+                this.openTooltip();
+            }
         }
 
         function deskSaveForm(deskName, employee) {
@@ -203,11 +217,10 @@
                 url: '{{ route('deskAssign') }}',
                 type: 'POST',
                 data: {
-                    'deskName' : deskName,
-                    'employee' : employee,
+                    'deskName': deskName,
+                    'employeeName': employee,
                 },
-                success: function(response) { 
-                }
+                success: function(response) {}
             });
         }
     </script>

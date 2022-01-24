@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Symfony\Component\HttpFoundation\Response;
 
 class DeskController extends Controller
 {
@@ -30,8 +31,7 @@ class DeskController extends Controller
             'floor_name' => $request->floorName,
             'floor_map'  => $request->floorMap,
         ]);
-        return redirect('floor', )
-            ->with('success', 'Floor Added Successfully');
+        return response()->json(['success' => true, 'message' => 'Desk inserted successfully']);
     }
         
     

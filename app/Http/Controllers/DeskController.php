@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Symfony\Component\HttpFoundation\Response;
 
 class DeskController extends Controller
 {
@@ -15,7 +14,7 @@ class DeskController extends Controller
     public function createFloor(Request $request)
     {
         $request->validate([
-            'floorName' => ['required', 'regex:/(^([a-zA-Z]+)(\d+)?$)/u'],
+            'floorName' => 'required',
             'floorMap'  => 'image|mimes:jpg,jpeg,png|max:2048',
         ]);
         if (request()->has('floorMap')) {
@@ -31,7 +30,8 @@ class DeskController extends Controller
             'floor_name' => $request->floorName,
             'floor_map'  => $request->floorMap,
         ]);
-        return response()->json(['success' => true, 'message' => 'Desk inserted successfully']);
+        return redirect('floor')
+        ->with('success', 'Desk Added Successfully');
     }
         
     

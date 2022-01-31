@@ -62,10 +62,12 @@ class HomeController extends Controller
         $locations = User::find(Auth::user()->id)->location;
         $employees = User::find(Auth::user()->id)->employee;
         $floors = User::find(Auth::user()->id)->desk;
+        $maps = User::find(Auth::user()->id)->deskAssignEmployee;
         if (view()->exists($request->path())) {
             return view(
                 $request->path(),
-                compact('locations', 'employees','floors')
+                compact('locations', 'employees','floors'
+                ,'maps')
             );
         }
         return abort(404);

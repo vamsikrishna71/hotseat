@@ -77,7 +77,7 @@
         var myMap = L.map("leaflet-map").setView([-41.2858, 174.78682], 1);
         var LeafIcon = L.Icon.extend({
             options: {
-                iconSize: [30],
+                iconSize: [25],
             }
         });
 
@@ -87,7 +87,9 @@
         var greenIcon = new LeafIcon({
             iconUrl: '/images/seat-open.png'
         });
-        var toolTip = 'Booked';
+        // var p1 = L.point(10, 10),
+        //     p2 = L.point(40, 60),
+        //     myBounds = L.bounds(p1, p2);
         $(function() {
             // webpackBootstrap
             var __webpack_exports__ = {};
@@ -98,41 +100,43 @@
             var southWest = new L.LatLng(10.712, -54.227),
                 northEast = new L.LatLng(50.774, -74.125),
                 south = new L.LatLng(60.220, -80);
-            var bounds = new L.LatLngBounds(southWest, northEast, south);
+                north = new L.LatLng(80,70);
+            var bounds = new L.LatLngBounds(southWest, northEast, south, north);
 
             function popupContentReady(id) {
                 return "<div class='row popcontent-" + id +
                     "'>\
-                    <div class='col-12'>\
-                         <div class='mb-3'>\
-                          <label for='deskName'class='form-label'>Desk Name<span style='color:red'>*</span></label>\
-                        <input type='text' class='form-control deskName @error('deskName') is-invalid @enderror' id='deskName-" +
+                        <div class='col-12'>\
+                             <div class='mb-3'>\
+                              <label for='deskName'class='form-label'>Desk Name<span style='color:red'>*</span></label>\
+                            <input type='text' class='form-control deskName @error('deskName') is-invalid @enderror' id='deskName-" +
                     id +
                     "' value='Desk-" + id +
                     "'name='deskName' autofocus>\
-                    </div>\
-                    <div class='mb-3'>\
-                    <label for='employeeName' class='form-label'>Employee Name<span style='color:red'>*</span></label>\
-                    <input type='text' class='form-control employeeName @error('employeeName') is-invalid @enderror' id='employeeName-" +
+                        </div>\
+                        <div class='mb-3'>\
+                        <label for='employeeName' class='form-label'>Employee Name<span style='color:red'>*</span></label>\
+                        <input type='text' class='form-control employeeName @error('employeeName') is-invalid @enderror' id='employeeName-" +
                     id +
                     "' value='" + id + "' name='employeeName' autofocus>\
-                    </div>\
-                    <div class='d-flex align-items-center justify-content-around'>\
-                    <button data-classname='popcontent-'" + id + "' type='button' class='btn btn-sm\
-                    btn-success text-light waves-effect fw-semibold get-markers'\
-                    id='saveDeskForm'\
-                    onclick='savePop(\"popcontent-" + id + "\"," + id + " )'>Save</a>\
-                    <button data-classname='popcontent-'" + id +
+                        </div>\
+                        <div class='d-flex align-items-center justify-content-around'>\
+                        <button data-classname='popcontent-'" + id + "' type='button' class='btn btn-sm\
+                        btn-success text-light waves-effect fw-semibold get-markers'\
+                        id='saveDeskForm'\
+                        onclick='savePop(\"popcontent-" + id + "\"," + id + " )'>Save</a>\
+                        <button data-classname='popcontent-'" + id +
                     "' class='btn btn-sm btn-danger text-light waves-effect fw-semibold marker-delete-button' id='popcontentDelete' onclick='deletePop(\"popcontent-" +
                     id + "\")'>Delete</button>\
+                    </div>\
                 </div>\
-            </div>\
-        </div>";
+            </div>";
             }
 
             var imgUrl = <?php echo json_encode($mapTileImage); ?>
 
             L.tileLayer(imgUrl, {
+                bounds: bounds,
                 maxZoom: 10,
                 attribution: "mapbox/streets-v11",
                 tileSize: 512,
@@ -164,6 +168,8 @@
             var markerClick = 1;
             myMap.on('click', onMapClick);
             myMap.fitBounds(bounds);
+            myMap.clearLayers();
+            myMap.setMaxBounds(myMap.getBounds());
         });
 
         function deletePop(classname) {
@@ -181,20 +187,23 @@
                     var markerobj = value.markerobj;
                     var curentDeskName = $('#deskName-' + id).val();
                     var currentEmployee = $('#employeeName-' + id).val();
+                    var positions = markerobj.getLatLng();
+                    // markerobj.setLatLng(latLng);
+                    // alert(latLng);
                     //save lat long in db
                     // var deskLatLng = new L.LatLng(markerobj.latitude, markerobj.longitude);
                     // var deskLatLng = L.latLng(55.4411764, 11.7928708);
-                    var myMarker = L.marker(e.latlng, {
-                            title: 'desk'
-                        })
-                        .addTo(myMap);
-                    alert(myMarker.getLatLng());
-                    deskSaveForm(curentDeskName, currentEmployee);
+                    // var myMarker = L.marker(e.latlng, {
+                    //         title: 'desk'
+                    //     })
+                    //     .addTo(myMap);
+                    // alert(myMarker.getLatLng());
+                    deskSaveForm(curentDeskName, currentEmployee, positions);
                     $('.test #deskName-' + id).val(curentDeskName);
                     $('.test #employeeName' + id).val(currentEmployee);
                     var callContent = $('.test').find('popcontent' + id).html();
                     markerobj.bindPopup(callContent);
-                    markerobj.bindTooltip('This place is booked by ' + currentEmployee);
+                    markerobj.bindTooltip('This place is booked by ' + currentEmployee +' '+ positions);
                     markerobj.on('mouseover', customTip);
                     markerobj.setIcon(redIcon).closePopup();
                     markerobj.dragging.disable();
@@ -209,7 +218,7 @@
             }
         }
 
-        function deskSaveForm(deskName, employee) {
+        function deskSaveForm(deskName, employee, positions) {
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -219,10 +228,14 @@
                 data: {
                     'deskName': deskName,
                     'employeeName': employee,
+                    'positions':  positions,
                 },
-                success: function(response) {}
+                success: function(response) {
+                    alert('saved');
+                }
             });
         }
+        
     </script>
     // {{-- <script src="{{ URL::asset('/assets/js/pages/leaflet-map.init.js') }}"></script> --}}
 @endsection

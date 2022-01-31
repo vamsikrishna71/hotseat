@@ -78,3 +78,9 @@ Route::delete('/floor/{id}',[App\Http\Controllers\DeskController::class, 'destro
 //DeskAssignController
 
 Route::post('/deskAssign', [App\Http\Controllers\DeskAssignController::class,'deskAssign'])->name('deskAssign');
+
+Route::delete(
+    '/maps/{id}',
+    [App\Http\Controllers\DeskAssignController::class, 'destroy']
+)->name('maps.destroy');
+

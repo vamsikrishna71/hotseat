@@ -76,6 +76,10 @@
     <script>
         /******/
         var markers = [];
+        var markerClick = 1;
+        var deskName;
+        var employeeName;
+
         var myMap = L.map("leaflet-map").setView([-41.2858, 174.78682], 10);
         var LeafIcon = L.Icon.extend({
             options: {
@@ -102,35 +106,6 @@
                 south = new L.LatLng(60.220, -80);
                 north = new L.LatLng(80,70);
             var bounds = new L.LatLngBounds(southWest, northEast, south, north);
-            function popupContentReady(id) {
-                return "<div class='row popcontent-" + id +
-                    "'>\
-                        <div class='col-12'>\
-                             <div class='mb-3'>\
-                              <label for='deskName'class='form-label'>Desk Name<span style='color:red'>*</span></label>\
-                            <input type='text' class='form-control deskName @error('deskName') is-invalid @enderror' id='deskName-" +
-                    id +
-                    "' value='Desk-" + id +
-                    "'name='deskName' autofocus>\
-                        </div>\
-                        <div class='mb-3'>\
-                        <label for='employeeName' class='form-label'>Employee Name<span style='color:red'>*</span></label>\
-                        <input type='text' class='form-control employeeName @error('employeeName') is-invalid @enderror' id='employeeName-" +
-                    id +
-                    "' value='" + id + "' name='employeeName' autofocus>\
-                        </div>\
-                        <div class='d-flex align-items-center justify-content-around'>\
-                        <button data-classname='popcontent-'" + id + "' type='button' class='btn btn-sm\
-                        btn-success text-light waves-effect fw-semibold get-markers'\
-                        id='saveDeskForm'\
-                        onclick='savePop(\"popcontent-" + id + "\"," + id + " )'>Save</a>\
-                        <button data-classname='popcontent-'" + id +
-                    "' class='btn btn-sm btn-danger text-light waves-effect fw-semibold marker-delete-button' id='popcontentDelete' onclick='deletePop(\"popcontent-" +
-                    id + "\")'>Delete</button>\
-                    </div>\
-                </div>\
-            </div>";
-            }
 
             var imgUrl = <?php echo json_encode($mapTileImage); ?>
 
@@ -153,26 +128,11 @@
                     raiseOnHover: true,
                 });
                 
-                // if(marker !== markerClick){
-                    
-                // markers = new L.marker(setLatLng([e.lat,e.lng]), {
-                //     draggable: true,
-                //     icon:greenIcon,
-                // });
-                // console.log(markers);
-                // marker.bindPopup(
-                //     popupContentReady(markerClick)
-                // ).openPopup();
-                // } else {
-                // marker.bindPopup(popupContentReady(markerClick))
-                // }
-                
                 markers.push({
                     "markerobj": marker,
                     "className": 'popcontent-' + markerClick
                 });
 
-                // console.log(markers['markerobj']);
                 marker.bindPopup(
                     popupContentReady(markerClick)
                 );
@@ -182,11 +142,43 @@
                 myMap.addLayer(marker);
             };
 
-            var markerClick = 1;
             myMap.on('click', onMapClick);
             myMap.fitBounds(bounds);
             // myMap.setMaxBounds(myMap.getBounds());
         });
+
+        function popupContentReady(id, employeeName = '', deskName = '') {
+                var desk = !deskName ? 'desk-' + id : deskName;
+                var employee = !employeeName ? 'employee-' + id : employeeName;
+                
+                return "<div class='row popcontent-" + id +
+                    "'>\
+                        <div class='col-12'>\
+                             <div class='mb-3'>\
+                              <label for='deskName'class='form-label'>Desk Name<span style='color:red'>*</span></label>\
+                            <input type='text' class='form-control deskName @error('deskName') is-invalid @enderror' id='deskName-" +
+                    id +
+                    "' value='" + desk +
+                    "'name='deskName' autofocus>\
+                        </div>\
+                        <div class='mb-3'>\
+                        <label for='employeeName' class='form-label'>Employee Name<span style='color:red'>*</span></label>\
+                        <input type='text' class='form-control employeeName @error('employeeName') is-invalid @enderror' id='employeeName-" +
+                    id +
+                    "' value='" + employee + "' name='employeeName' autofocus>\
+                        </div>\
+                        <div class='d-flex align-items-center justify-content-around'>\
+                        <button data-classname='popcontent-'" + id + "' type='button' class='btn btn-sm\
+                        btn-success text-light waves-effect fw-semibold get-markers'\
+                        id='saveDeskForm'\
+                        onclick='savePop(\"popcontent-" + id + "\"," + id + " )'>Save</a>\
+                        <button data-classname='popcontent-'" + id +
+                    "' class='btn btn-sm btn-danger text-light waves-effect fw-semibold marker-delete-button' id='popcontentDelete' onclick='deletePop(\"popcontent-" +
+                    id + "\")'>Delete</button>\
+                    </div>\
+                </div>\
+            </div>";
+        }
 
         function deletePop(classname) {
             $.each(markers, function(index, value) {
@@ -239,6 +231,18 @@
                                 autoPan:true,
                                 raiseOnHover: true,
                             }).bindTooltip(response[i].employee_name).addTo(myMap);
+                            marker.bindPopup(popupContentReady(
+                                    markerClick,
+                                    response[i].employee_name,
+                                    response[i].desk_name
+                                )
+                            );
+                            $('.test').append(popupContentReady(
+                                    markerClick,
+                                    response[i].employee_name,
+                                    response[i].desk_name
+                                )
+                                );
                         }
                     }
                 }

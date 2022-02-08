@@ -23,4 +23,14 @@ class Desk extends Model
             'id'
         );
     }
+
+    /**
+     * deskAssign
+     *
+     * @return void
+     */
+    public function deskAssign()
+    {
+        return $this->hasMany(DeskAssign::class);
+    }
 }

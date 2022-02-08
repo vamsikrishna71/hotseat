@@ -8,18 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class DeskAssign extends Model
 {
     use HasFactory;
-    protected $fillable = ['desk_name', 'employee_name'];
+    protected $fillable = ['desk_name', 'employee_name','latitude', 'longitude'];
+
 
     /**
-     * user
+     * Desk
      *
      * @return void
      */
-    public function user()
+    public function desk()
     {
         return $this->belongsTo(
-            User::class,
-            'user_id',
+            Desk::class,
+            'desk_id',
             'id'
         );
     }

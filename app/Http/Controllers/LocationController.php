@@ -93,17 +93,16 @@ class LocationController extends Controller
     }
 
     /**
-     * todo
+     * 
      *
      * @return void
      */
     public function locationOverview()
     {
         $location = User::find(Auth::user()->id)->location->orderBy('id')->get();
-        // print_r($location);
-        // die;
         return view('location', compact('location'));
     }
+    
     /**
      * editLocation
      *
@@ -186,6 +185,6 @@ class LocationController extends Controller
         DB::commit();
         Session::flash('message', 'Location Delete Successfully');
         Session::flash('alert-class', 'alert-danger');
-        return redirect('location')->with('success','Location Delete Successfully');
+        return redirect('location')->with('success', 'Location Delete Successfully');
     }
 }

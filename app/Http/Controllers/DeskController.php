@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Desk;
+use App\Models\DeskAssign;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -45,12 +46,8 @@ class DeskController extends Controller
     public function editFloor($id)
     {
         $floor = Desk::findOrFail($id);
-        return view('maps', compact('floor'));
-    }
-
-    public function createDesk(Request $request)
-    {
-        return $request->input();
+        $map = DeskAssign::all();
+        return view('maps', compact('floor','map'));
     }
 
     /**

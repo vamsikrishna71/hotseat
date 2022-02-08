@@ -32,7 +32,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="address" class="form-label">Address</label>
+                                    <label for="address" class="form-label">Address<span style="color:red">*</span></label>
                                     <input type="text" name="address" class="form-control"
                                         id="address"  placeholder="Address">
                                     <div class="valid-feedback">
@@ -50,7 +50,7 @@
                         <div class="row">
                             <div class="col-lg-3">
                                 <div class="mb-3">
-                                    <label for="formrow-inputState" class="form-label">Country</label>
+                                    <label for="formrow-inputState" class="form-label">Country<span style="color:red">*</span></label>
                                     <input type="text" name="country" class="form-control" id="formrow-inputCity"
                                         placeholder="Enter Your Country">
                                     <span class="text-danger">@error('country')
@@ -59,7 +59,7 @@
                             </div>
                             <div class="col-lg-3">
                                 <div class="mb-3">
-                                    <label for="formrow-inputState" class="form-label">State</label>
+                                    <label for="formrow-inputState" class="form-label">State<span style="color:red">*</span></label>
                                     <input type="text" class="form-control" id="formrow-inputCity" name="state"
                                         placeholder="Enter Your State">
                                     <span class="text-danger">@error('state'){{ $message }} @enderror</span>
@@ -67,7 +67,7 @@
                             </div>
                             <div class="col-lg-3">
                                 <div class="mb-3">
-                                    <label for="formrow-inputCity" class="form-label">City</label>
+                                    <label for="formrow-inputCity" class="form-label">City<span style="color:red">*</span></label>
                                     <input type="text" class="form-control" id="formrow-inputCity" name="city"
                                         placeholder="Enter Your Living City">
                                     <span class="text-danger">@error('city'){{ $message }} @enderror</span>
@@ -78,7 +78,7 @@
                             </div>
                             <div class="col-lg-3">
                                 <div class="mb-3">
-                                    <label for="formrow-inputZip" class="form-label">Zipcode</label>
+                                    <label for="formrow-inputZip" class="form-label">Zipcode<span style="color:red">*</span></label>
                                     <input type="text" class="form-control" id="formrow-inputZip" name="zipcode"
                                         placeholder="Enter Your Zip Code">
                                     <span class="text-danger">@error('zipcode'){{ $message }} @enderror</span>
@@ -88,7 +88,7 @@
                                 <div class="col-md-6">
                                     <h4 class="card-title mb-4">Other Details</h4>
                                     <div class="mb-3">
-                                        <label for="formrow-inputZip" class="form-label">Time Zone</label>
+                                        <label for="formrow-inputZip" class="form-label">Time Zone<span style="color:red">*</span></label>
                                         <input type="text" name="timezone" class="form-control" id="formrow-inputZip"
                                             placeholder="Enter Your Time Zone">
                                         <span class="text-danger">@error('timezone'){{ $message }} @enderror</span>
@@ -99,21 +99,21 @@
                                     <div data-repeater-list="zones">
                                         <div data-repeater-item class="row">
                                             <div class="mb-3 col-lg-3">
-                                                <label for="formrow-firstname-input" class="form-label">Building</label>
+                                                <label for="formrow-firstname-input" class="form-label">Building<span style="color:red">*</span></label>
                                                 <input type="text" name="building_name" class="form-control"
                                                     id="formrow-firstname-input" placeholder="Building Name">
                                                 <span class="text-danger">@error('building_name'){{ $message }}
                                                     @enderror</span>
                                             </div>
                                             <div class="mb-3 col-lg-3">
-                                                <label for="name">Level</label>
+                                                <label for="name">Level<span style="color:red">*</span></label>
                                                 <input type="text" name="level_name" class="form-control"
                                                     id="formrow-firstname-input" placeholder="Level">
                                                 <span class="text-danger">@error('level_name'){{ $message }}
                                                     @enderror</span>
                                             </div>
                                             <div class="mb-3 col-lg-3">
-                                                <label for="name">Zone</label>
+                                                <label for="name">Zone<span style="color:red">*</span></label>
                                                 <input type="text" class="form-control" id="formrow-inputZip"
                                                     name="zone_name" placeholder="Enter Your Zone ID"><span
                                                     class="text-danger">@error('zone_name'){{ $message }}

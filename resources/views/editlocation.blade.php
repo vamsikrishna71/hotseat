@@ -31,7 +31,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="formrow-firstname-input" class="form-label">Address</label>
+                                    <label for="formrow-firstname-input" class="form-label">Address<span style="color:red">*</span></label>
                                     <input type="text" name="address" class="form-control"
                                         value="{{ old('address', $location->address) }}"
                                         id="formrow-firstname-input address" placeholder="Address" required>
@@ -42,7 +42,7 @@
                         <div class="row">
                             <div class="col-lg-3">
                                 <div class="mb-3">
-                                    <label for="formrow-inputState" class="form-label">Country</label>
+                                    <label for="formrow-inputState" class="form-label">Country<span style="color:red">*</span></label>
                                     <input type="text" name="country" class="form-control" id="formrow-inputCity country"
                                         value="{{ old('country', $location->country) }}" placeholder="Enter Your Country"
                                         required>
@@ -50,14 +50,14 @@
                             </div>
                             <div class="col-lg-3">
                                 <div class="mb-3">
-                                    <label for="formrow-inputState" class="form-label">State</label>
+                                    <label for="formrow-inputState" class="form-label">State<span style="color:red">*</span></label>
                                     <input type="text" class="form-control" id="formrow-inputCity state" name="state"
                                         value="{{ old('state', $location->state) }}" placeholder="Enter Your State">
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="mb-3">
-                                    <label for="formrow-inputCity" class="form-label">City</label>
+                                    <label for="formrow-inputCity" class="form-label">City<span style="color:red">*</span></label>
                                     <input type="text" class="form-control" id="formrow-inputCity city"
                                         value="{{ old('city', $location->city) }}" name="city"
                                         placeholder="Enter Your Living City">
@@ -65,7 +65,7 @@
                             </div>
                             <div class="col-lg-3">
                                 <div class="mb-3">
-                                    <label for="formrow-inputZip" class="form-label">Zipcode</label>
+                                    <label for="formrow-inputZip" class="form-label">Zipcode<span style="color:red">*</span></label>
                                     <input type="text" class="form-control" id="formrow-inputZip zipcode" name="zipcode"
                                         value="{{ old('zipcode', $location->zipcode) }}" placeholder="Enter Your Zip Code">
                                 </div>
@@ -74,7 +74,7 @@
                                 <div class="col-md-6">
                                     <h4 class="card-title mb-4">Other Details</h4>
                                     <div class="mb-3">
-                                        <label for="formrow-inputZip" class="form-label">Time Zone</label>
+                                        <label for="formrow-inputZip" class="form-label">Time Zone<span style="color:red">*</span></label>
                                         <input type="text" name="timezone" class="form-control"
                                             value="{{ old('timezone', $location->timezone) }}"
                                             id="formrow-inputZip timezone" placeholder="Enter Your Time Zone">
@@ -87,20 +87,20 @@
                                             <div data-repeater-item class="row">
                                                 <div class="mb-3 col-lg-3">
                                                     <label for="formrow-firstname-inpu"
-                                                        class="form-label">Building</label>
+                                                        class="form-label">Building<span style="color:red">*</span></label>
                                                     <input type="text" name="building_name" class="form-control"
                                                         value="{{ old('building_name', $zone->building_name) }}"
                                                         id="formrow-firstname-input building_name"
                                                         placeholder="Building Name" required>
                                                 </div>
                                                 <div class="mb-3 col-lg-3">
-                                                    <label for="name">Level</label>
+                                                    <label for="name">Level<span style="color:red">*</span></label>
                                                     <input type="text" name="level_name" class="form-control"
                                                         value="{{ old('level_name', $zone->level) }}"
                                                         id="formrow-firstname-input level_name" placeholder="Level">
                                                 </div>
                                                  <div class="mb-3 col-lg-3">
-                                                    <label for="name">Zone</label>
+                                                    <label for="name">Zone<span style="color:red">*</span></label>
                                                     <input type="text" class="form-control"
                                                         id="formrow-inputZip zone_name"
                                                         value="{{ old('zone_name', $zone->zone) }}" name="zone_name"

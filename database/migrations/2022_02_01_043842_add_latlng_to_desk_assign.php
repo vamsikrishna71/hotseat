@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddPositionsToDeskAssign extends Migration
+class AddLatlngToDeskAssign extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +15,8 @@ class AddPositionsToDeskAssign extends Migration
     {
         Schema::table('desk_assigns', function (Blueprint $table) {
             //
-            $table->text('positions');
+            $table->text('latitude');
+            $table->text('longitude');
         });
     }
 

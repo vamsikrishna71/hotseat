@@ -73,14 +73,4 @@ class User extends Authenticatable
     public function desk(){
         return $this->hasMany(Desk::class);
     }
-
-    /**
-     * desk
-     *
-     * @return void
-     */
-    public function deskAssignEmployee()
-    {
-        return $this->hasMany(DeskAssign::class);
-    }
 }

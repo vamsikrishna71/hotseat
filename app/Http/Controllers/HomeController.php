@@ -16,6 +16,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Location;
+use App\Models\Desk;
+
+use App\Models\DeskAssign;
+
 use App\Models\User;
 use App\Models\Zone;
 use Illuminate\Http\Request;
@@ -62,14 +66,17 @@ class HomeController extends Controller
         $locations = User::find(Auth::user()->id)->location;
         $employees = User::find(Auth::user()->id)->employee;
         $floors = User::find(Auth::user()->id)->desk;
-        $maps = User::find(Auth::user()->id)->deskAssignEmployee;
+        $maps = DeskAssign::all();
         if (view()->exists($request->path())) {
             return view(
                 $request->path(),
-                compact('locations', 'employees','floors'
-                ,'maps')
+                compact(
+                    'locations', 'employees', 'floors',
+                    'maps'
+                )
             );
         }
+        // dd($maps);
         return abort(404);
     }
 
@@ -195,7 +202,8 @@ class HomeController extends Controller
         if (!(Hash::check(
             $request->get('current_password'),
             Auth::user()->password
-        ))) {
+        ))
+        ) {
             return response()->json(
                 [
                     'isSuccess' => false,

@@ -50,7 +50,7 @@
                         <span id="responseMessage"></span>
                     </div>
                     <h4 class="card-title mb-4">{{ $floor->floor_name }}</h4>
-                    {{-- {{ dd($floor->floor_map) }} --}}
+                    {{-- {{ dd($maps->desk_name) }} --}}
                     <div id="leaflet-map" class="leaflet-map">
                     </div>
                     <div class="test" style="display:none"></div>
@@ -62,6 +62,8 @@
     <!-- end row -->
     @php
     $mapTileImage = $floor->floor_map;
+    // $latitude = $map->latitude;
+    // $longitude = $map->longitude;
     @endphp
 @endsection
 
@@ -74,7 +76,7 @@
     <script>
         /******/
         var markers = [];
-        var myMap = L.map("leaflet-map").setView([-41.2858, 174.78682], 1);
+        var myMap = L.map("leaflet-map").setView([-41.2858, 174.78682], 10);
         var LeafIcon = L.Icon.extend({
             options: {
                 iconSize: [25],
@@ -87,9 +89,7 @@
         var greenIcon = new LeafIcon({
             iconUrl: '/images/seat-open.png'
         });
-        // var p1 = L.point(10, 10),
-        //     p2 = L.point(40, 60),
-        //     myBounds = L.bounds(p1, p2);
+    
         $(function() {
             // webpackBootstrap
             var __webpack_exports__ = {};
@@ -102,7 +102,6 @@
                 south = new L.LatLng(60.220, -80);
                 north = new L.LatLng(80,70);
             var bounds = new L.LatLngBounds(southWest, northEast, south, north);
-
             function popupContentReady(id) {
                 return "<div class='row popcontent-" + id +
                     "'>\
@@ -135,21 +134,39 @@
 
             var imgUrl = <?php echo json_encode($mapTileImage); ?>
 
-            L.tileLayer(imgUrl, {
+             L.tileLayer(imgUrl, {
                 bounds: bounds,
-                maxZoom: 10,
+                center: [17.385044, 78.486671],
+                maxZoom: 13,
                 attribution: "mapbox/streets-v11",
                 tileSize: 512,
                 zoomOffset: -1,
             }).addTo(myMap);
 
-
-            function onMapClick(e, id) {
+            updateMarker();
+             
+            function onMapClick(e) {
                 marker = new L.marker(e.latlng, {
                     draggable: true,
                     icon: greenIcon,
+                    autoPan:true,
+                    raiseOnHover: true,
                 });
-
+                
+                // if(marker !== markerClick){
+                    
+                // markers = new L.marker(setLatLng([e.lat,e.lng]), {
+                //     draggable: true,
+                //     icon:greenIcon,
+                // });
+                // console.log(markers);
+                // marker.bindPopup(
+                //     popupContentReady(markerClick)
+                // ).openPopup();
+                // } else {
+                // marker.bindPopup(popupContentReady(markerClick))
+                // }
+                
                 markers.push({
                     "markerobj": marker,
                     "className": 'popcontent-' + markerClick
@@ -168,8 +185,7 @@
             var markerClick = 1;
             myMap.on('click', onMapClick);
             myMap.fitBounds(bounds);
-            myMap.clearLayers();
-            myMap.setMaxBounds(myMap.getBounds());
+            // myMap.setMaxBounds(myMap.getBounds());
         });
 
         function deletePop(classname) {
@@ -188,22 +204,12 @@
                     var curentDeskName = $('#deskName-' + id).val();
                     var currentEmployee = $('#employeeName-' + id).val();
                     var positions = markerobj.getLatLng();
-                    // markerobj.setLatLng(latLng);
-                    // alert(latLng);
-                    //save lat long in db
-                    // var deskLatLng = new L.LatLng(markerobj.latitude, markerobj.longitude);
-                    // var deskLatLng = L.latLng(55.4411764, 11.7928708);
-                    // var myMarker = L.marker(e.latlng, {
-                    //         title: 'desk'
-                    //     })
-                    //     .addTo(myMap);
-                    // alert(myMarker.getLatLng());
                     deskSaveForm(curentDeskName, currentEmployee, positions);
                     $('.test #deskName-' + id).val(curentDeskName);
                     $('.test #employeeName' + id).val(currentEmployee);
                     var callContent = $('.test').find('popcontent' + id).html();
                     markerobj.bindPopup(callContent);
-                    markerobj.bindTooltip('This place is booked by ' + currentEmployee +' '+ positions);
+                    markerobj.bindTooltip('This place is booked by ' + currentEmployee);
                     markerobj.on('mouseover', customTip);
                     markerobj.setIcon(redIcon).closePopup();
                     markerobj.dragging.disable();
@@ -212,6 +218,33 @@
             });
         }
 
+        function updateMarker(){
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: '{{ route('mapAssign') }}',
+                type: 'post',
+                dataType: 'json',
+                data:{
+                    'deskId':{{ $floor->id }}
+                },
+                success: function(response) {
+                    if(response) {
+                        for (var i = 0; i < response.length; i++) {
+                            // console.log(response[i]);
+                            marker = new L.marker([response[i].latitude,response[i].longitude],{
+                                draggable: false,
+                                icon: redIcon,
+                                autoPan:true,
+                                raiseOnHover: true,
+                            }).bindTooltip(response[i].employee_name).addTo(myMap);
+                        }
+                    }
+                }
+            });
+        }
+        
         function customTip() {
             if (!this.isPopupOpen()) {
                 this.openTooltip();
@@ -226,12 +259,14 @@
                 url: '{{ route('deskAssign') }}',
                 type: 'POST',
                 data: {
+                    'deskId': {{ $floor->id }},
                     'deskName': deskName,
                     'employeeName': employee,
-                    'positions':  positions,
+                    'latitude' : positions.lat,
+                    'longitude' : positions.lng
                 },
                 success: function(response) {
-                    alert('saved');
+                    // alert('saved');
                 }
             });
         }

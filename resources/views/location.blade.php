@@ -99,7 +99,6 @@
                                             @csrf
                                             @method('DELETE')
                                             
-                                            {{--  <input type="submit" id="showtoast" class="btn btn-danger"value="Delete">  --}}
                                             
                                             <input type="submit" role="button" aria-label="delete location" value="">
                                             <i class="fas fa-trash text-danger fs-3"></i>

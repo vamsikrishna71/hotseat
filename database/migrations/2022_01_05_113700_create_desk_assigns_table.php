@@ -17,9 +17,9 @@ class CreateDeskAssignsTable extends Migration
             $table->increments('id');
             $table->string('desk_name');
             $table->string('employee_name');
-            $table->unsignedInteger('user_id');
-            $table->foreign('user_id')->references('id')
-            ->on('users')
+            $table->unsignedInteger('desk_id');
+            $table->foreign('desk_id')->references('id')
+            ->on('desks')
             ->onDelete('cascade')
             ->onUpdate('cascade');
             $table->timestamps();

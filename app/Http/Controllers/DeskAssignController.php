@@ -22,7 +22,6 @@ class DeskAssignController extends Controller
      */
     public function deskAssign(Request $request){
         
-        // dd($request->all());
         $request->validate([
             'deskName' => 'required',
             'employeeName'  => 'required',
@@ -46,11 +45,28 @@ class DeskAssignController extends Controller
      */
     public function mapAssign(Request $request){
         $maps = DeskAssign::where('desk_id', $request->deskId)->select('desk_id', 'latitude', 'longitude','employee_name','desk_name')->get();
-        
-        // dd($maps->toArray());
         return $maps->toArray();
     }
+
+    /**
+     * editDeskAssign
+     *
+     * @param  mixed $request
+     * @return void
+     */
+    public function editDeskAssign(Request $request){
+        $request->input();
+    }
     
+    /**
+     * updateDeskAssign
+     *
+     * @param  mixed $request
+     * @return void
+     */
+    public function updateDeskAssign(Request $request){
+        $request->input();
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -62,7 +78,7 @@ class DeskAssignController extends Controller
      */
     public function destroy($id)
     {
-        // dd($id, 'delete');die;
+        
         try {
             DB::beginTransaction();
             $floor = DeskAssign::findOrFail($id);

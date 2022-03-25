@@ -106,7 +106,7 @@
                                 <i class="fas fa-plus px-1"></i>
                                 Create
                                 Floor</button>
-                            <a href="drop-zone" class="btn btn-primary btn-lg" type="button">Import CSV</a>
+                            {{-- <a href="drop-zone" class="btn btn-primary btn-lg" type="button">Import CSV</a> --}}
                         </div>
                     </div>
                     <x-table>

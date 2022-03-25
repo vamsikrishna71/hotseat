@@ -81,8 +81,14 @@ Route::post('/deskAssign', [App\Http\Controllers\DeskAssignController::class,'de
 
 Route::post('/mapAssign', [App\Http\Controllers\DeskAssignController::class, 'mapAssign'])->name('mapAssign');
 
+Route::post('/updateDeskAssign', [App\Http\Controllers\DeskAssignController::class, 'updateDeskAssign'])->name('updateDeskAssign');
+
 Route::delete(
     '/maps/{id}',
     [App\Http\Controllers\DeskAssignController::class, 'destroy']
 )->name('maps.destroy');
 
+// CSV import
+
+// Route::get('importEmployeeCsv', [App\Http\Controllers\EmployeeImportController::class,'importEmployeeCsv']);
+Route::post('importEmployee',[App\Http\Controllers\EmployeeImportController::class,'importEmployee']);

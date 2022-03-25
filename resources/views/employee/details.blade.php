@@ -40,6 +40,7 @@
                                     <i class="fas fa-plus px-1"></i> Add New Employee
                                 </button>
                             </a>
+                            <a href="drop-zone-employees" class="btn btn-primary btn-lg" type="button">Import CSV</a>
                         </div>
                     </div>
 

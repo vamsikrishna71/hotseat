@@ -15,7 +15,7 @@
                 <div class="card-body">
                     <h4 class="card-title mb-4">Address</h4>
 
-                    <form action="{{ route('addlocation') }}" class="needs-validation" method="post">
+                    <form action="{{ route('addlocation') }}" class="needs-validation" novalidate method="post">
                         @if (Session::get('success'))
                             <div class="alert alert-success">
                                 {{ Session::get('success') }}
@@ -32,9 +32,9 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="address" class="form-label">Address<span style="color:red">*</span></label>
+                                    <label for="validationCustom01" class="form-label">Address<span style="color:red">*</span></label>
                                     <input type="text" name="address" class="form-control"
-                                        id="address"  placeholder="Address">
+                                        id="validationCustom01"  placeholder="Address">
                                     <div class="valid-feedback">
                                         Looks good!
                                     </div>
@@ -50,29 +50,44 @@
                         <div class="row">
                             <div class="col-lg-3">
                                 <div class="mb-3">
-                                    <label for="formrow-inputState" class="form-label">Country<span style="color:red">*</span></label>
-                                    <input type="text" name="country" class="form-control" id="formrow-inputCity"
+                                    <label for="validationCustom02" class="form-label">Country<span style="color:red">*</span></label>
+                                    <input type="text" name="country" class="form-control" id="validationCustom02"
                                         placeholder="Enter Your Country">
                                     <span class="text-danger">@error('country')
                                         {{ $message }} @enderror</span>
+                                        <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Please enter the Country.
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="mb-3">
-                                    <label for="formrow-inputState" class="form-label">State<span style="color:red">*</span></label>
-                                    <input type="text" class="form-control" id="formrow-inputCity" name="state"
+                                    <label for="validationCustom03" class="form-label">State<span style="color:red">*</span></label>
+                                    <input type="text" class="form-control" id="validationCustom03" name="state"
                                         placeholder="Enter Your State">
                                     <span class="text-danger">@error('state'){{ $message }} @enderror</span>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Please enter the State.
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="mb-3">
-                                    <label for="formrow-inputCity" class="form-label">City<span style="color:red">*</span></label>
-                                    <input type="text" class="form-control" id="formrow-inputCity" name="city"
+                                    <label for="validationCustom04" class="form-label">City<span style="color:red">*</span></label>
+                                    <input type="text" class="form-control" id="validationCustom04" name="city"
                                         placeholder="Enter Your Living City">
                                     <span class="text-danger">@error('city'){{ $message }} @enderror</span>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
                                     <div class="invalid-feedback">
-                                        Please provide a valid city.
+                                        Please provide a valid city name.
                                     </div>
                                 </div>
                             </div>
@@ -153,10 +168,11 @@
 
 @section('script')
     <!-- form repeater js -->
+     <script src="{{ URL::asset('/assets/libs/parsleyjs/parsleyjs.min.js') }}"></script>
+    <script src="{{ URL::asset('/assets/js/pages/form-validation.init.js') }}">
+    </script>
     <script src="{{ URL::asset('/assets/libs/jquery-repeater/jquery-repeater.min.js') }}"></script>
     <script src="{{ URL::asset('/assets/js/pages/form-repeater.int.js') }}"></script>
     <script src="{{ URL::asset('/assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js') }}"></script>
     <script src="{{ URL::asset('/assets/js/pages/form-advanced.init.js') }}"></script>
-    <script src="{{ URL::asset('/assets/libs/parsleyjs/parsleyjs.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/js/pages/form-validation.init.js') }}"></script>
 @endsection

@@ -15,18 +15,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Location;
 use App\Models\Desk;
-
 use App\Models\DeskAssign;
-
+use App\Models\Location;
 use App\Models\User;
-use App\Models\Zone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Collection;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
@@ -37,7 +32,7 @@ use Illuminate\Support\Facades\Session;
  *
  * @category  PHP
  * @package   Desk_Reservation
- * @author    Vamsi Krishna 
+ * @author    Vamsi Krishna
  * @copyright 2006-2021 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   standard license
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -63,10 +58,11 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $locations = User::find(Auth::user()->id)->location;
-        $employees = User::find(Auth::user()->id)->employee;
-        $floors = User::find(Auth::user()->id)->desk;
-        $maps = DeskAssign::all();
+        $user      = User::find(Auth::user()->id);
+        $locations = $user->location;
+        $employees = $user->employee;
+        $floors    = $user->desk;
+        $maps      = DeskAssign::all();
         if (view()->exists($request->path())) {
             return view(
                 $request->path(),

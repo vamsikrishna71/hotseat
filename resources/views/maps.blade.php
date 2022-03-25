@@ -62,8 +62,6 @@
     <!-- end row -->
     @php
     $mapTileImage = $floor->floor_map;
-    // $latitude = $map->latitude;
-    // $longitude = $map->longitude;
     @endphp
 @endsection
 
@@ -118,7 +116,7 @@
                 zoomOffset: -1,
             }).addTo(myMap);
 
-            updateMarker();
+            editMarker();
              
             function onMapClick(e) {
                 marker = new L.marker(e.latlng, {
@@ -210,7 +208,7 @@
             });
         }
 
-        function updateMarker(){
+        function editMarker(){
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -254,7 +252,23 @@
                 this.openTooltip();
             }
         }
-
+        
+        function updateMarker(){
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: '{{ route('updateDeskAssign') }}',
+                type: 'post',
+                dataType: 'json',
+                data:{
+                    'deskId':{{ $floor->id }}
+                },
+                success: function(response) {
+                    alert(response);
+                }
+            });
+        }
         function deskSaveForm(deskName, employee, positions) {
             $.ajax({
                 headers: {

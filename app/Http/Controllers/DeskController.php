@@ -53,6 +53,7 @@ class DeskController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * 
      * @param mixed Deleting the location.
      *
      * @var $data

@@ -62,7 +62,6 @@ class DeskController extends Controller
      */
     public function destroy($id)
     {
-    
         try {
             DB::beginTransaction();
             $floor = Desk::findOrFail($id);

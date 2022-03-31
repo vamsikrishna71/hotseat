@@ -133,6 +133,11 @@
                                         <a href="{{ route('floor.edit', ['id' => $floor->id]) }}" class="text-dark fs-3">
                                             <i class="fas fa-eye"></i>
                                         </a>
+                                        
+                                        <a href="{{ route('floor.edit', ['id' => $floor->id]) }}" class="text-dark btn btn-primary text-white fs-3">
+                                            Adjust
+                                        </a>
+                                        
                                         <form
                                             class="d-inline delete-icon
                                             position-relative mb-0"

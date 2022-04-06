@@ -20,31 +20,56 @@ class DeskAssignController extends Controller
      * @param  mixed $request
      * @return void
      */
-    public function deskAssign(Request $request){
-        
-        $request->validate([
-            'deskName' => 'required',
-            'employeeName'  => 'required',
-        ]);
-        $desk = Desk::find($request->deskId);
-        $desk->deskAssign()->create([
-            'desk_name' => $request->deskName,
-            'employee_name'  => $request->employeeName,
-            'latitude' => $request->latitude,
-            'longitude' => $request->longitude
-        ]);
-        
-        return back()->with('success', 'Desk Added Successfully');
+
+    public function deskAssign(Request $request)
+    {
+        $floor = Desk::find($request->floorId);
+        try {
+            foreach ($request->desks as $desk) {
+                $floor->deskAssign()->create([
+                    'desk_name' => $desk['desk'],
+                    'employee_name' => $desk['employee'],
+                    'latitude' => $desk['latitude'],
+                    'longitude' => $desk['longitude'],
+                ]);
+            }
+        } catch (\Exception $e) {
+            dd($e);
+        }
+        if ($floor) {
+            Session::flash('message', 'Desk saved successfully!');
+            Session::flash('alert-class', 'alert-success');
+            $data = [
+                'success' => true,
+                'message' => 'Desk saved successfully'
+            ];
+            return response()->json(
+                $data,
+                200
+            );
+        } else {
+            Session::flash('message', 'Something went wrong!');
+            Session::flash('alert-class', 'alert-danger');
+            $data = [
+                'success' => false,
+                'message' => 'Something went wrong!'
+            ];
+            return response()->json(
+                $data,
+                200
+            );
+        }
     }
-    
+
     /**
      * mapAssign
      *
      * @param  mixed $request
      * @return void
      */
-    public function mapAssign(Request $request){
-        $maps = DeskAssign::where('desk_id', $request->deskId)->select('desk_id', 'latitude', 'longitude','employee_name','desk_name')->get();
+    public function mapAssign(Request $request)
+    {
+        $maps = DeskAssign::where('desk_id', $request->deskId)->select('desk_id', 'latitude', 'longitude', 'employee_name', 'desk_name')->get();
         return $maps->toArray();
     }
 
@@ -54,17 +79,19 @@ class DeskAssignController extends Controller
      * @param  mixed $request
      * @return void
      */
-    public function editDeskAssign(Request $request){
+    public function editDeskAssign(Request $request)
+    {
         $request->input();
     }
-    
+
     /**
      * updateDeskAssign
      *
      * @param  mixed $request
      * @return void
      */
-    public function updateDeskAssign(Request $request){
+    public function updateDeskAssign(Request $request)
+    {
         $request->input();
     }
     /**
@@ -78,7 +105,7 @@ class DeskAssignController extends Controller
      */
     public function destroy($id)
     {
-        
+
         try {
             DB::beginTransaction();
             $floor = DeskAssign::findOrFail($id);

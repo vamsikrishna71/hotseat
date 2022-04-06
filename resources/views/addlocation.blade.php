@@ -114,21 +114,21 @@
                                     <div data-repeater-list="zones">
                                         <div data-repeater-item class="row">
                                             <div class="mb-3 col-lg-3">
-                                                <label for="formrow-firstname-input" class="form-label">Building<span style="color:red">*</span></label>
+                                                <label for="formrow-firstname-input" class="form-label">Building</label>
                                                 <input type="text" name="building_name" class="form-control"
                                                     id="formrow-firstname-input" placeholder="Building Name">
                                                 <span class="text-danger">@error('building_name'){{ $message }}
                                                     @enderror</span>
                                             </div>
                                             <div class="mb-3 col-lg-3">
-                                                <label for="name">Level<span style="color:red">*</span></label>
+                                                <label for="name">Level</label>
                                                 <input type="text" name="level_name" class="form-control"
                                                     id="formrow-firstname-input" placeholder="Level">
                                                 <span class="text-danger">@error('level_name'){{ $message }}
                                                     @enderror</span>
                                             </div>
                                             <div class="mb-3 col-lg-3">
-                                                <label for="name">Zone<span style="color:red">*</span></label>
+                                                <label for="name">Zone</label>
                                                 <input type="text" class="form-control" id="formrow-inputZip"
                                                     name="zone_name" placeholder="Enter Your Zone ID"><span
                                                     class="text-danger">@error('zone_name'){{ $message }}

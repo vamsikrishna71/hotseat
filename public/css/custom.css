@@ -45,6 +45,21 @@ table tbody td {
     max-width: 200px;
 }
 
+.form-switch.toggle-button .form-check-input:checked {
+    background-color: #34c38f;
+    border-color: #34c38f;
+}
+
+.form-switch.toggle-button .form-check-input {
+    width: 3em;
+    height: 20px;
+}
+
+.toggle-button label {
+    font-size: 20px;
+    padding-left: 13px;
+}
+
 
 /* #leaflet-map {
     position: absolute;

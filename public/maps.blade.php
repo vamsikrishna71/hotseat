@@ -13,10 +13,10 @@
     <link href="{{ URL::asset('/assets/css/app.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
     {{-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> --}}
     <link href="{{ URL::asset('/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
-
+    
     {{-- Bower --}}
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
     <!-- DataTables -->
     <link href="{{ URL::asset('/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('/assets/libs/toastr/toastr.min.css') }}">
@@ -45,19 +45,19 @@
     @endif
     <div class="row">
         <div class="col-12">
-            <div class="position-fixed end-0 bottom-0 p-3" style="z-index: 11">
-                <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-                    <div class="toast-header">
-                        <img src="..." class="me-2 rounded" alt="...">
-                        <strong class="me-auto">Success!</strong>
-                        <small>2 secs ago</small>
-                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                    </div>
-                    <div class="toast-body">
-                        Desk Added Successfully
-                    </div>
-                </div>
-            </div>
+            <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img src="..." class="rounded me-2" alt="...">
+      <strong class="me-auto">Success!</strong>
+      <small>2 secs ago</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      Desk Added Successfully
+    </div>
+  </div>
+</div>
             <div class="floor-map-date mb-3">
                 <input class="form-control" type="date" value="0000-00-00" id="example-date-input">
             </div>
@@ -71,8 +71,8 @@
                     <div class="alert alert-success d-none" id="saveMessage">
                         <span id="responseMessage"></span>
                     </div>
-                    {{-- <button type="submit" class="btn btn-success float-end"
-                    onclick='save()'>Save</button> --}}
+                    <button type="submit" class="btn btn-success float-end"
+                    onclick='save()'>Save</button>
 
                     <h4 class="card-title mb-4">{{ $floor->floor_name }}</h4>
                     {{-- {{ dd($maps->desk_name) }} --}}
@@ -103,7 +103,7 @@
                 onstyle: 'success',
                 offstyle: 'danger'
             });
-
+            
         })
     </script>
     <!-- leaflet map.init -->
@@ -191,35 +191,32 @@
 
             return "<div class='row popcontent-" + id +
                 "'>\
-                    <div class='col-12'>\
-                        <div class='mb-3'>\
-                            <label for='deskName'class='form-label'>Desk Name<span style='color:red'>*</span></label>\
-                            <input type='text' class='form-control deskName @error('deskName') is-invalid @enderror' id='deskName-" +
+                <div class='col-12'>\
+                    <div class='mb-3'>\
+                        <label for='deskName'class='form-label'>Desk Name<span style='color:red'>*</span></label>\
+                        <input type='text' class='form-control deskName @error('deskName') is-invalid @enderror' id='deskName-" +
                 id +
                 "' value='" + desk +
                 "'name='deskName' autofocus>\
-                    </div>\
-                    <div class='mb-3'>\
-                    <label for='employeeName' class='form-label'>Employee Name<span style='color:red'>*</span></label>\
-                    <input type='text' class='form-control employeeName @error('employeeName') is-invalid @enderror' id='employeeName-" +
+                </div>\
+                <div class='mb-3'>\
+                <label for='employeeName' class='form-label'>Employee Name<span style='color:red'>*</span></label>\
+                <input type='text' class='form-control employeeName @error('employeeName') is-invalid @enderror' id='employeeName-" +
                 id +
                 "' value='" + employee + "' name='employeeName' autofocus>\
-                    </div>\
-                    <div class='form-check form-switch toggle-button'>\
-                    <input class='form-check-input' data-classname='popcontent-'" + id + "' id='saveDeskForm'\
-                    onclick='savePop(\"popcontent-" + id + "\"," + id + " )' type='checkbox' role='switch' id='flexSwitchCheckDefault'>\
-                    <label class='form-check-label text-muted' for='flexSwitchCheckDefault'>Enable Desk</label>\
-                    </div>\
-                    <div class='d-flex align-items-center justify-content-around'>\
-                    \<button data-classname='popcontent-'" + id +
-                "' class='btn btn-sm btn-success text-light waves-effect fw-semibold marker-delete-button' id='saveDeskForm' onclick='save()'>Save</button>\
-                    <div class='d-flex align-items-center justify-content-around'>\
-                    \<button data-classname='popcontent-'" + id +
+                </div>\
+                <div class='form-check form-switch toggle-button'>\
+                <input class='form-check-input' data-classname='popcontent-'" + id + "' id='saveDeskForm'\
+                onclick='savePop(\"popcontent-" + id + "\"," + id + " )' type='checkbox' role='switch' id='flexSwitchCheckDefault'>\
+                <label class='form-check-label text-muted' for='flexSwitchCheckDefault'>Enable Desk</label>\
+                </div>\
+                <div class='d-flex align-items-center justify-content-around'>\
+                \<button data-classname='popcontent-'" + id +
                 "' class='btn btn-sm btn-danger text-light waves-effect fw-semibold marker-delete-button' id='popcontentDelete' onclick='deletePop(\"popcontent-" +
                 id + "\")'>Delete</button>\
-                        </div>\
                     </div>\
-                </div>";
+                </div>\
+            </div>";
         }
 
         function deletePop(classname) {
@@ -232,22 +229,22 @@
         }
 
         function savePop(classname, id, e) {
-            var markerobj = markers[id - 1].markerobj;
-            var desk = $('#deskName-' + id).val();
-            var employee = $('#employeeName-' + id).val();
-            var positions = markerobj.getLatLng();
-            markers[id - 1].desk = desk;
-            markers[id - 1].employee = employee;
-            $('.test #deskName-' + id).val(desk);
-            $('.test #employeeName' + id).val(employee);
-            var callContent = $('.test').find('popcontent' + id).html();
-            markerobj.bindPopup(callContent).setLatlang(e.latlang);
-            markerobj.bindTooltip(desk);
-            markerobj.on('mouseover', customTip);
-            markerobj.setIcon(greenIcon).closePopup();
-            markerobj.dragging.disable();
-            return false;
-        }
+                    var markerobj = markers[id-1].markerobj;
+                    var desk = $('#deskName-' + id).val();
+                    var employee = $('#employeeName-' + id).val();
+                    var positions = markerobj.getLatLng();
+                    markers[id-1].desk = desk;
+                    markers[id-1].employee = employee;
+                    $('.test #deskName-' + id).val(desk);
+                    $('.test #employeeName' + id).val(employee);
+                    var callContent = $('.test').find('popcontent' + id).html();
+                    markerobj.bindPopup(callContent);
+                    markerobj.bindTooltip(desk);
+                    markerobj.on('mouseover', customTip);
+                    markerobj.setIcon(greenIcon).closePopup();
+                    markerobj.dragging.disable();
+                    return false;
+                }
 
         function editMarker() {
             $.ajax({
@@ -308,45 +305,44 @@
                 }
             });
         }
-
+        
         function save() {
-            var desks = [];
-            if (markers.length) {
-                markers.forEach(function(marker, index) {
-                    desks.push({
-                        'latitude': marker.markerobj.getLatLng().lat,
-                        'longitude': marker.markerobj.getLatLng().lng,
-                        'desk': marker.desk,
-                        'employee': marker.employee
-                    });
-                });
+                    var desks = [];
+                    if (markers.length) {
+                        markers.forEach(function(marker, index) {
+                            desks.push({
+                                'latitude': marker.markerobj.getLatLng().lat,
+                                'longitude': marker.markerobj.getLatLng().lng,
+                                'desk': marker.desk,
+                                'employee' : marker.employee
+                            });
+                        });
 
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    url: '{{ route('deskAssign') }}',
-                    type: 'POST',
-                    dataType: 'json',
-                    data: {
-                        'floorId': {{ $floor->id }},
-                        'desks': desks
-                    },
-                    success: function(response) {
-                        if (response.success === true) {
-                            alert(response.message);
-                            markerobj.setIcon(greenIcon).closePopup();
-                        } else if (response.success === false) {
-                            alert(response.message);
-                        } else {
-                            alert('Something went wrong!');
-                        }
+                        $.ajax({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            url: '{{ route('deskAssign') }}',
+                            type: 'POST',
+                            dataType: 'json',
+                            data: {
+                                'floorId': {{ $floor->id }},
+                                'desks': desks
+                            },
+                            success: function(response) {
+                                if(response.success === true) {
+                                alert(response.message);
+                                }else if(response.success === false){
+                                    alert(response.message);
+                                } else {
+                                    alert('Something went wrong!');
+                                }
+                            }
+                        });
+                    } else {
+                        alert('no desk allocated');
                     }
-                });
-            } else {
-                alert('no desk allocated');
-            }
-        }
+                }
     </script>
     // {{-- <script src="{{ URL::asset('/assets/js/pages/leaflet-map.init.js') }}"></script> --}}
 @endsection

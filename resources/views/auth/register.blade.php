@@ -147,7 +147,7 @@
                                                     @enderror
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="department" class="form-label">Department</label>
+                                                    <label for="department" class="form-label">Department<span style="color:red">*</span></label>
                                                     <input type="text"
                                                         class="form-control @error('department') is-invalid @enderror"
                                                         value="{{ old('department') }}" id="department" name="department" autofocus
@@ -159,7 +159,7 @@
                                                     @enderror
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="designation" class="form-label">Designation</label>
+                                                    <label for="designation" class="form-label">Designation<span style="color:red">*</span></label>
                                                     <input type="text"
                                                         class="form-control @error('designation') is-invalid @enderror"
                                                         value="{{ old('designation') }}" id="designation" name="designation" autofocus

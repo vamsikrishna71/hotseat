@@ -23,6 +23,7 @@ class DeskAssignController extends Controller
 
     public function deskAssign(Request $request)
     {
+        // dd($request);
         $floor = Desk::find($request->floorId);
         try {
             foreach ($request->desks as $desk) {

@@ -13,7 +13,7 @@
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title mb-4">Address</h4>
+                    <h4 class="card-title mb-4">Address Details</h4>
 
                     <form action="{{ route('addlocation') }}" class="needs-validation" novalidate method="post">
                         @if (Session::get('success'))

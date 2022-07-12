@@ -17,7 +17,6 @@
     @endsection
 
     @section('content')
-
         <div>
             <div class="container-fluid p-0">
                 <div class="row g-0">
@@ -28,13 +27,13 @@
                                 <div class="bg-overlay"></div>
                                 <div class="d-flex h-100 flex-column">
 
-                                    <div class="p-4 mt-auto">
+                                    <div class="mt-auto p-4">
                                         <div class="row justify-content-center">
                                             <div class="col-lg-7">
                                                 <div class="text-center">
 
                                                     <h4 class="mb-3"><i
-                                                            class="bx bxs-quote-alt-left text-primary h1 align-middle me-3"></i><span
+                                                            class="bx bxs-quote-alt-left text-primary h1 me-3 align-middle"></i><span
                                                             class="text-primary">5k</span>+ Satisfied clients</h4>
 
                                                     <div dir="ltr">
@@ -88,13 +87,13 @@
                             <div class="w-100">
 
                                 <div class="d-flex flex-column h-100">
-                                    <div class="mb-4 mb-md-5">
+                                    <div class="mb-md-5 mb-4">
                                         <a href="index" class="d-block auth-logo">
                                             {{-- <img src="{{ URL::asset('/assets/images/logo-dark.png') }}" alt="" height="18"
                                                 class="auth-logo-dark">
                                             <img src="{{ URL::asset('/assets/images/logo-light.png') }}" alt=""
                                                 height="18" class="auth-logo-light"> --}}
-                                                <h1>FEUGO</h1>
+                                            <h1>FEUGO</h1>
                                         </a>
                                     </div>
                                     <div class="my-auto">
@@ -109,7 +108,8 @@
                                                 enctype="multipart/form-data">
                                                 @csrf
                                                 <div class="mb-3">
-                                                    <label for="username" class="form-label">Company ID<span style="color:red">*</span></label>
+                                                    <label for="username" class="form-label">Company ID<span
+                                                            style="color:red">*</span></label>
                                                     <input type="text"
                                                         class="form-control @error('username') is-invalid @enderror"
                                                         id="username" value="{{ old('username') }}" name="username"
@@ -125,8 +125,8 @@
                                                     <label for="firstName" class="form-label">First name</label>
                                                     <input type="text"
                                                         class="form-control @error('firstName') is-invalid @enderror"
-                                                        value="{{ old('firstName') }}" id="firstName" name="firstName" autofocus
-                                                        required placeholder="Enter firstName">
+                                                        value="{{ old('firstName') }}" id="firstName" name="firstName"
+                                                        autofocus required placeholder="Enter firstName">
                                                     @error('firstName')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -134,12 +134,13 @@
                                                     @enderror
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="lastName" class="form-label">Last name<span style="color:red">*</span>
+                                                    <label for="lastName" class="form-label">Last name<span
+                                                            style="color:red">*</span>
                                                     </label>
                                                     <input type="text"
                                                         class="form-control @error('lastName') is-invalid @enderror"
-                                                        value="{{ old('lastName') }}" id="lastName" name="lastName" autofocus
-                                                        required placeholder="Enter Last Name">
+                                                        value="{{ old('lastName') }}" id="lastName" name="lastName"
+                                                        autofocus required placeholder="Enter Last Name">
                                                     @error('lastName')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -147,11 +148,12 @@
                                                     @enderror
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="department" class="form-label">Department<span style="color:red">*</span></label>
+                                                    <label for="department" class="form-label">Department<span
+                                                            style="color:red">*</span></label>
                                                     <input type="text"
                                                         class="form-control @error('department') is-invalid @enderror"
-                                                        value="{{ old('department') }}" id="department" name="department" autofocus
-                                                        required placeholder="Enter Department">
+                                                        value="{{ old('department') }}" id="department" name="department"
+                                                        autofocus required placeholder="Enter Department">
                                                     @error('department')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -159,20 +161,23 @@
                                                     @enderror
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="designation" class="form-label">Designation<span style="color:red">*</span></label>
+                                                    <label for="designation" class="form-label">Designation<span
+                                                            style="color:red">*</span></label>
                                                     <input type="text"
                                                         class="form-control @error('designation') is-invalid @enderror"
-                                                        value="{{ old('designation') }}" id="designation" name="designation" autofocus
-                                                        required placeholder="Enter Designation">
+                                                        value="{{ old('designation') }}" id="designation"
+                                                        name="designation" autofocus required
+                                                        placeholder="Enter Designation">
                                                     @error('firstName')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
                                                         </span>
                                                     @enderror
                                                 </div>
-                                                
+
                                                 <div class="mb-3">
-                                                    <label for="useremail" class="form-label">E-mail<span style="color:red">*</span></label>
+                                                    <label for="useremail" class="form-label">E-mail<span
+                                                            style="color:red">*</span></label>
                                                     <input type="email"
                                                         class="form-control @error('email') is-invalid @enderror"
                                                         id="useremail" value="{{ old('email') }}" name="email"
@@ -184,7 +189,8 @@
                                                     @enderror
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="userpassword" class="form-label">Password<span style="color:red">*</span></label>
+                                                    <label for="userpassword" class="form-label">Password<span
+                                                            style="color:red">*</span></label>
                                                     <input type="password"
                                                         class="form-control @error('password') is-invalid @enderror"
                                                         id="userpassword" name="password" placeholder="Enter password"
@@ -245,7 +251,7 @@
                                                     @enderror
                                                 </div>
 
-                                                <div class="mt-4 d-grid">
+                                                <div class="d-grid mt-4">
                                                     <button class="btn btn-primary waves-effect waves-light"
                                                         type="submit">Register</button>
                                                 </div>
@@ -256,19 +262,19 @@
                                                     <ul class="list-inline">
                                                         <li class="list-inline-item">
                                                             <a href="#"
-                                                                class="social-list-item bg-primary text-white border-primary">
+                                                                class="social-list-item bg-primary border-primary text-white">
                                                                 <i class="mdi mdi-facebook"></i>
                                                             </a>
                                                         </li>
                                                         <li class="list-inline-item">
                                                             <a href="#"
-                                                                class="social-list-item bg-info text-white border-info">
+                                                                class="social-list-item bg-info border-info text-white">
                                                                 <i class="mdi mdi-twitter"></i>
                                                             </a>
                                                         </li>
                                                         <li class="list-inline-item">
                                                             <a href="#"
-                                                                class="social-list-item bg-danger text-white border-danger">
+                                                                class="social-list-item bg-danger border-danger text-white">
                                                                 <i class="mdi mdi-google"></i>
                                                             </a>
                                                         </li>
@@ -289,12 +295,12 @@
                                         </div>
                                     </div>
 
-                                    <div class="mt-4 mt-md-3 text-center">
+                                    <div class="mt-md-3 mt-4 text-center">
                                         <script>
                                             document.write(new Date().getFullYear())
                                         </script> Feugo. Crafted with <i
-                                                class="mdi mdi-heart text-danger"></i> by
-                                            Themesbrand</p>
+                                            class="mdi mdi-heart text-danger"></i> by
+                                        Themesbrand</p>
                                     </div>
                                 </div>
 
@@ -308,7 +314,6 @@
             </div>
             <!-- end container-fluid -->
         </div>
-
     @endsection
     @section('script')
         <script src="{{ URL::asset('/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>

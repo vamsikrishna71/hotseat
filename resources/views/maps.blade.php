@@ -191,36 +191,55 @@
 
             return "<div class='row popcontent-" + id +
                 "'>\
-                    <div class='col-12'>\
-                        <div class='mb-3'>\
-                            <label for='deskName'class='form-label'>Desk Name<span style='color:red'>*</span></label>\
-                            <input type='text' class='form-control deskName @error('deskName') is-invalid @enderror' id='deskName-" +
+                        <div class='col-12'>\
+                            <div class='mb-3'>\
+                                <label for='deskName'class='form-label'>Desk Name<span style='color:red'>*</span></label>\
+                                <input type='text' class='form-control deskName @error('deskName') is-invalid @enderror' id='deskName-" +
                 id +
                 "' value='" + desk +
                 "'name='deskName' autofocus>\
-                    </div>\
-                    <div class='mb-3'>\
-                    <label for='employeeName' class='form-label'>Employee Name<span style='color:red'>*</span></label>\
-                    <input type='text' class='form-control employeeName @error('employeeName') is-invalid @enderror' id='employeeName-" +
+                        </div>\
+                        <div class='mb-3'>\
+                        <label for='employeeName' class='form-label'>Employee Name<span style='color:red'>*</span></label>\
+                        <input type='text' class='form-control employeeName @error('employeeName') is-invalid @enderror' id='employeeName-" +
                 id +
                 "' value='" + employee + "' name='employeeName' autofocus>\
-                    </div>\
-                    <div class='form-check form-switch toggle-button'>\
-                    <input class='form-check-input' data-classname='popcontent-'" + id + "' id='saveDeskForm'\
-                    onclick='savePop(\"popcontent-" + id + "\"," + id + " )' type='checkbox' role='switch' id='flexSwitchCheckDefault'>\
-                    <label class='form-check-label text-muted' for='flexSwitchCheckDefault'>Enable Desk</label>\
-                    </div>\
-                    <div class='d-flex align-items-center justify-content-around'>\
-                    \<button data-classname='popcontent-'" + id +
-                "' class='btn btn-sm btn-success text-light waves-effect fw-semibold marker-delete-button' id='saveDeskForm' onclick='save()'>Save</button>\
-                    <div class='d-flex align-items-center justify-content-around'>\
-                    \<button data-classname='popcontent-'" + id +
-                "' class='btn btn-sm btn-danger text-light waves-effect fw-semibold marker-delete-button' id='popcontentDelete' onclick='deletePop(\"popcontent-" +
-                id + "\")'>Delete</button>\
                         </div>\
-                    </div>\
-                </div>";
+                        <div class='form-check form-switch toggle-button'>\
+                        <input class='form-check-input' data-classname='popcontent-'" + id + "' id='saveDeskForm'\
+                        onclick='savePop(\"popcontent-" + id + "\"," + id + " )' type='checkbox' role='switch' id='flexSwitchCheckDefault'>\
+                        <label class='form-check-label text-muted' for='flexSwitchCheckDefault'>Enable Desk</label>\
+                        </div>\
+                        <div class='d-flex align-items-center justify-content-around'>\
+                        \<button data-classname='popcontent-'" + id +
+                "' class='btn btn-sm btn-success text-light waves-effect fw-semibold marker-delete-button' id='saveDeskForm' onclick='save()'>Save</button>\
+                        <div class='d-flex align-items-center justify-content-around'>\
+                        \<button data-classname='popcontent-'" + id +
+                "' class='btn btn-sm btn-warning text-light waves-effect fw-semibold marker-delete-button mx-2' id='popcontentDelete' onclick='deletePop(\"popcontent-" +
+                id + "\")'>Delete</button>\
+                <meta name='csrf-token' content='{{ csrf_token() }}'>\
+                    <button class='btn btn-sm btn-danger text-light waves-effect fw-semibold marker-delete-button deleteRecord mx-2' data-id='{{ $floor->id }}' >Delete Record</button>\
+                            </div>\
+                        </div>\
+                    </div>";
         }
+        
+        $('.deleteRecord').click(function() {
+            var id = $(this).data("id");
+            var token = $("meta[name='csrf-token']").attr("content");
+
+            $.ajax({
+                url: 'maps/' + id,
+                type: 'DELETE',
+                data: {
+                    'id': id,
+                    '_token': token,
+                },
+                success: function() {
+                    console.log("it Works");
+                }
+            });
+        });
 
         function deletePop(classname) {
             $.each(markers, function(index, value) {
@@ -241,7 +260,7 @@
             $('.test #deskName-' + id).val(desk);
             $('.test #employeeName' + id).val(employee);
             var callContent = $('.test').find('popcontent' + id).html();
-            markerobj.bindPopup(callContent).setLatlang(e.latlang);
+            markerobj.bindPopup(callContent);
             markerobj.bindTooltip(desk);
             markerobj.on('mouseover', customTip);
             markerobj.setIcon(greenIcon).closePopup();
@@ -335,7 +354,6 @@
                     success: function(response) {
                         if (response.success === true) {
                             alert(response.message);
-                            markerobj.setIcon(greenIcon).closePopup();
                         } else if (response.success === false) {
                             alert(response.message);
                         } else {

@@ -7,7 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use Maatwebsite\Excel\Excel;
+use Response;
 
 class EmployeeController extends Controller
 {
@@ -22,12 +25,13 @@ class EmployeeController extends Controller
   {
     $request->validate(
       [
-        'username'    => ['required','alpha_num', 'string', 'max:255'],
-        'firstName'   => ['required', 'string', 'max:100', 'regex:/(^([a-zA-Z]+)(\d+)?$)/u'],
-        'lastName'    => ['required', 'string', 'max:100', 'regex:/(^([a-zA-Z]+)(\d+)?$)/u'],
-        'department'  => ['required', 'string', 'max:100', 'regex:/(^([a-zA-Z]+)(\d+)?$)/u'],
+        'username'    => ['required', 'alpha_num', 'string', 'max:255'],
+        'firstName'   => ['required', 'string', 'max:100','alpha', 'regex:/(^([a-zA-Z]+)(\d+)?$)/u'],
+        'employeeId'  => ['required', 'string'],
+        'lastName'    => ['required', 'string', 'max:100','alpha', 'regex:/(^([a-zA-Z]+)(\d+)?$)/u'],
+        'department'  => ['required', 'string', 'max:100', 'alpha','regex:/(^([a-zA-Z]+)(\d+)?$)/u'],
         'password'    => ['required', 'string', 'max:30', 'regex:/(^([a-zA-Z]+)(\d+)?$)/u'],
-        'designation' => ['required', 'string', 'max:100', 'regex:/(^([a-zA-Z]+)(\d+)?$)/u'],
+        'designation' => ['required', 'string', 'max:100','alpha', 'regex:/(^([a-zA-Z]+)(\d+)?$)/u'],
       ]
     );
 
@@ -37,6 +41,8 @@ class EmployeeController extends Controller
         'username'    => $request->username,
         'first_name'  => $request->firstName,
         'last_name'   => $request->lastName,
+        'employeeId'  => $request->employeeId,
+        'email'       => $request->email,
         'password'    => Hash::make($request->password),
         'designation' => $request->designation,
         'department'  => $request->department,
@@ -57,8 +63,9 @@ class EmployeeController extends Controller
    */
   public function employeeLogin(Request $request)
   {
+    // dd('exit');
     $request->validate([
-      'username' => 'required|unique:employee',
+      'username' => 'required',
       'password' => 'required|min:6',
     ]);
     $credentials = $request->only('username', 'password');
@@ -78,10 +85,23 @@ class EmployeeController extends Controller
    */
   public function editEmployee($id)
   {
+
+    $designations = [
+      'Developer' => 'Developer',
+      'Designer'  => 'Designer',
+    ];
+
+    $departments = [
+      'IT'  => 'IT',
+      'CSE' => 'CSE',
+    ];
+
     $employee = Employee::findOrFail($id);
-    return view('employee.edit', compact('employee'));
+    return view('employee.edit', compact('employee'))
+      ->with('designations', $designations)
+      ->with('departments', $departments);
   }
-  
+
   /**
    * UpdateEmployee in the database.
    *
@@ -95,20 +115,23 @@ class EmployeeController extends Controller
     // exit('Not updated');
     $request->validate(
       [
-        'username'    => ['required', 'string', 'max:100', 'regex:/(^([a-zA-Z]+)(\d+)?$)/u'],
-        'firstName'   => ['required', 'string', 'max:100', 'regex:/(^([a-zA-Z]+)(\d+)?$)/u'],
-        'lastName'    => ['required', 'string', 'max:100', 'regex:/(^([a-zA-Z]+)(\d+)?$)/u'],
-        'department'  => ['required', 'string', 'max:100', 'regex:/(^([a-zA-Z]+)(\d+)?$)/u'],
-        'designation' => ['required', 'string', 'max:100', 'regex:/(^([a-zA-Z]+)(\d+)?$)/u'],
+        'username'    => ['required', 'alpha_num', 'string', 'max:255'],
+        'firstName'   => ['required', 'string', 'max:100', 'alpha', 'regex:/(^([a-zA-Z]+)(\d+)?$)/u'],
+        'employeeId'  => ['required', 'string'],
+        'lastName'    => ['required', 'string', 'max:100', 'alpha', 'regex:/(^([a-zA-Z]+)(\d+)?$)/u'],
+        'department'  => ['required', 'string', 'max:100', 'alpha', 'regex:/(^([a-zA-Z]+)(\d+)?$)/u'],
+        'designation' => ['required', 'string', 'max:100', 'alpha', 'regex:/(^([a-zA-Z]+)(\d+)?$)/u'],
       ]
     );
 
     $employeeId = Employee::find($id);
-    
+
     $employeeId->update([
       'username'    => $request->get('username'),
+      'employeeId'  => $request->get('employeeId'),
       'first_name'  => $request->get('firstName'),
       'last_name'   => $request->get('lastName'),
+      'email'       => $request->get('email'),
       'department'  => $request->get('department'),
       'designation' => $request->get('designation'),
     ]);
@@ -116,6 +139,80 @@ class EmployeeController extends Controller
     return redirect('employee.details')->with('success', 'Employee updated Successfully');
   }
 
+  /**
+   * exportEmployeeCsv
+   *
+   * @return void
+   */
+  public function exportEmployeeCsv(Request $request)
+  {
+    // exit('export');
+    $fileName = 'employee.csv';
+    $tasks    = Employee::all();
+
+    $headers =
+      array(
+        "Content-type"        => "text/csv",
+        "Content-Disposition" => "attachment; filename=$fileName",
+        "Pragma"              => "no-cache",
+        "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+        "Expires"             => "0",
+      );
+
+    $columns  = array('employeeId', 'username', 'first_name', 'last_name', 'designation', 'department', 'password', 'email');
+    $callback = function () use ($tasks, $columns) {
+      $file = fopen('php://output', 'w');
+
+      fputcsv($file, $columns);
+
+      foreach ($tasks as $task) {
+        $row['employeeId']  = $task->employeeId;
+        $row['username']    = $task->username;
+        $row['firstName']   = $task->first_name;
+        $row['lastName']    = $task->last_name;
+        $row['designation'] = $task->designation;
+        $row['department']  = $task->department;
+        $row['password']    = $task->password;
+        $row['email']       = $task->email;
+
+        fputcsv($file, array(
+          $row['employeeId'],
+          $row['username'],
+          $row['firstName'],
+          $row['lastName'],
+          $row['designation'],
+          $row['department'],
+          $row['email'],
+          $row['email'],
+        ));
+      }
+      fclose($file);
+    };
+    return response()->stream($callback, 200, $headers);
+  }
+  
+  /**
+   * exportCsv
+   *
+   * @return void
+   */
+  public function exportCsv()
+  {
+    exit('csv');
+    // $data = array('employeeId', 'username', 'first name', 'last name', 'designation', 'department', 'password', 'email');
+
+    // Excel::create(
+    //   'employee',
+    //   function ($e) use ($data) {
+    //     $e->sheet(
+    //       'Employee',
+    //       function ($sheet) use ($data) {
+    //         $sheet->fromArray($data);
+    //       }
+    //     );
+    //   }
+    // )->download('csv', ['access-control-allow-origin' => '*']);
+  }
   /**
    * Remove the specified resource from storage.
    *

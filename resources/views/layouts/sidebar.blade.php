@@ -22,7 +22,7 @@
                             <a href="employee.details" key="t-level-2-2">Overview</a>
                         </li>
                         <li>
-                            <a href="employee.create" key="t-level-2-2">Add Employee</a>
+                            <a href="{{ URL('employee.create') }}" key="t-level-2-2">Add Employee</a>
                         </li>
 
                     </ul>
@@ -86,8 +86,8 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="charts-apex" class="waves-effect">
-                        <span key="t-file-manager">Reports</span>
+                    <a href="{{ URL('hotdesk-map') }}" class="waves-effect">
+                        <span key="t-file-manager">Hotdesk</span>
                     </a>
                 </li>
 

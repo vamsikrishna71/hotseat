@@ -63,6 +63,7 @@ class HomeController extends Controller
         $employees = $user->employee;
         $floors    = $user->desk;
         $maps      = DeskAssign::all();
+        
         if (view()->exists($request->path())) {
             return view(
                 $request->path(),
@@ -142,38 +143,17 @@ class HomeController extends Controller
         $user->designation = $request->get('designation');
         $user->department  = $request->get('department');
         $user->email       = $request->get('email');
-        // $user->dob = date('Y-m-d', strtotime($request->get('dob')));
+        
 
-        if ($request->file('logo')) {
+        if ($request->has('logo')) {
             $logo     = $request->file('logo');
-            $logoName = time() . '.' . $logo->getClientOriginalExtension();
+            $logoName = $logo->getName(). '.' . $logo->getClientOriginalExtension();
             $logoPath = public_path('/images/');
             $logo->move($logoPath, $logoName);
             $user->logo = '/images/' . $logoName;
         }
-
         $user->update();
-        if ($user) {
-            Session::flash('message', 'User Details Updated successfully!');
-            Session::flash('alert-class', 'alert-success');
-            return response()->json(
-                [
-                    'isSuccess' => true,
-                    'Message'   => "User Details Updated successfully!",
-                ],
-                200
-            ); // Status code here
-        } else {
-            Session::flash('message', 'Something went wrong!');
-            Session::flash('alert-class', 'alert-danger');
-            return response()->json(
-                [
-                    'isSuccess' => true,
-                    'Message'   => "Something went wrong!",
-                ],
-                200
-            ); // Status code here
-        }
+        return back()->with('success', 'Profile updated Successfully');
     }
 
     /**

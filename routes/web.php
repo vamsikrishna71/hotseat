@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\EmployeeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\EmployeeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,12 +13,16 @@ use App\Http\Controllers\EmployeeController;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
 Auth::routes();
 
+// Root
 Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])
     ->name('root');
+
+    
+Route::post('/login', [App\Http\Controllers\Auth\LoginController::class,'login'])->name('login_user');
 
 //Grouping routes
 Route::prefix('employee')->name('employee.')->group(function () {
@@ -33,9 +37,10 @@ Route::prefix('employee')->name('employee.')->group(function () {
 
 //Update User Details
 Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class, 'updateProfile'])
-    ->name('updateProfile');
+    ->name('user.update');
 Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class, 'updatePassword'])
     ->name('updatePassword');
+    
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])
     ->name('index');
 
@@ -73,11 +78,11 @@ Route::post('/desk', [App\Http\Controllers\DeskController::class, 'createFloor']
 
 Route::get('/editFloor/{id}', [App\Http\Controllers\DeskController::class, 'editFloor'])->name('floor.edit');
 
-Route::delete('/floor/{id}',[App\Http\Controllers\DeskController::class, 'destroy'])->name('floor.destroy');
+Route::delete('/floor/{id}', [App\Http\Controllers\DeskController::class, 'destroy'])->name('floor.destroy');
 
 //DeskAssignController
 
-Route::post('/deskAssign', [App\Http\Controllers\DeskAssignController::class,'deskAssign'])->name('deskAssign');
+Route::post('/deskAssign', [App\Http\Controllers\DeskAssignController::class, 'deskAssign'])->name('deskAssign');
 
 Route::post('/mapAssign', [App\Http\Controllers\DeskAssignController::class, 'mapAssign'])->name('mapAssign');
 
@@ -90,4 +95,8 @@ Route::delete(
 
 // CSV import
 
-Route::post('importEmployee',[App\Http\Controllers\EmployeeImportController::class,'importEmployee']);
+Route::post('importEmployee', [App\Http\Controllers\EmployeeImportController::class, 'importEmployee']);
+
+// CSV export
+
+Route::get('/employee/export', [App\Http\Controllers\EmployeeController::class, 'exportEmployeeCsv'])->name('employee');

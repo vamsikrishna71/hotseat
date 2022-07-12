@@ -100,7 +100,7 @@ class RegisterController extends Controller
         // return $request->input();
         if (request()->has('logo')) {
             $logo     = request()->file('logo');
-            $logoName = time() . '.' . $logo->getClientOriginalExtension();
+            $logoName = $logo->getName(). '.' . $logo->getClientOriginalExtension();
             $logoPath = public_path('/images/');
             $logo->move($logoPath, $logoName);
         }

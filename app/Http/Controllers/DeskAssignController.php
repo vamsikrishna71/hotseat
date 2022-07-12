@@ -21,10 +21,11 @@ class DeskAssignController extends Controller
      * @return void
      */
 
-    public function deskAssign(Request $request)
+    public function deskAssign(Request $request,$id)
     {
         // dd($request);
         $floor = Desk::find($request->floorId);
+        $hotdesk = Desk::find($id);
         try {
             foreach ($request->desks as $desk) {
                 $floor->deskAssign()->create([
@@ -60,6 +61,7 @@ class DeskAssignController extends Controller
                 200
             );
         }
+        return view('hotdesk',compact('hotdesk'));
     }
 
     /**
@@ -95,6 +97,7 @@ class DeskAssignController extends Controller
     {
         $request->input();
     }
+    
     /**
      * Remove the specified resource from storage.
      *
@@ -104,22 +107,11 @@ class DeskAssignController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-
-        try {
-            DB::beginTransaction();
-            $floor = DeskAssign::findOrFail($id);
-            $floor->delete();
-        } catch (\Exception $e) {
-            dd($e);
-        }
-        DB::commit();
-        Session::flash('message', 'Desk Delete Successfully');
-        Session::flash('alert-class', 'alert-danger');
-        return redirect('maps-overview')->with(
-            'success',
-            'Desk Delete Successfully'
-        );
-    }
+    public function destroy($id){
+   
+    DeskAssign::find($id)->delete($id);
+    return response()->json([
+        'success' => 'Desk deleted successfully!'
+    ]);
+}
 }

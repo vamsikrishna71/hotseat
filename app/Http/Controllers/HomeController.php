@@ -63,7 +63,7 @@ class HomeController extends Controller
         $employees = $user->employee;
         $floors    = $user->desk;
         $maps      = DeskAssign::all();
-        
+
         if (view()->exists($request->path())) {
             return view(
                 $request->path(),
@@ -143,11 +143,11 @@ class HomeController extends Controller
         $user->designation = $request->get('designation');
         $user->department  = $request->get('department');
         $user->email       = $request->get('email');
-        
+
 
         if ($request->has('logo')) {
             $logo     = $request->file('logo');
-            $logoName = $logo->getName(). '.' . $logo->getClientOriginalExtension();
+            $logoName = $logo->getClientOriginalName(). '.' . $logo->getClientOriginalExtension();
             $logoPath = public_path('/images/');
             $logo->move($logoPath, $logoName);
             $user->logo = '/images/' . $logoName;

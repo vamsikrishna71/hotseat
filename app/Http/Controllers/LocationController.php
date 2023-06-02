@@ -54,7 +54,10 @@ class LocationController extends Controller
         $request->validate(
             [
                 'address'  => ['required', 'string', 'max:255'],
-                'state'    => ['required', 'string', 'max:100', 'regex:/^[\pL\s\-]+$/u'],
+                'state'    => [
+                    'required', 'string', 'max:100',
+                    'regex:/^[\pL\s\-]+$/u'
+                ],
                 'city'     => ['required', 'string', 'max:100', 'regex:/^[\pL\s\-]+$/u'],
                 'country'  => ['required', 'string', 'max:100', 'regex:/^[\pL\s\-]+$/u'],
                 'zipcode'  => ['required', 'string', 'max:100'],
@@ -93,7 +96,7 @@ class LocationController extends Controller
     }
 
     /**
-     * 
+     *
      *
      * @return void
      */
@@ -102,7 +105,7 @@ class LocationController extends Controller
         $location = User::find(Auth::user()->id)->location->orderBy('id')->get();
         return view('location', compact('location'));
     }
-    
+
     /**
      * editLocation
      *
@@ -159,7 +162,7 @@ class LocationController extends Controller
                 ]
             );
         }
-       
+
         return redirect('location')->with('success', 'Location updated Successfully');
     }
 
